@@ -32,10 +32,14 @@ cd careerport && node tools/seed.mjs && node tools/test-logic.mjs && node build.
 
 3. **`data.js` を変更したら必ず** `index.html` 内の `data.js?v=1` の数字を +1 する
    （logic.js 変更時は `logic.js?v=1` も同様）。これを忘れると閲覧者に古いデータが表示される。
-4. ローカル確認：リポジトリ直下で `python -m http.server 8830` →
+4. ローカル確認：MOFURI.HP 直下で `python -m http.server 8830` →
    http://localhost:8830/careerport/ja/ を開く（Claude Code なら launch.json の `careerport`）
-5. 公開：GitHub Pages（このリポジトリごと push）。**公開URL確定後に `build.mjs` の `SITE` 定数を
-   実URLへ変更**して再ビルドすること（canonical / sitemap / JSON-LD のURLに使われる）。
+5. 公開：**GitHub Pages（公開中）** https://jiantailanglin266-rgb.github.io/careerport/
+   - リポジトリ: https://github.com/jiantailanglin266-rgb/careerport （careerport/ フォルダ単独の
+     独立リポジトリ。MOFURI.HP=mofuri-jp とは別）
+   - デプロイループ: 変更 → seed → test → build → `?v=N` バンプ →
+     `git add -A && git commit && git push`（push が拒否されたら `git pull --rebase`）
+   - 独自ドメイン移行時は `build.mjs` の `SITE` 定数を変更して再ビルド。
 
 ## 運用手順
 
