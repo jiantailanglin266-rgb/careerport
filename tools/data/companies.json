@@ -1,0 +1,2669 @@
+[
+ {
+  "id": "co_q53268",
+  "slug": "toyota",
+  "wikidataId": "Q53268",
+  "employees": 359542,
+  "founded": 1937,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q53268",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "トヨタ自動車",
+    "summary": "東京証券取引所上場企業。従業員数 359,542人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q53247",
+  "slug": "panasonic-holdings-corporation",
+  "wikidataId": "Q53247",
+  "employees": 257533,
+  "founded": 1918,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q53247",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "パナソニックホールディングス",
+    "summary": "東京証券取引所上場企業。従業員数 257,533人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q9584",
+  "slug": "honda",
+  "wikidataId": "Q9584",
+  "employees": 204035,
+  "founded": 1948,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q9584",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "本田技研工業",
+    "summary": "東京証券取引所上場企業。従業員数 204,035人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q186394",
+  "slug": "fujitsu",
+  "wikidataId": "Q186394",
+  "employees": 200000,
+  "founded": 1935,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q186394",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "富士通",
+    "summary": "東京証券取引所上場企業。従業員数 200,000人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q62621",
+  "slug": "canon-inc",
+  "wikidataId": "Q62621",
+  "employees": 194151,
+  "founded": 1937,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q62621",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "キヤノン",
+    "summary": "東京証券取引所上場企業。従業員数 194,151人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q1814247",
+  "slug": "sumitomo-electric-industries",
+  "wikidataId": "Q1814247",
+  "employees": 182773,
+  "founded": 1897,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q1814247",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "住友電気工業",
+    "summary": "東京証券取引所上場企業。従業員数 182,773人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q20165",
+  "slug": "nissan",
+  "wikidataId": "Q20165",
+  "employees": 136134,
+  "founded": 1933,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q20165",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "日産自動車",
+    "summary": "東京証券取引所上場企業。従業員数 136,134人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q41187",
+  "slug": "sony-group",
+  "wikidataId": "Q41187",
+  "employees": 112300,
+  "founded": 1946,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q41187",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "ソニーグループ",
+    "summary": "東京証券取引所上場企業。従業員数 112,300人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q1151693",
+  "slug": "nippon-steel-corporation",
+  "wikidataId": "Q1151693",
+  "employees": 106528,
+  "founded": 2012,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q1151693",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "日本製鉄",
+    "summary": "東京証券取引所上場企業。従業員数 106,528人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q1542175",
+  "slug": "mitsubishi-ufj-financial-group",
+  "wikidataId": "Q1542175",
+  "employees": 104900,
+  "founded": 2005,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q1542175",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "三菱UFJフィナンシャル・グループ",
+    "summary": "東京証券取引所上場企業。従業員数 104,900人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q409907",
+  "slug": "aisin-seiki",
+  "wikidataId": "Q409907",
+  "employees": 100000,
+  "founded": 1949,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q409907",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "アイシン",
+    "summary": "東京証券取引所上場企業。従業員数 100,000人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q745099",
+  "slug": "kyocera",
+  "wikidataId": "Q745099",
+  "employees": 79185,
+  "founded": 1959,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q745099",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "京セラ",
+    "summary": "東京証券取引所上場企業。従業員数 79,185人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q271413",
+  "slug": "aeon",
+  "wikidataId": "Q271413",
+  "employees": 76318,
+  "founded": 1758,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q271413",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "イオン (持株会社)",
+    "summary": "東京証券取引所上場企業。従業員数 76,318人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q164740",
+  "slug": "fujifilm-corporation",
+  "wikidataId": "Q164740",
+  "employees": 75845,
+  "founded": 1934,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q164740",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "富士フイルムホールディングス",
+    "summary": "東京証券取引所上場企業。従業員数 75,845人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q159614",
+  "slug": "seiko-epson",
+  "wikidataId": "Q159614",
+  "employees": 74464,
+  "founded": 1881,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q159614",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "セイコーエプソン",
+    "summary": "東京証券取引所上場企業。従業員数 74,464人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q499071",
+  "slug": "east-japan-railway-company",
+  "wikidataId": "Q499071",
+  "employees": 73063,
+  "founded": 1987,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q499071",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "東日本旅客鉄道",
+    "summary": "東京証券取引所上場企業。従業員数 73,063人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q181642",
+  "slug": "suzuki-motor-corporation",
+  "wikidataId": "Q181642",
+  "employees": 68499,
+  "founded": 1909,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q181642",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "スズキ",
+    "summary": "東京証券取引所上場企業。従業員数 68,499人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q201653",
+  "slug": "softbank-group",
+  "wikidataId": "Q201653",
+  "employees": 68402,
+  "founded": 1981,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q201653",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "ソフトバンクグループ",
+    "summary": "東京証券取引所上場企業。従業員数 68,402人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q648280",
+  "slug": "mitsubishi-heavy-industries",
+  "wikidataId": "Q648280",
+  "employees": 68213,
+  "founded": 1934,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q648280",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "三菱重工業",
+    "summary": "東京証券取引所上場企業。従業員数 68,213人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q898568",
+  "slug": "japan-tobacco",
+  "wikidataId": "Q898568",
+  "employees": 63969,
+  "founded": 1985,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q898568",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "日本たばこ産業",
+    "summary": "東京証券取引所上場企業。従業員数 63,969人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q717093",
+  "slug": "itochu",
+  "wikidataId": "Q717093",
+  "employees": 62500,
+  "founded": 1949,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q717093",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "伊藤忠商事",
+    "summary": "東京証券取引所上場企業。従業員数 62,500人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q962591",
+  "slug": "jfe-holdings",
+  "wikidataId": "Q962591",
+  "employees": 56688,
+  "founded": 2002,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q962591",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "JFEホールディングス",
+    "summary": "東京証券取引所上場企業。従業員数 56,688人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q1157589",
+  "slug": "daikin-industries",
+  "wikidataId": "Q1157589",
+  "employees": 56240,
+  "founded": 1924,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q1157589",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "ダイキン工業",
+    "summary": "東京証券取引所上場企業。従業員数 56,240人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q820239",
+  "slug": "minebeamitsumi",
+  "wikidataId": "Q820239",
+  "employees": 54768,
+  "founded": 1951,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q820239",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "ミネベアミツミ",
+    "summary": "東京証券取引所上場企業。従業員数 54,768人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q855479",
+  "slug": "tdk",
+  "wikidataId": "Q855479",
+  "employees": 53923,
+  "founded": 1935,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q855479",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "TDK",
+    "summary": "東京証券取引所上場企業。従業員数 53,923人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q158888",
+  "slug": "yamaha-motor-company",
+  "wikidataId": "Q158888",
+  "employees": 53701,
+  "founded": 1955,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q158888",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "ヤマハ発動機",
+    "summary": "東京証券取引所上場企業。従業員数 53,701人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q11229272",
+  "slug": "lixil-group",
+  "wikidataId": "Q11229272",
+  "employees": 53206,
+  "founded": 1949,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q11229272",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "LIXILグループ",
+    "summary": "東京証券取引所上場企業。従業員数 53,206人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q53227",
+  "slug": "sharp-corporation",
+  "wikidataId": "Q53227",
+  "employees": 50253,
+  "founded": 1912,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q53227",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "シャープ",
+    "summary": "東京証券取引所上場企業。従業員数 50,253人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q35996",
+  "slug": "mazda",
+  "wikidataId": "Q35996",
+  "employees": 48750,
+  "founded": 1920,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q35996",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "マツダ",
+    "summary": "東京証券取引所上場企業。従業員数 48,750人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q7830755",
+  "slug": "toyota-boshoku",
+  "wikidataId": "Q7830755",
+  "employees": 46972,
+  "founded": 1918,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q7830755",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "トヨタ紡織",
+    "summary": "東京証券取引所上場企業。従業員数 46,972人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q36033",
+  "slug": "mitsubishi-motors",
+  "wikidataId": "Q36033",
+  "employees": 42625,
+  "founded": 1970,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q36033",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "三菱自動車工業",
+    "summary": "東京証券取引所上場企業。従業員数 42,625人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q204284",
+  "slug": "all-nippon-airways",
+  "wikidataId": "Q204284",
+  "employees": 42196,
+  "founded": 1952,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q204284",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "全日本空輸",
+    "summary": "東京証券取引所上場企業。従業員数 42,196人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q1514221",
+  "slug": "kubota",
+  "wikidataId": "Q1514221",
+  "employees": 41605,
+  "founded": 1890,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q1514221",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "クボタ",
+    "summary": "東京証券取引所上場企業。従業員数 41,605人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q128577",
+  "slug": "eneos-holdings",
+  "wikidataId": "Q128577",
+  "employees": 40695,
+  "founded": 2010,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q128577",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "ENEOSホールディングス",
+    "summary": "東京証券取引所上場企業。従業員数 40,695人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q904240",
+  "slug": "mitsui-co",
+  "wikidataId": "Q904240",
+  "employees": 40026,
+  "founded": 1947,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q904240",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "三井物産",
+    "summary": "東京証券取引所上場企業。従業員数 40,026人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q1157511",
+  "slug": "dai-nippon-printing",
+  "wikidataId": "Q1157511",
+  "employees": 37740,
+  "founded": 1876,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q1157511",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "大日本印刷",
+    "summary": "東京証券取引所上場企業。従業員数 37,740人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q118911",
+  "slug": "konica-minolta",
+  "wikidataId": "Q118911",
+  "employees": 36000,
+  "founded": 2003,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q118911",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "コニカミノルタ",
+    "summary": "東京証券取引所上場企業。従業員数 36,000人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q11257037",
+  "slug": "akindo-sushiro",
+  "wikidataId": "Q11257037",
+  "employees": 35509,
+  "founded": 1984,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q11257037",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "あきんどスシロー",
+    "summary": "東京証券取引所上場企業。従業員数 35,509人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q1993298",
+  "slug": "nippon-express",
+  "wikidataId": "Q1993298",
+  "employees": 35174,
+  "founded": 1937,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q1993298",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "日本通運",
+    "summary": "東京証券取引所上場企業。従業員数 35,174人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q720489",
+  "slug": "asahi-kasei",
+  "wikidataId": "Q720489",
+  "employees": 34670,
+  "founded": 1931,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q720489",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "旭化成",
+    "summary": "東京証券取引所上場企業。従業員数 34,670人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q688619",
+  "slug": "olympus-corporation",
+  "wikidataId": "Q688619",
+  "employees": 33300,
+  "founded": 1919,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q688619",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "オリンパス",
+    "summary": "東京証券取引所上場企業。従業員数 33,300人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q748148",
+  "slug": "kawasaki-heavy-industries",
+  "wikidataId": "Q748148",
+  "employees": 32706,
+  "founded": 1878,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q748148",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "川崎重工業",
+    "summary": "東京証券取引所上場企業。従業員数 32,706人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q137803",
+  "slug": "sumitomo-chemical",
+  "wikidataId": "Q137803",
+  "employees": 30745,
+  "founded": 1913,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q137803",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "住友化学",
+    "summary": "東京証券取引所上場企業。従業員数 30,745人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q501376",
+  "slug": "omron",
+  "wikidataId": "Q501376",
+  "employees": 30000,
+  "founded": 1933,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q501376",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "オムロン",
+    "summary": "東京証券取引所上場企業。従業員数 30,000人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q326700",
+  "slug": "nippon-sheet-glass",
+  "wikidataId": "Q326700",
+  "employees": 29340,
+  "founded": 1918,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q326700",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "日本板硝子",
+    "summary": "東京証券取引所上場企業。従業員数 29,340人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q728185",
+  "slug": "shiseido",
+  "wikidataId": "Q728185",
+  "employees": 28793,
+  "founded": 1872,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q728185",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "資生堂",
+    "summary": "東京証券取引所上場企業。従業員数 28,793人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q853958",
+  "slug": "ntt-docomo",
+  "wikidataId": "Q853958",
+  "employees": 27558,
+  "founded": 1992,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q853958",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "NTTドコモ",
+    "summary": "東京証券取引所上場企業。従業員数 27,558人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q1812086",
+  "slug": "tokio-marine",
+  "wikidataId": "Q1812086",
+  "employees": 24959,
+  "founded": 1879,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q1812086",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "東京海上ホールディングス",
+    "summary": "東京証券取引所上場企業。従業員数 24,959人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q786947",
+  "slug": "oki-electric-industry",
+  "wikidataId": "Q786947",
+  "employees": 22640,
+  "founded": 1881,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q786947",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "沖電気工業",
+    "summary": "東京証券取引所上場企業。従業員数 22,640人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q385775",
+  "slug": "osaka-gas",
+  "wikidataId": "Q385775",
+  "employees": 21250,
+  "founded": 1897,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q385775",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "大阪ガス",
+    "summary": "東京証券取引所上場企業。従業員数 21,250人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q1196269",
+  "slug": "renesas-electronics",
+  "wikidataId": "Q1196269",
+  "employees": 21204,
+  "founded": 2002,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q1196269",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "ルネサス エレクトロニクス",
+    "summary": "東京証券取引所上場企業。従業員数 21,204人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q1365015",
+  "slug": "kansai-electric-power-company",
+  "wikidataId": "Q1365015",
+  "employees": 20628,
+  "founded": 1951,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q1365015",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "関西電力",
+    "summary": "東京証券取引所上場企業。従業員数 20,628人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q15731340",
+  "slug": "dic-corporation",
+  "wikidataId": "Q15731340",
+  "employees": 20411,
+  "founded": 1908,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q15731340",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "DIC",
+    "summary": "東京証券取引所上場企業。従業員数 20,411人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q188454",
+  "slug": "yamaha",
+  "wikidataId": "Q188454",
+  "employees": 20348,
+  "founded": 1987,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q188454",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "ヤマハ",
+    "summary": "東京証券取引所上場企業。従業員数 20,348人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q1321914",
+  "slug": "tobu-railway",
+  "wikidataId": "Q1321914",
+  "employees": 19621,
+  "founded": 1897,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q1321914",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "東武鉄道",
+    "summary": "東京証券取引所上場企業。従業員数 19,621人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q904284",
+  "slug": "shin-etsu-chemical",
+  "wikidataId": "Q904284",
+  "employees": 19206,
+  "founded": 1926,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q904284",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "信越化学工業",
+    "summary": "東京証券取引所上場企業。従業員数 19,206人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q971946",
+  "slug": "kddi",
+  "wikidataId": "Q971946",
+  "employees": 18418,
+  "founded": 1984,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q971946",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "KDDI",
+    "summary": "東京証券取引所上場企業。従業員数 18,418人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q513679",
+  "slug": "central-japan-railway-company",
+  "wikidataId": "Q513679",
+  "employees": 18148,
+  "founded": 1987,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q513679",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "東海旅客鉄道",
+    "summary": "東京証券取引所上場企業。従業員数 18,148人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q1368019",
+  "slug": "citizen-watch",
+  "wikidataId": "Q1368019",
+  "employees": 18000,
+  "founded": 1918,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q1368019",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "シチズン時計",
+    "summary": "東京証券取引所上場企業。従業員数 18,000人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q691508",
+  "slug": "makita",
+  "wikidataId": "Q691508",
+  "employees": 16424,
+  "founded": 1915,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q691508",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "マキタ",
+    "summary": "東京証券取引所上場企業。従業員数 16,424人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q1676719",
+  "slug": "jvckenwood",
+  "wikidataId": "Q1676719",
+  "employees": 16277,
+  "founded": 2008,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q1676719",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "JVCケンウッド",
+    "summary": "東京証券取引所上場企業。従業員数 16,277人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q682894",
+  "slug": "tokyo-metro",
+  "wikidataId": "Q682894",
+  "employees": 11794,
+  "founded": 2004,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q682894",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "東京地下鉄",
+    "summary": "東京証券取引所上場企業。従業員数 11,794人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q115681659",
+  "slug": "create-sd",
+  "wikidataId": "Q115681659",
+  "employees": 11442,
+  "founded": 1975,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q115681659",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "クリエイトエス・ディー",
+    "summary": "東京証券取引所上場企業。従業員数 11,442人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q905412",
+  "slug": "resonac-holdings-corporation",
+  "wikidataId": "Q905412",
+  "employees": 10864,
+  "founded": 1939,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q905412",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "昭和電工",
+    "summary": "東京証券取引所上場企業。従業員数 10,864人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q568406",
+  "slug": "toyo-tire-corporation",
+  "wikidataId": "Q568406",
+  "employees": 10849,
+  "founded": 1945,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q568406",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "TOYO TIRE",
+    "summary": "東京証券取引所上場企業。従業員数 10,849人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q6414376",
+  "slug": "kintetsu-world-express",
+  "wikidataId": "Q6414376",
+  "employees": 10453,
+  "founded": 1970,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q6414376",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "近鉄エクスプレス",
+    "summary": "東京証券取引所上場企業。従業員数 10,453人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q45700",
+  "slug": "konami",
+  "wikidataId": "Q45700",
+  "employees": 10392,
+  "founded": 1969,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q45700",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "コナミグループ",
+    "summary": "東京証券取引所上場企業。従業員数 10,392人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q2620239",
+  "slug": "yaskawa-electric-corporation",
+  "wikidataId": "Q2620239",
+  "employees": 10383,
+  "founded": 1915,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q2620239",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "安川電機",
+    "summary": "東京証券取引所上場企業。従業員数 10,383人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q973054",
+  "slug": "rakuten-group-inc",
+  "wikidataId": "Q973054",
+  "employees": 10000,
+  "founded": 1997,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q973054",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "楽天グループ",
+    "summary": "東京証券取引所上場企業。従業員数 10,000人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q217338",
+  "slug": "casio",
+  "wikidataId": "Q217338",
+  "employees": 9732,
+  "founded": 1957,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q217338",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "カシオ計算機",
+    "summary": "東京証券取引所上場企業。従業員数 9,732人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q327247",
+  "slug": "asics",
+  "wikidataId": "Q327247",
+  "employees": 9039,
+  "founded": 1949,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q327247",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "アシックス",
+    "summary": "東京証券取引所上場企業。従業員数 9,039人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q212116",
+  "slug": "fanuc",
+  "wikidataId": "Q212116",
+  "employees": 8675,
+  "founded": 1956,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q212116",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "ファナック",
+    "summary": "東京証券取引所上場企業。従業員数 8,675人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q1685648",
+  "slug": "sumitomo-metal-mining",
+  "wikidataId": "Q1685648",
+  "employees": 8628,
+  "founded": 1590,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q1685648",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "住友金属鉱山",
+    "summary": "東京証券取引所上場企業。従業員数 8,628人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q1081154",
+  "slug": "kajima-corporation",
+  "wikidataId": "Q1081154",
+  "employees": 8129,
+  "founded": 1840,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q1081154",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "鹿島建設",
+    "summary": "東京証券取引所上場企業。従業員数 8,129人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q29803",
+  "slug": "isuzu",
+  "wikidataId": "Q29803",
+  "employees": 8111,
+  "founded": 1934,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q29803",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "いすゞ自動車",
+    "summary": "東京証券取引所上場企業。従業員数 8,111人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q1397688",
+  "slug": "fast-retailing",
+  "wikidataId": "Q1397688",
+  "employees": 8055,
+  "founded": 1963,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q1397688",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "ファーストリテイリング",
+    "summary": "東京証券取引所上場企業。従業員数 8,055人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q5302643",
+  "slug": "dowa-holdings",
+  "wikidataId": "Q5302643",
+  "employees": 7500,
+  "founded": 1937,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q5302643",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "DOWAホールディングス",
+    "summary": "東京証券取引所上場企業。従業員数 7,500人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q8093",
+  "slug": "nintendo",
+  "wikidataId": "Q8093",
+  "employees": 7317,
+  "founded": 1889,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q8093",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "任天堂",
+    "summary": "東京証券取引所上場企業。従業員数 7,317人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q6452254",
+  "slug": "kyowa-kirin",
+  "wikidataId": "Q6452254",
+  "employees": 7152,
+  "founded": 1949,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q6452254",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "協和キリン",
+    "summary": "東京証券取引所上場企業。従業員数 7,152人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q11375826",
+  "slug": "keihan-holdings",
+  "wikidataId": "Q11375826",
+  "employees": 7083,
+  "founded": 1949,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q11375826",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "京阪ホールディングス",
+    "summary": "東京証券取引所上場企業。従業員数 7,083人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q750619",
+  "slug": "chugai-pharmaceutical-co",
+  "wikidataId": "Q750619",
+  "employees": 6872,
+  "founded": 1925,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q750619",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "中外製薬",
+    "summary": "東京証券取引所上場企業。従業員数 6,872人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q2214105",
+  "slug": "softbank-mobile",
+  "wikidataId": "Q2214105",
+  "employees": 6700,
+  "founded": 1984,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q2214105",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "ソフトバンク株式会社",
+    "summary": "東京証券取引所上場企業。従業員数 6,700人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q7499501",
+  "slug": "shizuoka-bank",
+  "wikidataId": "Q7499501",
+  "employees": 6541,
+  "founded": 1943,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q7499501",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "静岡銀行",
+    "summary": "東京証券取引所上場企業。従業員数 6,541人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q7039614",
+  "slug": "nippon-chemi-con",
+  "wikidataId": "Q7039614",
+  "employees": 6478,
+  "founded": 1931,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q7039614",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "日本ケミコン",
+    "summary": "東京証券取引所上場企業。従業員数 6,478人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q11361559",
+  "slug": "nachi-fujikoshi",
+  "wikidataId": "Q11361559",
+  "employees": 6070,
+  "founded": 1928,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q11361559",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "不二越",
+    "summary": "東京証券取引所上場企業。従業員数 6,070人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q277115",
+  "slug": "showa-shell-sekiyu",
+  "wikidataId": "Q277115",
+  "employees": 6000,
+  "founded": 1985,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q277115",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "昭和シェル石油",
+    "summary": "東京証券取引所上場企業。従業員数 6,000人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q902855",
+  "slug": "kao-corporation",
+  "wikidataId": "Q902855",
+  "employees": 5652,
+  "founded": 1940,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q902855",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "花王",
+    "summary": "東京証券取引所上場企業。従業員数 5,652人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q2744340",
+  "slug": "bank-of-yokohama",
+  "wikidataId": "Q2744340",
+  "employees": 4733,
+  "founded": 1920,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q2744340",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "横浜銀行",
+    "summary": "東京証券取引所上場企業。従業員数 4,733人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q777141",
+  "slug": "mitsui-chemicals",
+  "wikidataId": "Q777141",
+  "employees": 4275,
+  "founded": 1997,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q777141",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "三井化学",
+    "summary": "東京証券取引所上場企業。従業員数 4,275人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q11509093",
+  "slug": "nippon-shokubai",
+  "wikidataId": "Q11509093",
+  "employees": 4219,
+  "founded": 1941,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q11509093",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "日本触媒",
+    "summary": "東京証券取引所上場企業。従業員数 4,219人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q886564",
+  "slug": "saizeriya",
+  "wikidataId": "Q886564",
+  "employees": 4134,
+  "founded": 1973,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q886564",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "サイゼリヤ",
+    "summary": "東京証券取引所上場企業。従業員数 4,134人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q11299598",
+  "slug": "kureha",
+  "wikidataId": "Q11299598",
+  "employees": 4080,
+  "founded": 1944,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q11299598",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "クレハ",
+    "summary": "東京証券取引所上場企業。従業員数 4,080人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q83584",
+  "slug": "odakyu-electric-railway",
+  "wikidataId": "Q83584",
+  "employees": 3760,
+  "founded": 1923,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q83584",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "小田急電鉄",
+    "summary": "東京証券取引所上場企業。従業員数 3,760人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q11469986",
+  "slug": "sanyo-denki",
+  "wikidataId": "Q11469986",
+  "employees": 3705,
+  "founded": 1936,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q11469986",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "山洋電気",
+    "summary": "東京証券取引所上場企業。従業員数 3,705人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q1372049",
+  "slug": "japan-post-holdings",
+  "wikidataId": "Q1372049",
+  "employees": 2886,
+  "founded": 2006,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q1372049",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "日本郵政",
+    "summary": "東京証券取引所上場企業。従業員数 2,886人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q14428",
+  "slug": "capcom",
+  "wikidataId": "Q14428",
+  "employees": 2832,
+  "founded": 1979,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q14428",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "カプコン",
+    "summary": "東京証券取引所上場企業。従業員数 2,832人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q1808912",
+  "slug": "sumitomo-heavy-industries",
+  "wikidataId": "Q1808912",
+  "employees": 2832,
+  "founded": 1888,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q1808912",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "住友重機械工業",
+    "summary": "東京証券取引所上場企業。従業員数 2,832人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q11295397",
+  "slug": "cawachi",
+  "wikidataId": "Q11295397",
+  "employees": 2616,
+  "founded": 1980,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q11295397",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "カワチ薬品",
+    "summary": "東京証券取引所上場企業。従業員数 2,616人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q7040930",
+  "slug": "nissan-chemical",
+  "wikidataId": "Q7040930",
+  "employees": 2511,
+  "founded": 1921,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q7040930",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "日産化学",
+    "summary": "東京証券取引所上場企業。従業員数 2,511人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q11503608",
+  "slug": "niigata-engineering",
+  "wikidataId": "Q11503608",
+  "employees": 2338,
+  "founded": 1910,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q11503608",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "新潟鐵工所",
+    "summary": "東京証券取引所上場企業。従業員数 2,338人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q1332506",
+  "slug": "keio",
+  "wikidataId": "Q1332506",
+  "employees": 2276,
+  "founded": 1948,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q1332506",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "京王電鉄",
+    "summary": "東京証券取引所上場企業。従業員数 2,276人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q11506947",
+  "slug": "mcdonald-s-holdings-japan",
+  "wikidataId": "Q11506947",
+  "employees": 2272,
+  "founded": 1977,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q11506947",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "日本マクドナルドホールディングス",
+    "summary": "東京証券取引所上場企業。従業員数 2,272人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q11199029",
+  "slug": "fdk-corporation",
+  "wikidataId": "Q11199029",
+  "employees": 1840,
+  "founded": 1950,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q11199029",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "FDK",
+    "summary": "東京証券取引所上場企業。従業員数 1,840人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q1104912",
+  "slug": "ryobi",
+  "wikidataId": "Q1104912",
+  "employees": 1722,
+  "founded": 1943,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q1104912",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "リョービ",
+    "summary": "東京証券取引所上場企業。従業員数 1,722人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q4045699",
+  "slug": "okamoto-industries",
+  "wikidataId": "Q4045699",
+  "employees": 1515,
+  "founded": 1934,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q4045699",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "オカモト",
+    "summary": "東京証券取引所上場企業。従業員数 1,515人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q16962428",
+  "slug": "ateam-holdings",
+  "wikidataId": "Q16962428",
+  "employees": 1106,
+  "founded": 1997,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q16962428",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "エイチームホールディングス",
+    "summary": "東京証券取引所上場企業。従業員数 1,106人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q639447",
+  "slug": "seven-i-holdings-co",
+  "wikidataId": "Q639447",
+  "employees": 1017,
+  "founded": 2005,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q639447",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "セブン&アイ・ホールディングス",
+    "summary": "東京証券取引所上場企業。従業員数 1,017人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q11308895",
+  "slug": "c-bon-cosmetics-co-ltd",
+  "wikidataId": "Q11308895",
+  "employees": 971,
+  "founded": 1966,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q11308895",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "シーボン",
+    "summary": "東京証券取引所上場企業。従業員数 971人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q1027454",
+  "slug": "calpis",
+  "wikidataId": "Q1027454",
+  "employees": 852,
+  "founded": 1948,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q1027454",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "カルピス",
+    "summary": "東京証券取引所上場企業。従業員数 852人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q1054844",
+  "slug": "taito",
+  "wikidataId": "Q1054844",
+  "employees": 848,
+  "founded": 1953,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q1054844",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "タイトー",
+    "summary": "東京証券取引所上場企業。従業員数 848人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q11361587",
+  "slug": "fudo-tetra",
+  "wikidataId": "Q11361587",
+  "employees": 845,
+  "founded": 1947,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q11361587",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "不動テトラ",
+    "summary": "東京証券取引所上場企業。従業員数 845人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q4726740",
+  "slug": "alinco",
+  "wikidataId": "Q4726740",
+  "employees": 818,
+  "founded": 1940,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q4726740",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "アルインコ",
+    "summary": "東京証券取引所上場企業。従業員数 818人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q106689901",
+  "slug": "hogy-medical",
+  "wikidataId": "Q106689901",
+  "employees": 814,
+  "founded": 1961,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q106689901",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "ホギメディカル",
+    "summary": "東京証券取引所上場企業。従業員数 814人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q304962",
+  "slug": "mitsubishi-estate",
+  "wikidataId": "Q304962",
+  "employees": 772,
+  "founded": 1937,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q304962",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "三菱地所",
+    "summary": "東京証券取引所上場企業。従業員数 772人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q11385713",
+  "slug": "hodogaya-chemical",
+  "wikidataId": "Q11385713",
+  "employees": 719,
+  "founded": 1916,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q11385713",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "保土谷化学工業",
+    "summary": "東京証券取引所上場企業。従業員数 719人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q11403957",
+  "slug": "hokko-chemical-industry",
+  "wikidataId": "Q11403957",
+  "employees": 672,
+  "founded": 1950,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q11403957",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "北興化学工業",
+    "summary": "東京証券取引所上場企業。従業員数 672人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q1335998",
+  "slug": "tomy",
+  "wikidataId": "Q1335998",
+  "employees": 667,
+  "founded": 1924,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q1335998",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "タカラトミー",
+    "summary": "東京証券取引所上場企業。従業員数 667人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q11394144",
+  "slug": "naikai-zosen-corporation",
+  "wikidataId": "Q11394144",
+  "employees": 611,
+  "founded": 1944,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q11394144",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "内海造船",
+    "summary": "東京証券取引所上場企業。従業員数 611人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q96313585",
+  "slug": "serverworks-co-ltd",
+  "wikidataId": "Q96313585",
+  "employees": 550,
+  "founded": 2000,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q96313585",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "サーバーワークス",
+    "summary": "東京証券取引所上場企業。従業員数 550人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q1066018",
+  "slug": "toei-company",
+  "wikidataId": "Q1066018",
+  "employees": 311,
+  "founded": 1950,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q1066018",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "東映",
+    "summary": "東京証券取引所上場企業。従業員数 311人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q119659534",
+  "slug": "tameny-inc",
+  "wikidataId": "Q119659534",
+  "employees": 298,
+  "founded": 2004,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q119659534",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "タメニー",
+    "summary": "東京証券取引所上場企業。従業員数 298人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q24862548",
+  "slug": "ispace-inc",
+  "wikidataId": "Q24862548",
+  "employees": 282,
+  "founded": 2010,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q24862548",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "ispace",
+    "summary": "東京証券取引所上場企業。従業員数 282人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q1054765",
+  "slug": "kadokawa-shoten",
+  "wikidataId": "Q1054765",
+  "employees": 160,
+  "founded": 1945,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q1054765",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "角川書店",
+    "summary": "東京証券取引所上場企業。従業員数 160人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q11289916",
+  "slug": "ecomic",
+  "wikidataId": "Q11289916",
+  "employees": 160,
+  "founded": 1997,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q11289916",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "エコミック",
+    "summary": "東京証券取引所上場企業。従業員数 160人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q115035752",
+  "slug": "retty-inc",
+  "wikidataId": "Q115035752",
+  "employees": 132,
+  "founded": 2010,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q115035752",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "Retty",
+    "summary": "東京証券取引所上場企業。従業員数 132人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q133883406",
+  "slug": "cinc",
+  "wikidataId": "Q133883406",
+  "employees": 114,
+  "founded": 2014,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q133883406",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "CINC",
+    "summary": "東京証券取引所上場企業。従業員数 114人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ },
+ {
+  "id": "co_q135273081",
+  "slug": "reskill-corp",
+  "wikidataId": "Q135273081",
+  "employees": 52,
+  "founded": 2022,
+  "listed": true,
+  "industryId": null,
+  "prefId": null,
+  "sourceName": "Wikidata",
+  "sourceUrl": "https://www.wikidata.org/wiki/Q135273081",
+  "updatedAt": "2026-07-27",
+  "status": "published",
+  "cat": 1,
+  "translations": {
+   "ja": {
+    "name": "リスキル",
+    "summary": "東京証券取引所上場企業。従業員数 52人（Wikidata登録値・時点は出典参照）。基本情報のみの掲載です。"
+   }
+  }
+ }
+]

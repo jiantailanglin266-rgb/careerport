@@ -1,0 +1,11 @@
+{
+ "name": "CAREERPORT",
+ "short_name": "CAREERPORT",
+ "description": "キャリアの出港地。迷いを、進路に変える。",
+ "start_url": "./",
+ "scope": "./",
+ "display": "standalone",
+ "background_color": "#081426",
+ "theme_color": "#081426",
+ "icons": []
+}
