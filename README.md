@@ -74,10 +74,22 @@ TSE上場×従業員数登録あり（Wikidata）の上位企業を基本情報�
 評価・年収・社風など判断を要する情報は取得しない設計。
 
 ### 画像を使う
-全箇所 **Wikipedia / Wikimedia Commons** から。ファイルの「ライセンス」欄を確認し、
-キャプションに `Photo: <作者> / Wikimedia Commons, <ライセンス>` を明記。
-記事内は `[img:images/articles/xxx.jpg|キャプション（クレジット込み）]` 記法。
-素材サイト・AI生成画像は使わない。
+全箇所 **Wikipedia / Wikimedia Commons** から。素材サイト・AI生成画像は使わない。
+
+- **キービジュアル（職種/業界/カテゴリのヒーロー・サムネイル）**：`tools/image-plan.mjs` に
+  key（`occ:<slug>` / `ind:<slug>` / `cat:<カテゴリid>`）と検索クエリ or `file:` 指定を書き、
+  `node tools/fetch-image-plan.mjs` で一括取得（ライセンス不明・800px未満は自動拒否）→
+  **必ず全点を目視検証** → NG は `file:` 指定で差し替えて `node tools/fetch-image-plan.mjs <key>`。
+  クレジットは images.json に記録され、サイト側で常時表示される。
+  表示のフォールバックは `occ:slug → cat:カテゴリ → 画像なし`。
+- **記事内画像**：`node tools/fetch-commons-images.mjs get "File:X.jpg" images/articles/foo.jpg`
+  でDL→目視検証→ `[img:images/articles/foo.jpg|キャプション。Photo: 作者 / Wikimedia Commons, ライセンス]` 記法。
+
+### 職種を追加する
+`tools/data-occupations/*.mjs` に
+`[slug, 名称, カテゴリid, 業界slug|区切り, 仕事内容, スキル, キャリアパス, 未経験目安]` を追記
+→ seed→v バンプ→build。不明カテゴリ・業界slug・重複slugは seed が検出する。
+統計値は書かない・資格必須職は必須と明記（国家資格職の「未経験可」誤記に注意）。
 
 ### GA4 / 広告計測
 `index.html` の `AF_CONF.ga4` に測定IDを設定し、GTM/gtag スニペットを `<head>` に追加。
