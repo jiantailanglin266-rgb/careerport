@@ -166,6 +166,26 @@ nav.g a.on{color:var(--gold-400)}
 .mq .it b{color:var(--gold-400);font-family:var(--en);font-weight:600;letter-spacing:.05em}
 @keyframes mqL{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media (prefers-reduced-motion:reduce){.mqtrack{animation:none}}
+/* key visual（Commons画像・カラーグレード統一＋クレジット常時表示） */
+.kv{position:relative;border-radius:var(--r);overflow:hidden;margin:18px 0 6px;box-shadow:var(--shadow)}
+.kv img{display:block;width:100%;height:300px;object-fit:cover;filter:saturate(.88) contrast(1.04) brightness(.97)}
+.kv:after{content:"";position:absolute;inset:0;background:linear-gradient(165deg,rgba(8,20,38,.38) 0%,rgba(8,20,38,.05) 45%,rgba(8,20,38,.42) 100%);pointer-events:none}
+.kv .cr{position:absolute;right:10px;bottom:8px;z-index:2;background:rgba(8,20,38,.72);color:#c4cfe2;font-size:10px;padding:3px 9px;border-radius:999px;letter-spacing:.02em}
+.kv.sm img{height:200px}
+.thumb-card{overflow:hidden;padding:0}
+.thumb-card .tc-img{position:relative;height:120px;overflow:hidden}
+.thumb-card .tc-img img{width:100%;height:100%;object-fit:cover;filter:saturate(.88) contrast(1.04)}
+.thumb-card .tc-img:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,20,38,0) 40%,rgba(8,20,38,.45))}
+.thumb-card .tc-cr{position:absolute;right:6px;bottom:4px;z-index:2;color:rgba(255,255,255,.85);font-size:8.5px;background:rgba(8,20,38,.6);padding:1px 7px;border-radius:999px}
+.thumb-card .tc-body{padding:14px 18px 18px}
+/* photo marquee（ホバーで停止しない・reduced-motionで静止） */
+.pmq{overflow:hidden;position:relative;margin:0 -20px;background:var(--navy-950);padding:18px 0}
+.pmq .mqtrack{gap:14px;animation-duration:60s}
+.pmq figure{position:relative;flex:none;width:230px;height:140px;border-radius:10px;overflow:hidden;margin:0}
+.pmq img{width:100%;height:100%;object-fit:cover;filter:saturate(.82) contrast(1.05) brightness(.92)}
+.pmq figure:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,20,38,.1),rgba(8,20,38,.35))}
+.pmq .cr{position:absolute;left:8px;bottom:6px;z-index:2;color:rgba(255,255,255,.8);font-size:8.5px;background:rgba(8,20,38,.6);padding:1px 7px;border-radius:999px;max-width:90%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.occ-filter{width:100%;max-width:420px;padding:11px 15px;border:1px solid var(--border);border-radius:999px;font-size:14px;font-family:var(--sans);margin:10px 0 4px}
 /* reveal */
 .rv{opacity:0;transform:translateY(14px);filter:blur(5px);transition:opacity .7s ease,transform .7s ease,filter .7s ease}
 .rv.in{opacity:1;transform:none;filter:none}
@@ -259,7 +279,7 @@ footer .legal{border-top:1px solid rgba(210,168,70,.2);margin-top:34px;padding-t
   var p=location.pathname, mm=p.match(/^(.*?)\/(ja|en)(\/|$)/);
   var b=mm?mm[1]:p.replace(/\/index\.html$/,"").replace(/\/$/,"");
   window.CP_BASE=b;
-  try{var x=new XMLHttpRequest();x.open("GET",b+"/data.js?v=2",false);x.send();if(x.status===200||x.status===0){(0,eval)(x.responseText)}}catch(e){}
+  try{var x=new XMLHttpRequest();x.open("GET",b+"/data.js?v=3",false);x.send();if(x.status===200||x.status===0){(0,eval)(x.responseText)}}catch(e){}
   try{var y=new XMLHttpRequest();y.open("GET",b+"/logic.js?v=1",false);y.send();if(y.status===200||y.status===0){(0,eval)(y.responseText)}}catch(e){}
 })();
 if(!window.DATA){document.getElementById("app").innerHTML='<div class="skel">データの読み込みに失敗しました。再読み込みしてください。</div>';}
@@ -377,6 +397,19 @@ function artToc(body){
   return '<div class="toc"><b style="font-size:12.5px">目次</b>'+hs.map(function(h){return '<a href="#h'+h[0]+'">'+esc(h[1])+"</a>"}).join("")+"</div>";
 }
 
+/* ---------- キービジュアル（Commons・目視検証済み・クレジット必須表示） ---------- */
+function imgFor(){for(var i=0;i<arguments.length;i++){var im=(DATA.images||{})[arguments[i]];if(im)return im}return null}
+function kvBanner(keys,alt,small){
+  var im=imgFor.apply(null,keys);if(!im)return"";
+  return '<div class="kv'+(small?" sm":"")+'"><img loading="lazy" src="'+window.CP_BASE+"/"+esc(im.src)+'" alt="'+esc(alt||"")+'"><span class="cr">'+esc(im.credit)+"</span></div>";
+}
+function photoMarquee(){
+  var keys=Object.keys(DATA.images||{});if(!keys.length)return"";
+  var pick=keys.filter(function(k){return k.indexOf("ind:")===0||k.indexOf("cat:")===0}).slice(0,14);
+  var items=pick.map(function(k){var im=DATA.images[k];return '<figure><img loading="lazy" src="'+window.CP_BASE+"/"+esc(im.src)+'" alt=""><span class="cr">'+esc(im.credit)+"</span></figure>"}).join("");
+  return '<div class="pmq" aria-hidden="true"><div class="mqtrack">'+items+items+"</div></div>";
+}
+
 /* ---------- 年収データ描画（出典必須。無ければ「データ準備中」） ---------- */
 function salaryRows(filter){
   return (DATA.salaryData||[]).filter(function(r){
@@ -416,7 +449,8 @@ function occFaq(o){
 
 /* ---------- views ---------- */
 function vHome(){
-  var occs=DATA.occupations.filter(function(o){return!o.cat});
+  var occs=DATA.occupations.filter(function(o){return o.featured});
+  var occTotal=DATA.occupations.filter(function(o){return o.status==="published"}).length;
   var arts=DATA.articles.slice().sort(function(a,b){return b.publishedAt<a.publishedAt?-1:1}).slice(0,6);
   var nayami=[
     ["年収を上げたい","article","nenshu-koushou"],["未経験職種へ転職したい","article","mikeiken-tenshoku"],
@@ -439,7 +473,7 @@ function vHome(){
   '<button class="btn ghost" onclick="go({name:\'services\'})">転職サービスを比較する</button></div>'+
   '<div class="searchbox"><form onsubmit="return homeSearch(this)"><div class="row">'+
   '<div><label>キーワード</label><input name="kw" type="text" placeholder="職種、働き方など"></div>'+
-  '<div><label>職種</label><select name="oc"><option value="">すべて</option>'+DATA.occupations.map(function(o){return '<option value="'+o.slug+'">'+esc(tr(o).name)+"</option>"}).join("")+'</select></div>'+
+  '<div><label>職種</label><select name="oc"><option value="">すべて（主要職種）</option>'+occs.map(function(o){return '<option value="'+o.slug+'">'+esc(tr(o).name)+"</option>"}).join("")+'</select></div>'+
   '<div><label>勤務地</label><select name="pf"><option value="">すべて</option>'+DATA.prefectures.map(function(p){return '<option value="'+p.slug+'">'+esc(nm(p))+"</option>"}).join("")+'</select></div>'+
   '<div><label>雇用形態</label><select name="et"><option value="">すべて</option>'+Object.keys(EMP).map(function(k){return '<option value="'+k+'">'+EMP[k]+"</option>"}).join("")+'</select></div>'+
   '<div style="align-self:end"><button class="btn gold" style="width:100%;padding:11px 20px" type="submit">検索</button></div>'+
@@ -460,7 +494,8 @@ function vHome(){
   '<button class="btn gold" onclick="go({name:\'tool-diagnosis\'})">診断を始める</button> '+
   '<button class="btn ghost" onclick="go({name:\'tool-review\',slug:\'career-history-review\'})">AI書類添削を試す</button></div></section>'+
 
-  '<section class="sec rv"><div class="sec-h"><div class="eyebrow">By Occupation</div><h2>職種から探す</h2></div><div class="grid g4">'+occs.map(occCard).join("")+'</div></section>'+
+  '<section class="sec rv"><div class="sec-h"><div class="eyebrow">By Occupation</div><h2>職種から探す</h2><p class="lead">主要職種のほか、全'+occTotal+'職種の紹介ページを用意しています。</p></div><div class="grid g4">'+occs.map(occCard).join("")+'</div>'+
+  '<p style="margin-top:14px"><a class="btn line sm" href="javascript:void(0)" onclick="go({name:\'occupations\'})">全'+occTotal+'職種の一覧を見る</a></p></section>'+
   '<section class="sec rv"><div class="sec-h"><div class="eyebrow">By Industry</div><h2>業界から探す</h2></div><div class="grid g4">'+DATA.industries.map(function(x){return '<a class="tile" href="javascript:void(0)" onclick="go({name:\'industry\',slug:\''+esc(x.slug)+'\'})"><span class="ic">🏙️</span>'+esc(nm(x))+"</a>"}).join("")+'</div></section>'+
   '<section class="sec rv"><div class="sec-h"><div class="eyebrow">By Area</div><h2>地域から探す</h2></div><div class="grid g4">'+DATA.regions.map(function(rg){return '<a class="tile" href="javascript:void(0)" onclick="go({name:\'areas\'})"><span class="ic">🗾</span>'+esc(nm(rg))+"</a>"}).join("")+'</div>'+
   '<p style="margin-top:10px"><a href="javascript:void(0)" onclick="go({name:\'areas\'})" style="text-decoration:underline;font-size:13.5px">47都道府県の一覧を見る →</a></p></section>'+
@@ -478,14 +513,14 @@ function vHome(){
   [["⚓","比較の入口に特化","特定のサービスに誘導するのではなく、タイプ別の違いと選び方を整理します。広告・PRは明示します。"],
    ["🧭","無料のAIツール","キャリア診断・書類添削・チャット相談を無料で提供。入力内容は端末の外に送信されません。"],
    ["📊","出典主義","統計データは出典と時点を明示できるもののみ掲載。準備中のデータを架空の数値で埋めることはしません。"]].map(function(f){return '<div class="card"><div style="font-size:26px">'+f[0]+'</div><h3>'+f[1]+"</h3><p class=\"desc\">"+f[2]+"</p></div>"}).join("")+'</div></section>'+
-
+  photoMarquee()+
   '<section class="sec rv"><div class="sec-h"><div class="eyebrow">FAQ</div><h2>よくある質問</h2></div>'+faqBlock(DATA.faqs)+'</section>'+
   '<section class="sec rv"><div class="card" style="text-align:center;padding:40px"><h2 style="font-size:23px">さあ、出港の準備を。</h2>'+
   '<p class="desc" style="margin:10px 0 20px">まずは3分のAIキャリア診断で、いまの現在地と進路の候補を整理しましょう。</p>'+
   '<button class="btn gold" onclick="go({name:\'tool-diagnosis\'})">無料でキャリア診断を始める</button></div></section>';
 }
 function mqItems(){
-  return DATA.occupations.slice(0,14).map(function(o){return '<span class="it"><b>'+esc(o.slug.toUpperCase().replace(/-/g," "))+'</b> '+esc(tr(o).name)+"</span>"}).join("");
+  return DATA.occupations.filter(function(o){return o.featured}).slice(0,14).map(function(o){return '<span class="it"><b>'+esc(o.slug.toUpperCase().replace(/-/g," "))+'</b> '+esc(tr(o).name)+"</span>"}).join("");
 }
 function homeSearch(f){
   go({name:"jobs",q:{kw:f.kw.value,oc:f.oc.value,pf:f.pf.value,et:f.et.value}});
@@ -509,7 +544,7 @@ function vJobs(q){
   '<div class="notice">🚧 <b>求人データは提携準備中です。</b>現在表示されているのはレイアウト確認用のデモ求人であり、実在の募集ではありません。正規の求人データ提携（API・CSV）の開始後、実求人に切り替わります。求人情報の無断転載は行いません。</div>'+
   '<form class="card" style="margin:14px 0" onsubmit="return jobsSearch(this)"><div class="grid g4">'+
   '<input name="kw" type="text" placeholder="キーワード" value="'+esc(q.kw||"")+'" style="padding:10px 12px;border:1px solid var(--border);border-radius:9px;font-family:var(--sans)">'+
-  '<select name="oc" style="padding:10px;border:1px solid var(--border);border-radius:9px"><option value="">職種：すべて</option>'+DATA.occupations.map(function(o){return '<option value="'+o.slug+'"'+(q.oc===o.slug?" selected":"")+'>'+esc(tr(o).name)+"</option>"}).join("")+'</select>'+
+  '<select name="oc" style="padding:10px;border:1px solid var(--border);border-radius:9px"><option value="">職種：すべて</option>'+DATA.occupations.filter(function(o){return o.featured}).map(function(o){return '<option value="'+o.slug+'"'+(q.oc===o.slug?" selected":"")+'>'+esc(tr(o).name)+"</option>"}).join("")+'</select>'+
   '<select name="pf" style="padding:10px;border:1px solid var(--border);border-radius:9px"><option value="">勤務地：すべて</option>'+DATA.prefectures.map(function(p){return '<option value="'+p.slug+'"'+(q.pf===p.slug?" selected":"")+'>'+esc(nm(p))+"</option>"}).join("")+'</select>'+
   '<div style="display:flex;gap:8px"><select name="et" style="flex:1;padding:10px;border:1px solid var(--border);border-radius:9px"><option value="">雇用形態</option>'+Object.keys(EMP).map(function(k){return '<option value="'+k+'"'+(q.et===k?" selected":"")+'>'+EMP[k]+"</option>"}).join("")+'</select>'+
   '<button class="btn navy sm" type="submit">検索</button></div></div></form>'+
@@ -594,14 +629,25 @@ function vCareer(slug){
   '<div class="card" style="background:var(--navy-950);color:#fff;text-align:center;padding:28px"><p style="margin-bottom:12px">自分の状況に合う進路を整理したい方へ</p><button class="btn gold" onclick="go({name:\'tool-diagnosis\'})">AIキャリア診断を試す（無料）</button></div>';
 }
 function vOccupations(){
+  var total=DATA.occupations.filter(function(o){return o.status==="published"}).length;
   return crumb([["職種から探す"]])+
-  '<div class="pagehead"><h1>職種から探す</h1><p class="lead">仕事内容・必要なスキル・キャリアパス・未経験転職の目安を職種別に整理しています。</p></div>'+
-  DATA.occCategories.map(function(c){
-    var os=DATA.occupations.filter(function(o){return o.categoryId===c.id&&!o.cat});
+  '<div class="pagehead"><h1>職種から探す<span style="font-family:var(--en);font-size:16px;color:var(--gold-500);margin-left:10px">'+total+' OCCUPATIONS</span></h1><p class="lead">全'+total+'職種の仕事内容・必要なスキル・キャリアパス・未経験転職の目安を職種別に整理しています。</p>'+
+  '<input class="occ-filter" type="text" placeholder="職種名で絞り込み（例：営業、看護、エンジニア）" oninput="occFilter(this)"></div>'+
+  '<div id="occlist">'+DATA.occCategories.map(function(c){
+    var os=DATA.occupations.filter(function(o){return o.categoryId===c.id});
     if(!os.length)return"";
-    return '<section class="sec" style="padding:22px 0"><h2 style="font-size:18px;margin-bottom:12px">'+esc(nm(c))+'</h2><div class="grid g4">'+os.map(occCard).join("")+"</div></section>";
-  }).join("");
+    return '<section class="sec occ-sec" style="padding:22px 0"><h2 style="font-size:18px;margin-bottom:12px">'+esc(nm(c))+' <span class="small">'+os.length+'職種</span></h2><div class="grid g4">'+os.map(occCard).join("")+"</div></section>";
+  }).join("")+'</div>';
 }
+function occFilter(inp){
+  var q=inp.value.trim();
+  document.querySelectorAll("#occlist .tile").forEach(function(t){t.style.display=!q||t.textContent.indexOf(q)>=0?"":"none"});
+  document.querySelectorAll("#occlist .occ-sec").forEach(function(sec){
+    var any=[].slice.call(sec.querySelectorAll(".tile")).some(function(t){return t.style.display!=="none"});
+    sec.style.display=any?"":"none";
+  });
+}
+window.occFilter=occFilter;
 function vOccupation(slug){
   var o=bySlug(DATA.occupations,slug);if(!o)return vNotFound();
   var t=tr(o);pushHistory("occupation",o.id);
@@ -610,6 +656,7 @@ function vOccupation(slug){
   var inds=(o.industryIds||[]).map(function(id){return byId(DATA.industries,id)}).filter(Boolean);
   return crumb([["職種から探す",{name:"occupations"}],[t.name]])+
   '<div class="pagehead"><div class="eyebrow">'+esc(o.slug.toUpperCase().replace(/-/g," "))+'</div><h1>'+esc(t.name)+'の転職ガイド</h1><p class="lead">'+esc(t.summary)+'</p></div>'+
+  kvBanner(["occ:"+o.slug,"cat:"+o.categoryId],t.name+"のイメージ")+
   '<div class="grid g2" style="margin-top:14px">'+
   '<div class="card"><h3>必要なスキル・資格</h3><p style="font-size:14px">'+esc(t.skills)+'</p>'+(quals.length?'<div style="margin-top:8px">'+quals.map(function(q){return '<span class="chip">'+esc(tr(q).name)+"</span>"}).join("")+"</div>":"")+'</div>'+
   '<div class="card"><h3>キャリアパス</h3><p style="font-size:14px">'+esc(t.careerPath)+'</p></div>'+
@@ -626,13 +673,17 @@ function vOccupation(slug){
 function vIndustries(){
   return crumb([["業界から探す"]])+
   '<div class="pagehead"><h1>業界から探す</h1><p class="lead">業界ごとの概要・代表的な職種・転職の入口を整理しています。</p></div>'+
-  '<div class="grid g3" style="margin-top:14px">'+DATA.industries.map(function(x){return '<div class="card"><h3><a href="javascript:void(0)" onclick="go({name:\'industry\',slug:\''+x.slug+'\'})">'+esc(nm(x))+'</a></h3><p class="desc">'+esc(x.summaries.ja.slice(0,60))+'…</p></div>'}).join("")+'</div>';
+  '<div class="grid g3" style="margin-top:14px">'+DATA.industries.map(function(x){
+    var im=imgFor("ind:"+x.slug);
+    return '<div class="card thumb-card">'+(im?'<div class="tc-img"><img loading="lazy" src="'+window.CP_BASE+"/"+esc(im.src)+'" alt="'+esc(nm(x))+'"><span class="tc-cr">'+esc(im.credit)+'</span></div>':"")+
+    '<div class="tc-body"><h3><a href="javascript:void(0)" onclick="go({name:\'industry\',slug:\''+x.slug+'\'})">'+esc(nm(x))+'</a></h3><p class="desc">'+esc(x.summaries.ja.slice(0,60))+'…</p></div></div>'}).join("")+'</div>';
 }
 function vIndustry(slug){
   var x=bySlug(DATA.industries,slug);if(!x)return vNotFound();
   var occs=DATA.occupations.filter(function(o){return(o.industryIds||[]).indexOf(x.id)>=0});
   return crumb([["業界から探す",{name:"industries"}],[nm(x)]])+
   '<div class="pagehead"><h1>'+esc(nm(x))+'業界の転職ガイド</h1><p class="lead">'+esc(x.summaries.ja)+'</p></div>'+
+  kvBanner(["ind:"+x.slug],nm(x)+"業界のイメージ")+
   '<div class="card" style="margin-top:10px"><h3>平均年収・市場データ</h3><p class="small">出典を明示できる統計データの接続後に掲載します。現在は<b>データ準備中</b>です。</p></div>'+
   (occs.length?'<section class="sec" style="padding:24px 0"><div class="sec-h"><h2 style="font-size:20px">この業界の代表的な職種</h2></div><div class="grid g4">'+occs.map(occCard).join("")+'</section>':"")+
   ctaBlock({},null,nm(x)+"業界の転職に使えるサービス");
@@ -778,7 +829,7 @@ function vToolReview(slug){
   '<div class="pagehead"><div class="eyebrow">AI Document Review</div><h1>'+pg.title+'</h1><p class="lead">'+pg.lead+'<br><b>入力内容はお使いの端末の外に送信されません。</b>保存もご自身で選んだ場合のみ、端末内にだけ行われます。</p></div>'+
   '<div style="margin:12px 0">'+Object.keys(REVIEW_PAGES).map(function(k){return '<a class="chip" style="'+(k===slug?"background:var(--navy-950);color:var(--gold-400)":"")+'" href="javascript:void(0)" onclick="go({name:\'tool-review\',slug:\''+k+'\'})">'+REVIEW_PAGES[k].title.replace("AI","")+"</a>"}).join("")+'</div>'+
   '<form class="form" onsubmit="return reviewSubmit(this,\''+slug+'\')">'+
-  '<div class="q"><label>応募する職種（任意）</label><select name="oc"><option value="">選択しない</option>'+DATA.occupations.map(function(o){return '<option value="'+o.id+'">'+esc(tr(o).name)+"</option>"}).join("")+'</select></div>'+
+  '<div class="q"><label>応募する職種（任意）</label><select name="oc"><option value="">選択しない</option>'+DATA.occupations.filter(function(o){return o.featured}).map(function(o){return '<option value="'+o.id+'">'+esc(tr(o).name)+"</option>"}).join("")+'</select></div>'+
   '<div class="q"><label>本文</label><textarea name="text" placeholder="ここに文章を貼り付けてください"></textarea></div>'+
   '<button class="btn gold" type="submit">添削する</button>'+
   '<p class="small" style="margin-top:10px">※ルールベースのセルフチェックです。経験の書き換えや実績の追加提案は行いません（事実と異なる記載は推奨しません）。</p></form>'+

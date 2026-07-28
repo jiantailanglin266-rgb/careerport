@@ -166,6 +166,26 @@ nav.g a.on{color:var(--gold-400)}
 .mq .it b{color:var(--gold-400);font-family:var(--en);font-weight:600;letter-spacing:.05em}
 @keyframes mqL{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media (prefers-reduced-motion:reduce){.mqtrack{animation:none}}
+/* key visual（Commons画像・カラーグレード統一＋クレジット常時表示） */
+.kv{position:relative;border-radius:var(--r);overflow:hidden;margin:18px 0 6px;box-shadow:var(--shadow)}
+.kv img{display:block;width:100%;height:300px;object-fit:cover;filter:saturate(.88) contrast(1.04) brightness(.97)}
+.kv:after{content:"";position:absolute;inset:0;background:linear-gradient(165deg,rgba(8,20,38,.38) 0%,rgba(8,20,38,.05) 45%,rgba(8,20,38,.42) 100%);pointer-events:none}
+.kv .cr{position:absolute;right:10px;bottom:8px;z-index:2;background:rgba(8,20,38,.72);color:#c4cfe2;font-size:10px;padding:3px 9px;border-radius:999px;letter-spacing:.02em}
+.kv.sm img{height:200px}
+.thumb-card{overflow:hidden;padding:0}
+.thumb-card .tc-img{position:relative;height:120px;overflow:hidden}
+.thumb-card .tc-img img{width:100%;height:100%;object-fit:cover;filter:saturate(.88) contrast(1.04)}
+.thumb-card .tc-img:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,20,38,0) 40%,rgba(8,20,38,.45))}
+.thumb-card .tc-cr{position:absolute;right:6px;bottom:4px;z-index:2;color:rgba(255,255,255,.85);font-size:8.5px;background:rgba(8,20,38,.6);padding:1px 7px;border-radius:999px}
+.thumb-card .tc-body{padding:14px 18px 18px}
+/* photo marquee（ホバーで停止しない・reduced-motionで静止） */
+.pmq{overflow:hidden;position:relative;margin:0 -20px;background:var(--navy-950);padding:18px 0}
+.pmq .mqtrack{gap:14px;animation-duration:60s}
+.pmq figure{position:relative;flex:none;width:230px;height:140px;border-radius:10px;overflow:hidden;margin:0}
+.pmq img{width:100%;height:100%;object-fit:cover;filter:saturate(.82) contrast(1.05) brightness(.92)}
+.pmq figure:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,20,38,.1),rgba(8,20,38,.35))}
+.pmq .cr{position:absolute;left:8px;bottom:6px;z-index:2;color:rgba(255,255,255,.8);font-size:8.5px;background:rgba(8,20,38,.6);padding:1px 7px;border-radius:999px;max-width:90%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.occ-filter{width:100%;max-width:420px;padding:11px 15px;border:1px solid var(--border);border-radius:999px;font-size:14px;font-family:var(--sans);margin:10px 0 4px}
 /* reveal */
 .rv{opacity:0;transform:translateY(14px);filter:blur(5px);transition:opacity .7s ease,transform .7s ease,filter .7s ease}
 .rv.in{opacity:1;transform:none;filter:none}
@@ -225,7 +245,7 @@ footer .legal{border-top:1px solid rgba(210,168,70,.2);margin-top:34px;padding-t
 <link rel="canonical" href="https://jiantailanglin266-rgb.github.io/careerport/ja/industry/education/">
 <link rel="alternate" hreflang="ja" href="https://jiantailanglin266-rgb.github.io/careerport/ja/industry/education/">
 <link rel="alternate" hreflang="x-default" href="https://jiantailanglin266-rgb.github.io/careerport/ja/industry/education/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","name":"教育業界の職種","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/industry/education/","itemListElement":[{"@type":"ListItem","position":1,"name":"教育","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/education/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","name":"教育業界の職種","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/industry/education/","itemListElement":[{"@type":"ListItem","position":1,"name":"教育","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/education/"},{"@type":"ListItem","position":2,"name":"教育営業","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/education-sales/"},{"@type":"ListItem","position":3,"name":"学校事務","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/school-admin/"},{"@type":"ListItem","position":4,"name":"スポーツインストラクター","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/sports-instructor/"},{"@type":"ListItem","position":5,"name":"パーソナルトレーナー","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/personal-trainer/"},{"@type":"ListItem","position":6,"name":"ベビーシッター","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/childcare-sitter/"},{"@type":"ListItem","position":7,"name":"給食調理員","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/nursery-cook/"},{"@type":"ListItem","position":8,"name":"児童指導員","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/jido-shien/"},{"@type":"ListItem","position":9,"name":"保育士","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/hoikushi/"},{"@type":"ListItem","position":10,"name":"幼稚園教諭","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/kindergarten-teacher/"},{"@type":"ListItem","position":11,"name":"保育補助","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/hoiku-hojo/"},{"@type":"ListItem","position":12,"name":"学童保育指導員","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/gakudo/"},{"@type":"ListItem","position":13,"name":"小学校教諭","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/elementary-teacher/"},{"@type":"ListItem","position":14,"name":"中学・高校教諭","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/highschool-teacher/"},{"@type":"ListItem","position":15,"name":"塾講師","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/juku-teacher/"},{"@type":"ListItem","position":16,"name":"塾教室長","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/juku-manager/"},{"@type":"ListItem","position":17,"name":"個別指導講師・家庭教師","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/yobiko-tutor/"},{"@type":"ListItem","position":18,"name":"英会話講師","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/eikaiwa-teacher/"},{"@type":"ListItem","position":19,"name":"教材編集・教育コンテンツ制作","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/kyoiku-kyozai/"},{"@type":"ListItem","position":20,"name":"企業研修講師","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/kenshu-trainer/"},{"@type":"ListItem","position":21,"name":"スクールカウンセラー","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/school-counselor/"},{"@type":"ListItem","position":22,"name":"キャリアコンサルタント","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/career-consultant/"},{"@type":"ListItem","position":23,"name":"図書館司書","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/toshokan/"},{"@type":"ListItem","position":24,"name":"学芸員","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/gakugeiin/"},{"@type":"ListItem","position":25,"name":"スポーツトレーナー（チーム帯同）","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/sports-trainer-pro/"},{"@type":"ListItem","position":26,"name":"医局秘書・研究支援","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/hisho-medical/"},{"@type":"ListItem","position":27,"name":"大学職員","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/academic-staff/"},{"@type":"ListItem","position":28,"name":"観光ガイド・通訳案内士","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/kankou-guide/"},{"@type":"ListItem","position":29,"name":"ピアノ調律師","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/kenban-piano/"},{"@type":"ListItem","position":30,"name":"音楽講師","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/music-teacher/"},{"@type":"ListItem","position":31,"name":"スポーツコーチ・スクール指導員","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/sports-coach/"},{"@type":"ListItem","position":32,"name":"教習指導員","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/driving-instructor/"},{"@type":"ListItem","position":33,"name":"日本語教師","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/nihongo-teacher/"},{"@type":"ListItem","position":34,"name":"書道・習字講師","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/shodo-shihan/"},{"@type":"ListItem","position":35,"name":"ヨガインストラクター","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/yoga-instructor/"},{"@type":"ListItem","position":36,"name":"学校栄養職員","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/school-lunch-eiyoshi/"},{"@type":"ListItem","position":37,"name":"健康運動指導士","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/hoken-shido/"},{"@type":"ListItem","position":38,"name":"職業訓練指導員","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/shokugyo-kunren/"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"CAREERPORT","item":"https://jiantailanglin266-rgb.github.io/careerport/ja/"},{"@type":"ListItem","position":2,"name":"業界から探す","item":"https://jiantailanglin266-rgb.github.io/careerport/ja/industry/"},{"@type":"ListItem","position":3,"name":"教育","item":"https://jiantailanglin266-rgb.github.io/careerport/ja/industry/education/"}]}</script>
 </head>
 <body>
@@ -241,7 +261,7 @@ footer .legal{border-top:1px solid rgba(210,168,70,.2);margin-top:34px;padding-t
   </div>
   <div class="m-nav" id="mnav"></div>
 </header>
-<main><div class="wrap" id="app"><h1>教育業界の転職ガイド — 概要・職種・転職の入口</h1><p>学校・塾・研修サービス等を含む分野。教える力に加え、運営・企画の職種もあります。</p><p>学校・塾・研修サービス等を含む分野。教える力に加え、運営・企画の職種もあります。</p><h2>代表的な職種</h2><ul><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/education/">教育</a> — 学校・塾・研修などで教える仕事、および教室運営や教材企画の仕事です。</li></ul></div></main>
+<main><div class="wrap" id="app"><h1>教育業界の転職ガイド — 概要・職種・転職の入口</h1><p>学校・塾・研修サービス等を含む分野。教える力に加え、運営・企画の職種もあります。</p><figure><img src="https://jiantailanglin266-rgb.github.io/careerport/images/kv/ind-education.jpg" alt="教育業界のイメージ" width="1200" loading="lazy"><figcaption>Photo: Craft x Tech / Wikimedia Commons, CC BY-SA 4.0</figcaption></figure><p>学校・塾・研修サービス等を含む分野。教える力に加え、運営・企画の職種もあります。</p><h2>代表的な職種</h2><ul><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/education/">教育</a> — 学校・塾・研修などで教える仕事、および教室運営や教材企画の仕事です。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/education-sales/">教育営業</a> — 教材・研修サービス・スクールの提案を行う営業です。学校法人向けと企業向けで提案の型が異なります。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/school-admin/">学校事務</a> — 学校で入試・学籍・経理・広報などの運営事務を担う仕事です。教育現場を裏方として支えます。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/sports-instructor/">スポーツインストラクター</a> — ジムやスクールで運動指導を行う仕事です。健康づくりを支える職種です。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/personal-trainer/">パーソナルトレーナー</a> — マンツーマンでトレーニング指導を行う仕事です。成果に伴走する専門職です。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/childcare-sitter/">ベビーシッター</a> — 家庭で子どもの保育・送迎を行う仕事です。1対1で向き合う保育の形です。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/nursery-cook/">給食調理員</a> — 保育園・学校・病院で給食をつくる仕事です。安全でおいしい食事で成長と健康を支えます。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/jido-shien/">児童指導員</a> — 児童福祉施設や放課後等デイサービスで子どもの発達を支援する仕事です。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/hoikushi/">保育士</a> — 乳幼児の保育を行う国家資格職です。子どもの育ちと保護者の生活を支えます。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/kindergarten-teacher/">幼稚園教諭</a> — 幼稚園で教育を行う専門職です。幼稚園教諭免許が必要です。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/hoiku-hojo/">保育補助</a> — 保育士のサポートとして子どものお世話・環境整備を行う仕事です。資格がなくても保育に関われます。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/gakudo/">学童保育指導員</a> — 放課後の小学生の生活・遊びを見守る仕事です。放課後児童支援員の研修制度があります。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/elementary-teacher/">小学校教諭</a> — 小学校で全教科の指導と学級経営を行う専門職です。教員免許が必須です。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/highschool-teacher/">中学・高校教諭</a> — 専門教科の指導と進路支援を行う専門職です。該当教科の教員免許が必須です。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/juku-teacher/">塾講師</a> — 塾で教科指導・受験対策を行う仕事です。成果が生徒の合格として見える仕事です。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/juku-manager/">塾教室長</a> — 教室の運営・生徒募集・講師管理・保護者面談を行う仕事です。教育とマネジメントの両輪です。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/yobiko-tutor/">個別指導講師・家庭教師</a> — 1対1〜少人数で学習指導を行う仕事です。一人ひとりに合わせた指導設計が価値になります。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/eikaiwa-teacher/">英会話講師</a> — 英会話スクールで会話中心のレッスンを行う仕事です。使える英語を届けます。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/kyoiku-kyozai/">教材編集・教育コンテンツ制作</a> — 参考書・デジタル教材の企画・編集を行う仕事です。学びの体験を設計します。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/kenshu-trainer/">企業研修講師</a> — ビジネススキルやマネジメントの研修を企画・登壇する仕事です。大人の学びを支えます。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/school-counselor/">スクールカウンセラー</a> — 学校で児童生徒・保護者の心理相談を行う専門職です。公認心理師・臨床心理士が要件となることが多い仕事です。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/career-consultant/">キャリアコンサルタント</a> — キャリアの相談支援を行う国家資格職です。大学・ハローワーク・企業内で活躍します。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/toshokan/">図書館司書</a> — 図書館で資料の管理・レファレンス対応を行う専門職です。知の入口を守る仕事です。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/gakugeiin/">学芸員</a> — 博物館・美術館で資料の収集・研究・展示を行う専門職です。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/sports-trainer-pro/">スポーツトレーナー（チーム帯同）</a> — チームや選手のコンディショニングを支える専門職です。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/hisho-medical/">医局秘書・研究支援</a> — 大学病院や研究室で事務・研究支援を行う仕事です。研究者が研究に集中できる環境をつくります。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/academic-staff/">大学職員</a> — 大学の教務・入試・研究支援などの運営を担う職種です。教育を支える人気の事務職です。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/kankou-guide/">観光ガイド・通訳案内士</a> — 国内外の旅行者に観光案内を行う職種です。全国通訳案内士は語学系唯一の国家資格です。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/kenban-piano/">ピアノ調律師</a> — ピアノの音を整える技能職です。国家検定「ピアノ調律技能士」があります。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/music-teacher/">音楽講師</a> — 楽器や歌のレッスンを行う職種です。演奏技術を教える力に変えます。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/sports-coach/">スポーツコーチ・スクール指導員</a> — 子ども向けスポーツスクールなどで指導を行う職種です。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/driving-instructor/">教習指導員</a> — 自動車教習所で運転技能・学科を教える職種です。公認資格（審査合格）が必要です。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/nihongo-teacher/">日本語教師</a> — 外国人に日本語を教える職種です。登録日本語教員の国家資格制度が始まっています。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/shodo-shihan/">書道・習字講師</a> — 書道教室で指導を行う職種です。段位・師範資格が信頼の証になります。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/yoga-instructor/">ヨガインストラクター</a> — ヨガのレッスンを行う職種です。心身の健康づくりを支えます。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/school-lunch-eiyoshi/">学校栄養職員</a> — 学校給食の献立・衛生管理を担う専門職です。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/hoken-shido/">健康運動指導士</a> — 生活習慣病予防の運動プログラムを指導する専門職です。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/shokugyo-kunren/">職業訓練指導員</a> — 公共職業訓練で技能を教える仕事です。指導員免許制度があります。</li></ul></div></main>
 <footer class="site"><div class="wrap" id="sitefoot"></div></footer>
 <nav class="bnav" aria-label="モバイルナビゲーション"><div class="in" id="bnav"></div></nav>
 <script>
@@ -253,7 +273,7 @@ footer .legal{border-top:1px solid rgba(210,168,70,.2);margin-top:34px;padding-t
   var p=location.pathname, mm=p.match(/^(.*?)\/(ja|en)(\/|$)/);
   var b=mm?mm[1]:p.replace(/\/index\.html$/,"").replace(/\/$/,"");
   window.CP_BASE=b;
-  try{var x=new XMLHttpRequest();x.open("GET",b+"/data.js?v=2",false);x.send();if(x.status===200||x.status===0){(0,eval)(x.responseText)}}catch(e){}
+  try{var x=new XMLHttpRequest();x.open("GET",b+"/data.js?v=3",false);x.send();if(x.status===200||x.status===0){(0,eval)(x.responseText)}}catch(e){}
   try{var y=new XMLHttpRequest();y.open("GET",b+"/logic.js?v=1",false);y.send();if(y.status===200||y.status===0){(0,eval)(y.responseText)}}catch(e){}
 })();
 if(!window.DATA){document.getElementById("app").innerHTML='<div class="skel">データの読み込みに失敗しました。再読み込みしてください。</div>';}
@@ -371,6 +391,19 @@ function artToc(body){
   return '<div class="toc"><b style="font-size:12.5px">目次</b>'+hs.map(function(h){return '<a href="#h'+h[0]+'">'+esc(h[1])+"</a>"}).join("")+"</div>";
 }
 
+/* ---------- キービジュアル（Commons・目視検証済み・クレジット必須表示） ---------- */
+function imgFor(){for(var i=0;i<arguments.length;i++){var im=(DATA.images||{})[arguments[i]];if(im)return im}return null}
+function kvBanner(keys,alt,small){
+  var im=imgFor.apply(null,keys);if(!im)return"";
+  return '<div class="kv'+(small?" sm":"")+'"><img loading="lazy" src="'+window.CP_BASE+"/"+esc(im.src)+'" alt="'+esc(alt||"")+'"><span class="cr">'+esc(im.credit)+"</span></div>";
+}
+function photoMarquee(){
+  var keys=Object.keys(DATA.images||{});if(!keys.length)return"";
+  var pick=keys.filter(function(k){return k.indexOf("ind:")===0||k.indexOf("cat:")===0}).slice(0,14);
+  var items=pick.map(function(k){var im=DATA.images[k];return '<figure><img loading="lazy" src="'+window.CP_BASE+"/"+esc(im.src)+'" alt=""><span class="cr">'+esc(im.credit)+"</span></figure>"}).join("");
+  return '<div class="pmq" aria-hidden="true"><div class="mqtrack">'+items+items+"</div></div>";
+}
+
 /* ---------- 年収データ描画（出典必須。無ければ「データ準備中」） ---------- */
 function salaryRows(filter){
   return (DATA.salaryData||[]).filter(function(r){
@@ -410,7 +443,8 @@ function occFaq(o){
 
 /* ---------- views ---------- */
 function vHome(){
-  var occs=DATA.occupations.filter(function(o){return!o.cat});
+  var occs=DATA.occupations.filter(function(o){return o.featured});
+  var occTotal=DATA.occupations.filter(function(o){return o.status==="published"}).length;
   var arts=DATA.articles.slice().sort(function(a,b){return b.publishedAt<a.publishedAt?-1:1}).slice(0,6);
   var nayami=[
     ["年収を上げたい","article","nenshu-koushou"],["未経験職種へ転職したい","article","mikeiken-tenshoku"],
@@ -433,7 +467,7 @@ function vHome(){
   '<button class="btn ghost" onclick="go({name:\'services\'})">転職サービスを比較する</button></div>'+
   '<div class="searchbox"><form onsubmit="return homeSearch(this)"><div class="row">'+
   '<div><label>キーワード</label><input name="kw" type="text" placeholder="職種、働き方など"></div>'+
-  '<div><label>職種</label><select name="oc"><option value="">すべて</option>'+DATA.occupations.map(function(o){return '<option value="'+o.slug+'">'+esc(tr(o).name)+"</option>"}).join("")+'</select></div>'+
+  '<div><label>職種</label><select name="oc"><option value="">すべて（主要職種）</option>'+occs.map(function(o){return '<option value="'+o.slug+'">'+esc(tr(o).name)+"</option>"}).join("")+'</select></div>'+
   '<div><label>勤務地</label><select name="pf"><option value="">すべて</option>'+DATA.prefectures.map(function(p){return '<option value="'+p.slug+'">'+esc(nm(p))+"</option>"}).join("")+'</select></div>'+
   '<div><label>雇用形態</label><select name="et"><option value="">すべて</option>'+Object.keys(EMP).map(function(k){return '<option value="'+k+'">'+EMP[k]+"</option>"}).join("")+'</select></div>'+
   '<div style="align-self:end"><button class="btn gold" style="width:100%;padding:11px 20px" type="submit">検索</button></div>'+
@@ -454,7 +488,8 @@ function vHome(){
   '<button class="btn gold" onclick="go({name:\'tool-diagnosis\'})">診断を始める</button> '+
   '<button class="btn ghost" onclick="go({name:\'tool-review\',slug:\'career-history-review\'})">AI書類添削を試す</button></div></section>'+
 
-  '<section class="sec rv"><div class="sec-h"><div class="eyebrow">By Occupation</div><h2>職種から探す</h2></div><div class="grid g4">'+occs.map(occCard).join("")+'</div></section>'+
+  '<section class="sec rv"><div class="sec-h"><div class="eyebrow">By Occupation</div><h2>職種から探す</h2><p class="lead">主要職種のほか、全'+occTotal+'職種の紹介ページを用意しています。</p></div><div class="grid g4">'+occs.map(occCard).join("")+'</div>'+
+  '<p style="margin-top:14px"><a class="btn line sm" href="javascript:void(0)" onclick="go({name:\'occupations\'})">全'+occTotal+'職種の一覧を見る</a></p></section>'+
   '<section class="sec rv"><div class="sec-h"><div class="eyebrow">By Industry</div><h2>業界から探す</h2></div><div class="grid g4">'+DATA.industries.map(function(x){return '<a class="tile" href="javascript:void(0)" onclick="go({name:\'industry\',slug:\''+esc(x.slug)+'\'})"><span class="ic">🏙️</span>'+esc(nm(x))+"</a>"}).join("")+'</div></section>'+
   '<section class="sec rv"><div class="sec-h"><div class="eyebrow">By Area</div><h2>地域から探す</h2></div><div class="grid g4">'+DATA.regions.map(function(rg){return '<a class="tile" href="javascript:void(0)" onclick="go({name:\'areas\'})"><span class="ic">🗾</span>'+esc(nm(rg))+"</a>"}).join("")+'</div>'+
   '<p style="margin-top:10px"><a href="javascript:void(0)" onclick="go({name:\'areas\'})" style="text-decoration:underline;font-size:13.5px">47都道府県の一覧を見る →</a></p></section>'+
@@ -472,14 +507,14 @@ function vHome(){
   [["⚓","比較の入口に特化","特定のサービスに誘導するのではなく、タイプ別の違いと選び方を整理します。広告・PRは明示します。"],
    ["🧭","無料のAIツール","キャリア診断・書類添削・チャット相談を無料で提供。入力内容は端末の外に送信されません。"],
    ["📊","出典主義","統計データは出典と時点を明示できるもののみ掲載。準備中のデータを架空の数値で埋めることはしません。"]].map(function(f){return '<div class="card"><div style="font-size:26px">'+f[0]+'</div><h3>'+f[1]+"</h3><p class=\"desc\">"+f[2]+"</p></div>"}).join("")+'</div></section>'+
-
+  photoMarquee()+
   '<section class="sec rv"><div class="sec-h"><div class="eyebrow">FAQ</div><h2>よくある質問</h2></div>'+faqBlock(DATA.faqs)+'</section>'+
   '<section class="sec rv"><div class="card" style="text-align:center;padding:40px"><h2 style="font-size:23px">さあ、出港の準備を。</h2>'+
   '<p class="desc" style="margin:10px 0 20px">まずは3分のAIキャリア診断で、いまの現在地と進路の候補を整理しましょう。</p>'+
   '<button class="btn gold" onclick="go({name:\'tool-diagnosis\'})">無料でキャリア診断を始める</button></div></section>';
 }
 function mqItems(){
-  return DATA.occupations.slice(0,14).map(function(o){return '<span class="it"><b>'+esc(o.slug.toUpperCase().replace(/-/g," "))+'</b> '+esc(tr(o).name)+"</span>"}).join("");
+  return DATA.occupations.filter(function(o){return o.featured}).slice(0,14).map(function(o){return '<span class="it"><b>'+esc(o.slug.toUpperCase().replace(/-/g," "))+'</b> '+esc(tr(o).name)+"</span>"}).join("");
 }
 function homeSearch(f){
   go({name:"jobs",q:{kw:f.kw.value,oc:f.oc.value,pf:f.pf.value,et:f.et.value}});
@@ -503,7 +538,7 @@ function vJobs(q){
   '<div class="notice">🚧 <b>求人データは提携準備中です。</b>現在表示されているのはレイアウト確認用のデモ求人であり、実在の募集ではありません。正規の求人データ提携（API・CSV）の開始後、実求人に切り替わります。求人情報の無断転載は行いません。</div>'+
   '<form class="card" style="margin:14px 0" onsubmit="return jobsSearch(this)"><div class="grid g4">'+
   '<input name="kw" type="text" placeholder="キーワード" value="'+esc(q.kw||"")+'" style="padding:10px 12px;border:1px solid var(--border);border-radius:9px;font-family:var(--sans)">'+
-  '<select name="oc" style="padding:10px;border:1px solid var(--border);border-radius:9px"><option value="">職種：すべて</option>'+DATA.occupations.map(function(o){return '<option value="'+o.slug+'"'+(q.oc===o.slug?" selected":"")+'>'+esc(tr(o).name)+"</option>"}).join("")+'</select>'+
+  '<select name="oc" style="padding:10px;border:1px solid var(--border);border-radius:9px"><option value="">職種：すべて</option>'+DATA.occupations.filter(function(o){return o.featured}).map(function(o){return '<option value="'+o.slug+'"'+(q.oc===o.slug?" selected":"")+'>'+esc(tr(o).name)+"</option>"}).join("")+'</select>'+
   '<select name="pf" style="padding:10px;border:1px solid var(--border);border-radius:9px"><option value="">勤務地：すべて</option>'+DATA.prefectures.map(function(p){return '<option value="'+p.slug+'"'+(q.pf===p.slug?" selected":"")+'>'+esc(nm(p))+"</option>"}).join("")+'</select>'+
   '<div style="display:flex;gap:8px"><select name="et" style="flex:1;padding:10px;border:1px solid var(--border);border-radius:9px"><option value="">雇用形態</option>'+Object.keys(EMP).map(function(k){return '<option value="'+k+'"'+(q.et===k?" selected":"")+'>'+EMP[k]+"</option>"}).join("")+'</select>'+
   '<button class="btn navy sm" type="submit">検索</button></div></div></form>'+
@@ -588,14 +623,25 @@ function vCareer(slug){
   '<div class="card" style="background:var(--navy-950);color:#fff;text-align:center;padding:28px"><p style="margin-bottom:12px">自分の状況に合う進路を整理したい方へ</p><button class="btn gold" onclick="go({name:\'tool-diagnosis\'})">AIキャリア診断を試す（無料）</button></div>';
 }
 function vOccupations(){
+  var total=DATA.occupations.filter(function(o){return o.status==="published"}).length;
   return crumb([["職種から探す"]])+
-  '<div class="pagehead"><h1>職種から探す</h1><p class="lead">仕事内容・必要なスキル・キャリアパス・未経験転職の目安を職種別に整理しています。</p></div>'+
-  DATA.occCategories.map(function(c){
-    var os=DATA.occupations.filter(function(o){return o.categoryId===c.id&&!o.cat});
+  '<div class="pagehead"><h1>職種から探す<span style="font-family:var(--en);font-size:16px;color:var(--gold-500);margin-left:10px">'+total+' OCCUPATIONS</span></h1><p class="lead">全'+total+'職種の仕事内容・必要なスキル・キャリアパス・未経験転職の目安を職種別に整理しています。</p>'+
+  '<input class="occ-filter" type="text" placeholder="職種名で絞り込み（例：営業、看護、エンジニア）" oninput="occFilter(this)"></div>'+
+  '<div id="occlist">'+DATA.occCategories.map(function(c){
+    var os=DATA.occupations.filter(function(o){return o.categoryId===c.id});
     if(!os.length)return"";
-    return '<section class="sec" style="padding:22px 0"><h2 style="font-size:18px;margin-bottom:12px">'+esc(nm(c))+'</h2><div class="grid g4">'+os.map(occCard).join("")+"</div></section>";
-  }).join("");
+    return '<section class="sec occ-sec" style="padding:22px 0"><h2 style="font-size:18px;margin-bottom:12px">'+esc(nm(c))+' <span class="small">'+os.length+'職種</span></h2><div class="grid g4">'+os.map(occCard).join("")+"</div></section>";
+  }).join("")+'</div>';
 }
+function occFilter(inp){
+  var q=inp.value.trim();
+  document.querySelectorAll("#occlist .tile").forEach(function(t){t.style.display=!q||t.textContent.indexOf(q)>=0?"":"none"});
+  document.querySelectorAll("#occlist .occ-sec").forEach(function(sec){
+    var any=[].slice.call(sec.querySelectorAll(".tile")).some(function(t){return t.style.display!=="none"});
+    sec.style.display=any?"":"none";
+  });
+}
+window.occFilter=occFilter;
 function vOccupation(slug){
   var o=bySlug(DATA.occupations,slug);if(!o)return vNotFound();
   var t=tr(o);pushHistory("occupation",o.id);
@@ -604,6 +650,7 @@ function vOccupation(slug){
   var inds=(o.industryIds||[]).map(function(id){return byId(DATA.industries,id)}).filter(Boolean);
   return crumb([["職種から探す",{name:"occupations"}],[t.name]])+
   '<div class="pagehead"><div class="eyebrow">'+esc(o.slug.toUpperCase().replace(/-/g," "))+'</div><h1>'+esc(t.name)+'の転職ガイド</h1><p class="lead">'+esc(t.summary)+'</p></div>'+
+  kvBanner(["occ:"+o.slug,"cat:"+o.categoryId],t.name+"のイメージ")+
   '<div class="grid g2" style="margin-top:14px">'+
   '<div class="card"><h3>必要なスキル・資格</h3><p style="font-size:14px">'+esc(t.skills)+'</p>'+(quals.length?'<div style="margin-top:8px">'+quals.map(function(q){return '<span class="chip">'+esc(tr(q).name)+"</span>"}).join("")+"</div>":"")+'</div>'+
   '<div class="card"><h3>キャリアパス</h3><p style="font-size:14px">'+esc(t.careerPath)+'</p></div>'+
@@ -620,13 +667,17 @@ function vOccupation(slug){
 function vIndustries(){
   return crumb([["業界から探す"]])+
   '<div class="pagehead"><h1>業界から探す</h1><p class="lead">業界ごとの概要・代表的な職種・転職の入口を整理しています。</p></div>'+
-  '<div class="grid g3" style="margin-top:14px">'+DATA.industries.map(function(x){return '<div class="card"><h3><a href="javascript:void(0)" onclick="go({name:\'industry\',slug:\''+x.slug+'\'})">'+esc(nm(x))+'</a></h3><p class="desc">'+esc(x.summaries.ja.slice(0,60))+'…</p></div>'}).join("")+'</div>';
+  '<div class="grid g3" style="margin-top:14px">'+DATA.industries.map(function(x){
+    var im=imgFor("ind:"+x.slug);
+    return '<div class="card thumb-card">'+(im?'<div class="tc-img"><img loading="lazy" src="'+window.CP_BASE+"/"+esc(im.src)+'" alt="'+esc(nm(x))+'"><span class="tc-cr">'+esc(im.credit)+'</span></div>':"")+
+    '<div class="tc-body"><h3><a href="javascript:void(0)" onclick="go({name:\'industry\',slug:\''+x.slug+'\'})">'+esc(nm(x))+'</a></h3><p class="desc">'+esc(x.summaries.ja.slice(0,60))+'…</p></div></div>'}).join("")+'</div>';
 }
 function vIndustry(slug){
   var x=bySlug(DATA.industries,slug);if(!x)return vNotFound();
   var occs=DATA.occupations.filter(function(o){return(o.industryIds||[]).indexOf(x.id)>=0});
   return crumb([["業界から探す",{name:"industries"}],[nm(x)]])+
   '<div class="pagehead"><h1>'+esc(nm(x))+'業界の転職ガイド</h1><p class="lead">'+esc(x.summaries.ja)+'</p></div>'+
+  kvBanner(["ind:"+x.slug],nm(x)+"業界のイメージ")+
   '<div class="card" style="margin-top:10px"><h3>平均年収・市場データ</h3><p class="small">出典を明示できる統計データの接続後に掲載します。現在は<b>データ準備中</b>です。</p></div>'+
   (occs.length?'<section class="sec" style="padding:24px 0"><div class="sec-h"><h2 style="font-size:20px">この業界の代表的な職種</h2></div><div class="grid g4">'+occs.map(occCard).join("")+'</section>':"")+
   ctaBlock({},null,nm(x)+"業界の転職に使えるサービス");
@@ -772,7 +823,7 @@ function vToolReview(slug){
   '<div class="pagehead"><div class="eyebrow">AI Document Review</div><h1>'+pg.title+'</h1><p class="lead">'+pg.lead+'<br><b>入力内容はお使いの端末の外に送信されません。</b>保存もご自身で選んだ場合のみ、端末内にだけ行われます。</p></div>'+
   '<div style="margin:12px 0">'+Object.keys(REVIEW_PAGES).map(function(k){return '<a class="chip" style="'+(k===slug?"background:var(--navy-950);color:var(--gold-400)":"")+'" href="javascript:void(0)" onclick="go({name:\'tool-review\',slug:\''+k+'\'})">'+REVIEW_PAGES[k].title.replace("AI","")+"</a>"}).join("")+'</div>'+
   '<form class="form" onsubmit="return reviewSubmit(this,\''+slug+'\')">'+
-  '<div class="q"><label>応募する職種（任意）</label><select name="oc"><option value="">選択しない</option>'+DATA.occupations.map(function(o){return '<option value="'+o.id+'">'+esc(tr(o).name)+"</option>"}).join("")+'</select></div>'+
+  '<div class="q"><label>応募する職種（任意）</label><select name="oc"><option value="">選択しない</option>'+DATA.occupations.filter(function(o){return o.featured}).map(function(o){return '<option value="'+o.id+'">'+esc(tr(o).name)+"</option>"}).join("")+'</select></div>'+
   '<div class="q"><label>本文</label><textarea name="text" placeholder="ここに文章を貼り付けてください"></textarea></div>'+
   '<button class="btn gold" type="submit">添削する</button>'+
   '<p class="small" style="margin-top:10px">※ルールベースのセルフチェックです。経験の書き換えや実績の追加提案は行いません（事実と異なる記載は推奨しません）。</p></form>'+

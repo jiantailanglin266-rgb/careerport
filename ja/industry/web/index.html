@@ -166,6 +166,26 @@ nav.g a.on{color:var(--gold-400)}
 .mq .it b{color:var(--gold-400);font-family:var(--en);font-weight:600;letter-spacing:.05em}
 @keyframes mqL{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media (prefers-reduced-motion:reduce){.mqtrack{animation:none}}
+/* key visual（Commons画像・カラーグレード統一＋クレジット常時表示） */
+.kv{position:relative;border-radius:var(--r);overflow:hidden;margin:18px 0 6px;box-shadow:var(--shadow)}
+.kv img{display:block;width:100%;height:300px;object-fit:cover;filter:saturate(.88) contrast(1.04) brightness(.97)}
+.kv:after{content:"";position:absolute;inset:0;background:linear-gradient(165deg,rgba(8,20,38,.38) 0%,rgba(8,20,38,.05) 45%,rgba(8,20,38,.42) 100%);pointer-events:none}
+.kv .cr{position:absolute;right:10px;bottom:8px;z-index:2;background:rgba(8,20,38,.72);color:#c4cfe2;font-size:10px;padding:3px 9px;border-radius:999px;letter-spacing:.02em}
+.kv.sm img{height:200px}
+.thumb-card{overflow:hidden;padding:0}
+.thumb-card .tc-img{position:relative;height:120px;overflow:hidden}
+.thumb-card .tc-img img{width:100%;height:100%;object-fit:cover;filter:saturate(.88) contrast(1.04)}
+.thumb-card .tc-img:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,20,38,0) 40%,rgba(8,20,38,.45))}
+.thumb-card .tc-cr{position:absolute;right:6px;bottom:4px;z-index:2;color:rgba(255,255,255,.85);font-size:8.5px;background:rgba(8,20,38,.6);padding:1px 7px;border-radius:999px}
+.thumb-card .tc-body{padding:14px 18px 18px}
+/* photo marquee（ホバーで停止しない・reduced-motionで静止） */
+.pmq{overflow:hidden;position:relative;margin:0 -20px;background:var(--navy-950);padding:18px 0}
+.pmq .mqtrack{gap:14px;animation-duration:60s}
+.pmq figure{position:relative;flex:none;width:230px;height:140px;border-radius:10px;overflow:hidden;margin:0}
+.pmq img{width:100%;height:100%;object-fit:cover;filter:saturate(.82) contrast(1.05) brightness(.92)}
+.pmq figure:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,20,38,.1),rgba(8,20,38,.35))}
+.pmq .cr{position:absolute;left:8px;bottom:6px;z-index:2;color:rgba(255,255,255,.8);font-size:8.5px;background:rgba(8,20,38,.6);padding:1px 7px;border-radius:999px;max-width:90%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.occ-filter{width:100%;max-width:420px;padding:11px 15px;border:1px solid var(--border);border-radius:999px;font-size:14px;font-family:var(--sans);margin:10px 0 4px}
 /* reveal */
 .rv{opacity:0;transform:translateY(14px);filter:blur(5px);transition:opacity .7s ease,transform .7s ease,filter .7s ease}
 .rv.in{opacity:1;transform:none;filter:none}
@@ -225,7 +245,7 @@ footer .legal{border-top:1px solid rgba(210,168,70,.2);margin-top:34px;padding-t
 <link rel="canonical" href="https://jiantailanglin266-rgb.github.io/careerport/ja/industry/web/">
 <link rel="alternate" hreflang="ja" href="https://jiantailanglin266-rgb.github.io/careerport/ja/industry/web/">
 <link rel="alternate" hreflang="x-default" href="https://jiantailanglin266-rgb.github.io/careerport/ja/industry/web/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","name":"Web・インターネット業界の職種","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/industry/web/","itemListElement":[{"@type":"ListItem","position":1,"name":"マーケティング","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/marketing/"},{"@type":"ListItem","position":2,"name":"Webマーケティング","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/web-marketing/"},{"@type":"ListItem","position":3,"name":"エンジニア","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/engineer/"},{"@type":"ListItem","position":4,"name":"Webデザイナー","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/web-designer/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","name":"Web・インターネット業界の職種","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/industry/web/","itemListElement":[{"@type":"ListItem","position":1,"name":"マーケティング","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/marketing/"},{"@type":"ListItem","position":2,"name":"Webマーケティング","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/web-marketing/"},{"@type":"ListItem","position":3,"name":"エンジニア","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/engineer/"},{"@type":"ListItem","position":4,"name":"Webデザイナー","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/web-designer/"},{"@type":"ListItem","position":5,"name":"インサイドセールス","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/inside-sales/"},{"@type":"ListItem","position":6,"name":"フィールドセールス","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/field-sales/"},{"@type":"ListItem","position":7,"name":"カスタマーサクセス","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/customer-success/"},{"@type":"ListItem","position":8,"name":"SaaS営業","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/saas-sales/"},{"@type":"ListItem","position":9,"name":"メディア営業","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/media-sales/"},{"@type":"ListItem","position":10,"name":"Web広告営業","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/web-ad-sales/"},{"@type":"ListItem","position":11,"name":"カスタマーサポート","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/customer-support/"},{"@type":"ListItem","position":12,"name":"ECサイト運営","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/ec-admin/"},{"@type":"ListItem","position":13,"name":"企画アシスタント","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/kikaku-assistant/"},{"@type":"ListItem","position":14,"name":"セールスサポート","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/sales-support/"},{"@type":"ListItem","position":15,"name":"フロントエンドエンジニア","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/frontend-engineer/"},{"@type":"ListItem","position":16,"name":"バックエンドエンジニア","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/backend-engineer/"},{"@type":"ListItem","position":17,"name":"SRE","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/sre/"},{"@type":"ListItem","position":18,"name":"データエンジニア","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/data-engineer/"},{"@type":"ListItem","position":19,"name":"データアナリスト","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/data-analyst/"},{"@type":"ListItem","position":20,"name":"モバイルアプリエンジニア","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/mobile-engineer/"},{"@type":"ListItem","position":21,"name":"ゲームプログラマー","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/game-programmer/"},{"@type":"ListItem","position":22,"name":"QAエンジニア","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/qa-engineer/"},{"@type":"ListItem","position":23,"name":"プロダクトマネージャー","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/product-manager/"},{"@type":"ListItem","position":24,"name":"スクラムマスター","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/scrum-master/"},{"@type":"ListItem","position":25,"name":"Webディレクター","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/web-director/"},{"@type":"ListItem","position":26,"name":"UIデザイナー","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/ui-designer/"},{"@type":"ListItem","position":27,"name":"UXデザイナー","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/ux-designer/"},{"@type":"ListItem","position":28,"name":"アートディレクター","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/art-director/"},{"@type":"ListItem","position":29,"name":"イラストレーター","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/illustrator-artist/"},{"@type":"ListItem","position":30,"name":"動画編集者","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/video-editor/"},{"@type":"ListItem","position":31,"name":"編集者","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/editor/"},{"@type":"ListItem","position":32,"name":"ライター","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/writer/"},{"@type":"ListItem","position":33,"name":"コンテンツマーケター","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/content-marketer/"},{"@type":"ListItem","position":34,"name":"SNS運用担当","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/sns-manager/"},{"@type":"ListItem","position":35,"name":"ゲームプランナー","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/game-planner/"},{"@type":"ListItem","position":36,"name":"ゲームデザイナー（2D/3D）","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/game-designer/"},{"@type":"ListItem","position":37,"name":"CGデザイナー","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/cg-designer/"},{"@type":"ListItem","position":38,"name":"アニメーター","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/animator/"},{"@type":"ListItem","position":39,"name":"サウンドクリエイター","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/sound-creator/"},{"@type":"ListItem","position":40,"name":"校正・校閲","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/proofreader/"},{"@type":"ListItem","position":41,"name":"教材編集・教育コンテンツ制作","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/kyoiku-kyozai/"},{"@type":"ListItem","position":42,"name":"CRM/SFAコンサルタント","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/crm-consultant/"},{"@type":"ListItem","position":43,"name":"Webアナリスト","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/web-analyst/"},{"@type":"ListItem","position":44,"name":"SEOコンサルタント","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/seo-consultant/"},{"@type":"ListItem","position":45,"name":"広告運用（リスティング/SNS）","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/listing-ad-ops/"},{"@type":"ListItem","position":46,"name":"ECマネージャー","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/ec-manager/"},{"@type":"ListItem","position":47,"name":"コミュニティマネージャー","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/community-manager/"},{"@type":"ListItem","position":48,"name":"ノーコード開発者","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/no-code-developer/"},{"@type":"ListItem","position":49,"name":"生成AI活用担当","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/prompt-engineer/"},{"@type":"ListItem","position":50,"name":"ローカライズ・翻訳コーディネーター","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/localization/"},{"@type":"ListItem","position":51,"name":"シナリオライター","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/scenario-writer/"},{"@type":"ListItem","position":52,"name":"インフルエンサーマネージャー","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/influencer-manager/"},{"@type":"ListItem","position":53,"name":"採用マーケター","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/hr-tech/"},{"@type":"ListItem","position":54,"name":"チャットサポート","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/chat-support/"},{"@type":"ListItem","position":55,"name":"レベニューマネージャー","url":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/hotel-revenue/"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"CAREERPORT","item":"https://jiantailanglin266-rgb.github.io/careerport/ja/"},{"@type":"ListItem","position":2,"name":"業界から探す","item":"https://jiantailanglin266-rgb.github.io/careerport/ja/industry/"},{"@type":"ListItem","position":3,"name":"Web・インターネット","item":"https://jiantailanglin266-rgb.github.io/careerport/ja/industry/web/"}]}</script>
 </head>
 <body>
@@ -241,7 +261,7 @@ footer .legal{border-top:1px solid rgba(210,168,70,.2);margin-top:34px;padding-t
   </div>
   <div class="m-nav" id="mnav"></div>
 </header>
-<main><div class="wrap" id="app"><h1>Web・インターネット業界の転職ガイド — 概要・職種・転職の入口</h1><p>Webサービス・メディア・EC等を含む業界。企画・マーケティング・デザイン・開発など職種の幅が広いのが特徴です。</p><p>Webサービス・メディア・EC等を含む業界。企画・マーケティング・デザイン・開発など職種の幅が広いのが特徴です。</p><h2>代表的な職種</h2><ul><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/marketing/">マーケティング</a> — 市場調査・企画・プロモーションを通じて商品やサービスが売れる仕組みをつくる仕事です。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/web-marketing/">Webマーケティング</a> — 広告運用・SEO・SNS・アクセス解析など、Web上の集客と改善を担う仕事です。学習した内容が実務に直結しやすい分野です</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/engineer/">エンジニア</a> — システムやアプリケーションの設計・開発・運用を行う仕事です。需要が高い状態が続いているとされる職種です。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/web-designer/">Webデザイナー</a> — Webサイトやアプリの見た目と使いやすさを設計する仕事です。制作実績（ポートフォリオ）が評価の中心になります。</li></ul></div></main>
+<main><div class="wrap" id="app"><h1>Web・インターネット業界の転職ガイド — 概要・職種・転職の入口</h1><p>Webサービス・メディア・EC等を含む業界。企画・マーケティング・デザイン・開発など職種の幅が広いのが特徴です。</p><figure><img src="https://jiantailanglin266-rgb.github.io/careerport/images/kv/ind-web.jpg" alt="Web・インターネット業界のイメージ" width="1200" loading="lazy"><figcaption>Photo: Muhammad Raufan Yusup muhraufan / Wikimedia Commons, CC0</figcaption></figure><p>Webサービス・メディア・EC等を含む業界。企画・マーケティング・デザイン・開発など職種の幅が広いのが特徴です。</p><h2>代表的な職種</h2><ul><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/marketing/">マーケティング</a> — 市場調査・企画・プロモーションを通じて商品やサービスが売れる仕組みをつくる仕事です。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/web-marketing/">Webマーケティング</a> — 広告運用・SEO・SNS・アクセス解析など、Web上の集客と改善を担う仕事です。学習した内容が実務に直結しやすい分野です</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/engineer/">エンジニア</a> — システムやアプリケーションの設計・開発・運用を行う仕事です。需要が高い状態が続いているとされる職種です。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/web-designer/">Webデザイナー</a> — Webサイトやアプリの見た目と使いやすさを設計する仕事です。制作実績（ポートフォリオ）が評価の中心になります。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/inside-sales/">インサイドセールス</a> — 電話・メール・オンライン商談で見込み顧客を育成し、商談機会をつくる内勤型営業です。SaaS企業を中心に採用が拡大している</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/field-sales/">フィールドセールス</a> — 商談から契約までを担う外勤型営業です。インサイドセールスが創出した商談をクロージングする分業体制の企業が増えています。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/customer-success/">カスタマーサクセス</a> — 契約後のお客様の活用支援・解約防止・追加提案を担う職種です。サブスクリプション型ビジネスの拡大とともに需要が伸びていると</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/saas-sales/">SaaS営業</a> — クラウドサービス（SaaS）の導入提案を行う営業です。The Model型の分業体制など、科学的な営業プロセスを経験でき</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/media-sales/">メディア営業</a> — 自社メディアの広告商品やタイアップ企画を販売する営業です。編集部と連携した企画営業の色が濃い職種です。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/web-ad-sales/">Web広告営業</a> — リスティング・SNS広告などの運用型広告を提案する営業です。データに基づく改善提案で信頼を積み上げます。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/customer-support/">カスタマーサポート</a> — メール・チャット・電話でサービスの使い方や困りごとを解決する仕事です。顧客の声を製品改善につなぐ役割も担います。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/ec-admin/">ECサイト運営</a> — ネットショップの商品登録・受注処理・ページ更新・レビュー対応を行う仕事です。売れる売場づくりに関われます。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/kikaku-assistant/">企画アシスタント</a> — 企画職の資料作成・データ集計・進行管理を支える仕事です。企画職へのステップとして選ばれることが多い職種です。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/sales-support/">セールスサポート</a> — 営業資料の作成・データ分析・案件管理など、営業組織の生産性を高める支援職です。Sales Ops と呼ばれることもありま</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/frontend-engineer/">フロントエンドエンジニア</a> — Webサイトやアプリの「見える部分」を実装するエンジニアです。デザインと機能をつなぎ、使い心地を技術で形にします。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/backend-engineer/">バックエンドエンジニア</a> — サーバー側の処理・データベース・APIを設計・実装するエンジニアです。サービスの土台を支える中核職です。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/sre/">SRE</a> — サービスの信頼性を工学的に高める職種です。自動化・監視・障害対応の仕組みづくりを担います。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/data-engineer/">データエンジニア</a> — データ基盤の構築・整備を行うエンジニアです。分析に使える形にデータを流す配管をつくります。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/data-analyst/">データアナリスト</a> — データの集計・可視化・レポーティングで事業の状況を明らかにする職種です。データサイエンティストへの入口にもなります。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/mobile-engineer/">モバイルアプリエンジニア</a> — iOS・Androidアプリを開発するエンジニアです。ストア公開まで自分の手で届けられるのが魅力です。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/game-programmer/">ゲームプログラマー</a> — ゲームの挙動・演出・システムを実装する職種です。ユーザーの「楽しい」を直接つくる仕事です。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/qa-engineer/">QAエンジニア</a> — ソフトウェアの品質を保証するテスト設計・実行・自動化を行う職種です。ユーザーに届く品質の最後の砦です。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/product-manager/">プロダクトマネージャー</a> — プロダクトの企画・優先順位づけ・改善を主導する職種です。「何をつくるか」を決める役割です。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/scrum-master/">スクラムマスター</a> — アジャイル開発チームの進行を支援し、障害を取り除く役割です。チームの生産性を高める伴走者です。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/web-director/">Webディレクター</a> — Webサイト制作の企画・進行・品質管理を行う職種です。クライアント・デザイナー・エンジニアの真ん中に立ちます。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/ui-designer/">UIデザイナー</a> — アプリやWebの画面設計・ビジュアルデザインを行う職種です。使いやすさを形にする仕事です。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/ux-designer/">UXデザイナー</a> — ユーザー調査・体験設計・プロトタイピングでサービスの体験全体を設計する職種です。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/art-director/">アートディレクター</a> — 広告や媒体のビジュアル表現全体を統括する職種です。デザインの品質と一貫性に責任を持ちます。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/illustrator-artist/">イラストレーター</a> — 書籍・広告・ゲームなどのイラストを描く職種です。作風がそのまま名刺になる仕事です。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/video-editor/">動画編集者</a> — 動画のカット・テロップ・音入れなどを行う職種です。動画市場の拡大で需要が伸びているとされます。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/editor/">編集者</a> — 書籍・雑誌・Webメディアの企画・取材・編集を行う職種です。情報を「読まれる形」に仕立てます。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/writer/">ライター</a> — 記事・コラム・取材原稿を書く職種です。Webメディアの拡大で活躍の場が広がっています。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/content-marketer/">コンテンツマーケター</a> — 記事・動画・SNSなどのコンテンツで集客する仕組みを設計する職種です。作ることと届けることの両方を考えます。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/sns-manager/">SNS運用担当</a> — 企業のSNSアカウントの企画・投稿・分析を行う職種です。ブランドの人格をつくる仕事です。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/game-planner/">ゲームプランナー</a> — ゲームの企画・仕様書作成・レベルデザインを行う職種です。「面白さ」を設計に落とす仕事です。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/game-designer/">ゲームデザイナー（2D/3D）</a> — キャラクター・背景・UIなどゲームのグラフィックを制作する職種です。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/cg-designer/">CGデザイナー</a> — 映像・ゲームの3DCGモデリングやアニメーションを制作する職種です。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/animator/">アニメーター</a> — アニメーションの原画・動画を描く職種です。動きで感情を伝える専門職です。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/sound-creator/">サウンドクリエイター</a> — ゲーム・映像のBGM・効果音を制作する職種です。音で世界観を支えます。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/proofreader/">校正・校閲</a> — 文章の誤字脱字・事実関係・表記統一をチェックする職種です。情報の信頼性を最後に守る仕事です。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/kyoiku-kyozai/">教材編集・教育コンテンツ制作</a> — 参考書・デジタル教材の企画・編集を行う仕事です。学びの体験を設計します。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/crm-consultant/">CRM/SFAコンサルタント</a> — Salesforce等の営業支援システムの導入・活用支援を行う職種です。認定資格が転身の武器になります。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/web-analyst/">Webアナリスト</a> — アクセス解析でサイトの課題を発見し改善提案を行う職種です。データで語る参謀です。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/seo-consultant/">SEOコンサルタント</a> — 検索エンジンからの集客を設計・改善する専門職です。コンテンツと技術の両面から支援します。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/listing-ad-ops/">広告運用（リスティング/SNS）</a> — 運用型広告の入札・クリエイティブ・改善を回す職種です。学習が成果に直結する分野です。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/ec-manager/">ECマネージャー</a> — ネットショップの売上・在庫・販促全体を統括する職種です。小売とデジタルの交差点です。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/community-manager/">コミュニティマネージャー</a> — ユーザーコミュニティの企画・運営・活性化を行う職種です。ファンとの関係を育てます。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/no-code-developer/">ノーコード開発者</a> — ノーコード/ローコードツールで業務アプリを構築する職種です。開発の民主化を担います。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/prompt-engineer/">生成AI活用担当</a> — 生成AIの業務活用を設計・推進する職種です。プロンプト設計や社内ガイドライン整備を担います。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/localization/">ローカライズ・翻訳コーディネーター</a> — ゲームやアプリの多言語展開を管理する職種です。言葉と文化の橋渡しです。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/scenario-writer/">シナリオライター</a> — ゲーム・ドラマ・広告のシナリオを書く職種です。物語で人を動かします。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/influencer-manager/">インフルエンサーマネージャー</a> — クリエイターのマネジメント・案件調整を行う職種です。タレントの価値を最大化します。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/hr-tech/">採用マーケター</a> — 採用広報・スカウト運用・採用サイト改善を行う職種です。採用にマーケティングの技術を持ち込みます。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/chat-support/">チャットサポート</a> — チャット・メールでの顧客対応を行う仕事です。文章力で解決に導きます。</li><li><a href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/hotel-revenue/">レベニューマネージャー</a> — ホテルの客室価格を需要予測で最適化する仕事です。データで満室と収益を両立させます。</li></ul></div></main>
 <footer class="site"><div class="wrap" id="sitefoot"></div></footer>
 <nav class="bnav" aria-label="モバイルナビゲーション"><div class="in" id="bnav"></div></nav>
 <script>
@@ -253,7 +273,7 @@ footer .legal{border-top:1px solid rgba(210,168,70,.2);margin-top:34px;padding-t
   var p=location.pathname, mm=p.match(/^(.*?)\/(ja|en)(\/|$)/);
   var b=mm?mm[1]:p.replace(/\/index\.html$/,"").replace(/\/$/,"");
   window.CP_BASE=b;
-  try{var x=new XMLHttpRequest();x.open("GET",b+"/data.js?v=2",false);x.send();if(x.status===200||x.status===0){(0,eval)(x.responseText)}}catch(e){}
+  try{var x=new XMLHttpRequest();x.open("GET",b+"/data.js?v=3",false);x.send();if(x.status===200||x.status===0){(0,eval)(x.responseText)}}catch(e){}
   try{var y=new XMLHttpRequest();y.open("GET",b+"/logic.js?v=1",false);y.send();if(y.status===200||y.status===0){(0,eval)(y.responseText)}}catch(e){}
 })();
 if(!window.DATA){document.getElementById("app").innerHTML='<div class="skel">データの読み込みに失敗しました。再読み込みしてください。</div>';}
@@ -371,6 +391,19 @@ function artToc(body){
   return '<div class="toc"><b style="font-size:12.5px">目次</b>'+hs.map(function(h){return '<a href="#h'+h[0]+'">'+esc(h[1])+"</a>"}).join("")+"</div>";
 }
 
+/* ---------- キービジュアル（Commons・目視検証済み・クレジット必須表示） ---------- */
+function imgFor(){for(var i=0;i<arguments.length;i++){var im=(DATA.images||{})[arguments[i]];if(im)return im}return null}
+function kvBanner(keys,alt,small){
+  var im=imgFor.apply(null,keys);if(!im)return"";
+  return '<div class="kv'+(small?" sm":"")+'"><img loading="lazy" src="'+window.CP_BASE+"/"+esc(im.src)+'" alt="'+esc(alt||"")+'"><span class="cr">'+esc(im.credit)+"</span></div>";
+}
+function photoMarquee(){
+  var keys=Object.keys(DATA.images||{});if(!keys.length)return"";
+  var pick=keys.filter(function(k){return k.indexOf("ind:")===0||k.indexOf("cat:")===0}).slice(0,14);
+  var items=pick.map(function(k){var im=DATA.images[k];return '<figure><img loading="lazy" src="'+window.CP_BASE+"/"+esc(im.src)+'" alt=""><span class="cr">'+esc(im.credit)+"</span></figure>"}).join("");
+  return '<div class="pmq" aria-hidden="true"><div class="mqtrack">'+items+items+"</div></div>";
+}
+
 /* ---------- 年収データ描画（出典必須。無ければ「データ準備中」） ---------- */
 function salaryRows(filter){
   return (DATA.salaryData||[]).filter(function(r){
@@ -410,7 +443,8 @@ function occFaq(o){
 
 /* ---------- views ---------- */
 function vHome(){
-  var occs=DATA.occupations.filter(function(o){return!o.cat});
+  var occs=DATA.occupations.filter(function(o){return o.featured});
+  var occTotal=DATA.occupations.filter(function(o){return o.status==="published"}).length;
   var arts=DATA.articles.slice().sort(function(a,b){return b.publishedAt<a.publishedAt?-1:1}).slice(0,6);
   var nayami=[
     ["年収を上げたい","article","nenshu-koushou"],["未経験職種へ転職したい","article","mikeiken-tenshoku"],
@@ -433,7 +467,7 @@ function vHome(){
   '<button class="btn ghost" onclick="go({name:\'services\'})">転職サービスを比較する</button></div>'+
   '<div class="searchbox"><form onsubmit="return homeSearch(this)"><div class="row">'+
   '<div><label>キーワード</label><input name="kw" type="text" placeholder="職種、働き方など"></div>'+
-  '<div><label>職種</label><select name="oc"><option value="">すべて</option>'+DATA.occupations.map(function(o){return '<option value="'+o.slug+'">'+esc(tr(o).name)+"</option>"}).join("")+'</select></div>'+
+  '<div><label>職種</label><select name="oc"><option value="">すべて（主要職種）</option>'+occs.map(function(o){return '<option value="'+o.slug+'">'+esc(tr(o).name)+"</option>"}).join("")+'</select></div>'+
   '<div><label>勤務地</label><select name="pf"><option value="">すべて</option>'+DATA.prefectures.map(function(p){return '<option value="'+p.slug+'">'+esc(nm(p))+"</option>"}).join("")+'</select></div>'+
   '<div><label>雇用形態</label><select name="et"><option value="">すべて</option>'+Object.keys(EMP).map(function(k){return '<option value="'+k+'">'+EMP[k]+"</option>"}).join("")+'</select></div>'+
   '<div style="align-self:end"><button class="btn gold" style="width:100%;padding:11px 20px" type="submit">検索</button></div>'+
@@ -454,7 +488,8 @@ function vHome(){
   '<button class="btn gold" onclick="go({name:\'tool-diagnosis\'})">診断を始める</button> '+
   '<button class="btn ghost" onclick="go({name:\'tool-review\',slug:\'career-history-review\'})">AI書類添削を試す</button></div></section>'+
 
-  '<section class="sec rv"><div class="sec-h"><div class="eyebrow">By Occupation</div><h2>職種から探す</h2></div><div class="grid g4">'+occs.map(occCard).join("")+'</div></section>'+
+  '<section class="sec rv"><div class="sec-h"><div class="eyebrow">By Occupation</div><h2>職種から探す</h2><p class="lead">主要職種のほか、全'+occTotal+'職種の紹介ページを用意しています。</p></div><div class="grid g4">'+occs.map(occCard).join("")+'</div>'+
+  '<p style="margin-top:14px"><a class="btn line sm" href="javascript:void(0)" onclick="go({name:\'occupations\'})">全'+occTotal+'職種の一覧を見る</a></p></section>'+
   '<section class="sec rv"><div class="sec-h"><div class="eyebrow">By Industry</div><h2>業界から探す</h2></div><div class="grid g4">'+DATA.industries.map(function(x){return '<a class="tile" href="javascript:void(0)" onclick="go({name:\'industry\',slug:\''+esc(x.slug)+'\'})"><span class="ic">🏙️</span>'+esc(nm(x))+"</a>"}).join("")+'</div></section>'+
   '<section class="sec rv"><div class="sec-h"><div class="eyebrow">By Area</div><h2>地域から探す</h2></div><div class="grid g4">'+DATA.regions.map(function(rg){return '<a class="tile" href="javascript:void(0)" onclick="go({name:\'areas\'})"><span class="ic">🗾</span>'+esc(nm(rg))+"</a>"}).join("")+'</div>'+
   '<p style="margin-top:10px"><a href="javascript:void(0)" onclick="go({name:\'areas\'})" style="text-decoration:underline;font-size:13.5px">47都道府県の一覧を見る →</a></p></section>'+
@@ -472,14 +507,14 @@ function vHome(){
   [["⚓","比較の入口に特化","特定のサービスに誘導するのではなく、タイプ別の違いと選び方を整理します。広告・PRは明示します。"],
    ["🧭","無料のAIツール","キャリア診断・書類添削・チャット相談を無料で提供。入力内容は端末の外に送信されません。"],
    ["📊","出典主義","統計データは出典と時点を明示できるもののみ掲載。準備中のデータを架空の数値で埋めることはしません。"]].map(function(f){return '<div class="card"><div style="font-size:26px">'+f[0]+'</div><h3>'+f[1]+"</h3><p class=\"desc\">"+f[2]+"</p></div>"}).join("")+'</div></section>'+
-
+  photoMarquee()+
   '<section class="sec rv"><div class="sec-h"><div class="eyebrow">FAQ</div><h2>よくある質問</h2></div>'+faqBlock(DATA.faqs)+'</section>'+
   '<section class="sec rv"><div class="card" style="text-align:center;padding:40px"><h2 style="font-size:23px">さあ、出港の準備を。</h2>'+
   '<p class="desc" style="margin:10px 0 20px">まずは3分のAIキャリア診断で、いまの現在地と進路の候補を整理しましょう。</p>'+
   '<button class="btn gold" onclick="go({name:\'tool-diagnosis\'})">無料でキャリア診断を始める</button></div></section>';
 }
 function mqItems(){
-  return DATA.occupations.slice(0,14).map(function(o){return '<span class="it"><b>'+esc(o.slug.toUpperCase().replace(/-/g," "))+'</b> '+esc(tr(o).name)+"</span>"}).join("");
+  return DATA.occupations.filter(function(o){return o.featured}).slice(0,14).map(function(o){return '<span class="it"><b>'+esc(o.slug.toUpperCase().replace(/-/g," "))+'</b> '+esc(tr(o).name)+"</span>"}).join("");
 }
 function homeSearch(f){
   go({name:"jobs",q:{kw:f.kw.value,oc:f.oc.value,pf:f.pf.value,et:f.et.value}});
@@ -503,7 +538,7 @@ function vJobs(q){
   '<div class="notice">🚧 <b>求人データは提携準備中です。</b>現在表示されているのはレイアウト確認用のデモ求人であり、実在の募集ではありません。正規の求人データ提携（API・CSV）の開始後、実求人に切り替わります。求人情報の無断転載は行いません。</div>'+
   '<form class="card" style="margin:14px 0" onsubmit="return jobsSearch(this)"><div class="grid g4">'+
   '<input name="kw" type="text" placeholder="キーワード" value="'+esc(q.kw||"")+'" style="padding:10px 12px;border:1px solid var(--border);border-radius:9px;font-family:var(--sans)">'+
-  '<select name="oc" style="padding:10px;border:1px solid var(--border);border-radius:9px"><option value="">職種：すべて</option>'+DATA.occupations.map(function(o){return '<option value="'+o.slug+'"'+(q.oc===o.slug?" selected":"")+'>'+esc(tr(o).name)+"</option>"}).join("")+'</select>'+
+  '<select name="oc" style="padding:10px;border:1px solid var(--border);border-radius:9px"><option value="">職種：すべて</option>'+DATA.occupations.filter(function(o){return o.featured}).map(function(o){return '<option value="'+o.slug+'"'+(q.oc===o.slug?" selected":"")+'>'+esc(tr(o).name)+"</option>"}).join("")+'</select>'+
   '<select name="pf" style="padding:10px;border:1px solid var(--border);border-radius:9px"><option value="">勤務地：すべて</option>'+DATA.prefectures.map(function(p){return '<option value="'+p.slug+'"'+(q.pf===p.slug?" selected":"")+'>'+esc(nm(p))+"</option>"}).join("")+'</select>'+
   '<div style="display:flex;gap:8px"><select name="et" style="flex:1;padding:10px;border:1px solid var(--border);border-radius:9px"><option value="">雇用形態</option>'+Object.keys(EMP).map(function(k){return '<option value="'+k+'"'+(q.et===k?" selected":"")+'>'+EMP[k]+"</option>"}).join("")+'</select>'+
   '<button class="btn navy sm" type="submit">検索</button></div></div></form>'+
@@ -588,14 +623,25 @@ function vCareer(slug){
   '<div class="card" style="background:var(--navy-950);color:#fff;text-align:center;padding:28px"><p style="margin-bottom:12px">自分の状況に合う進路を整理したい方へ</p><button class="btn gold" onclick="go({name:\'tool-diagnosis\'})">AIキャリア診断を試す（無料）</button></div>';
 }
 function vOccupations(){
+  var total=DATA.occupations.filter(function(o){return o.status==="published"}).length;
   return crumb([["職種から探す"]])+
-  '<div class="pagehead"><h1>職種から探す</h1><p class="lead">仕事内容・必要なスキル・キャリアパス・未経験転職の目安を職種別に整理しています。</p></div>'+
-  DATA.occCategories.map(function(c){
-    var os=DATA.occupations.filter(function(o){return o.categoryId===c.id&&!o.cat});
+  '<div class="pagehead"><h1>職種から探す<span style="font-family:var(--en);font-size:16px;color:var(--gold-500);margin-left:10px">'+total+' OCCUPATIONS</span></h1><p class="lead">全'+total+'職種の仕事内容・必要なスキル・キャリアパス・未経験転職の目安を職種別に整理しています。</p>'+
+  '<input class="occ-filter" type="text" placeholder="職種名で絞り込み（例：営業、看護、エンジニア）" oninput="occFilter(this)"></div>'+
+  '<div id="occlist">'+DATA.occCategories.map(function(c){
+    var os=DATA.occupations.filter(function(o){return o.categoryId===c.id});
     if(!os.length)return"";
-    return '<section class="sec" style="padding:22px 0"><h2 style="font-size:18px;margin-bottom:12px">'+esc(nm(c))+'</h2><div class="grid g4">'+os.map(occCard).join("")+"</div></section>";
-  }).join("");
+    return '<section class="sec occ-sec" style="padding:22px 0"><h2 style="font-size:18px;margin-bottom:12px">'+esc(nm(c))+' <span class="small">'+os.length+'職種</span></h2><div class="grid g4">'+os.map(occCard).join("")+"</div></section>";
+  }).join("")+'</div>';
 }
+function occFilter(inp){
+  var q=inp.value.trim();
+  document.querySelectorAll("#occlist .tile").forEach(function(t){t.style.display=!q||t.textContent.indexOf(q)>=0?"":"none"});
+  document.querySelectorAll("#occlist .occ-sec").forEach(function(sec){
+    var any=[].slice.call(sec.querySelectorAll(".tile")).some(function(t){return t.style.display!=="none"});
+    sec.style.display=any?"":"none";
+  });
+}
+window.occFilter=occFilter;
 function vOccupation(slug){
   var o=bySlug(DATA.occupations,slug);if(!o)return vNotFound();
   var t=tr(o);pushHistory("occupation",o.id);
@@ -604,6 +650,7 @@ function vOccupation(slug){
   var inds=(o.industryIds||[]).map(function(id){return byId(DATA.industries,id)}).filter(Boolean);
   return crumb([["職種から探す",{name:"occupations"}],[t.name]])+
   '<div class="pagehead"><div class="eyebrow">'+esc(o.slug.toUpperCase().replace(/-/g," "))+'</div><h1>'+esc(t.name)+'の転職ガイド</h1><p class="lead">'+esc(t.summary)+'</p></div>'+
+  kvBanner(["occ:"+o.slug,"cat:"+o.categoryId],t.name+"のイメージ")+
   '<div class="grid g2" style="margin-top:14px">'+
   '<div class="card"><h3>必要なスキル・資格</h3><p style="font-size:14px">'+esc(t.skills)+'</p>'+(quals.length?'<div style="margin-top:8px">'+quals.map(function(q){return '<span class="chip">'+esc(tr(q).name)+"</span>"}).join("")+"</div>":"")+'</div>'+
   '<div class="card"><h3>キャリアパス</h3><p style="font-size:14px">'+esc(t.careerPath)+'</p></div>'+
@@ -620,13 +667,17 @@ function vOccupation(slug){
 function vIndustries(){
   return crumb([["業界から探す"]])+
   '<div class="pagehead"><h1>業界から探す</h1><p class="lead">業界ごとの概要・代表的な職種・転職の入口を整理しています。</p></div>'+
-  '<div class="grid g3" style="margin-top:14px">'+DATA.industries.map(function(x){return '<div class="card"><h3><a href="javascript:void(0)" onclick="go({name:\'industry\',slug:\''+x.slug+'\'})">'+esc(nm(x))+'</a></h3><p class="desc">'+esc(x.summaries.ja.slice(0,60))+'…</p></div>'}).join("")+'</div>';
+  '<div class="grid g3" style="margin-top:14px">'+DATA.industries.map(function(x){
+    var im=imgFor("ind:"+x.slug);
+    return '<div class="card thumb-card">'+(im?'<div class="tc-img"><img loading="lazy" src="'+window.CP_BASE+"/"+esc(im.src)+'" alt="'+esc(nm(x))+'"><span class="tc-cr">'+esc(im.credit)+'</span></div>':"")+
+    '<div class="tc-body"><h3><a href="javascript:void(0)" onclick="go({name:\'industry\',slug:\''+x.slug+'\'})">'+esc(nm(x))+'</a></h3><p class="desc">'+esc(x.summaries.ja.slice(0,60))+'…</p></div></div>'}).join("")+'</div>';
 }
 function vIndustry(slug){
   var x=bySlug(DATA.industries,slug);if(!x)return vNotFound();
   var occs=DATA.occupations.filter(function(o){return(o.industryIds||[]).indexOf(x.id)>=0});
   return crumb([["業界から探す",{name:"industries"}],[nm(x)]])+
   '<div class="pagehead"><h1>'+esc(nm(x))+'業界の転職ガイド</h1><p class="lead">'+esc(x.summaries.ja)+'</p></div>'+
+  kvBanner(["ind:"+x.slug],nm(x)+"業界のイメージ")+
   '<div class="card" style="margin-top:10px"><h3>平均年収・市場データ</h3><p class="small">出典を明示できる統計データの接続後に掲載します。現在は<b>データ準備中</b>です。</p></div>'+
   (occs.length?'<section class="sec" style="padding:24px 0"><div class="sec-h"><h2 style="font-size:20px">この業界の代表的な職種</h2></div><div class="grid g4">'+occs.map(occCard).join("")+'</section>':"")+
   ctaBlock({},null,nm(x)+"業界の転職に使えるサービス");
@@ -772,7 +823,7 @@ function vToolReview(slug){
   '<div class="pagehead"><div class="eyebrow">AI Document Review</div><h1>'+pg.title+'</h1><p class="lead">'+pg.lead+'<br><b>入力内容はお使いの端末の外に送信されません。</b>保存もご自身で選んだ場合のみ、端末内にだけ行われます。</p></div>'+
   '<div style="margin:12px 0">'+Object.keys(REVIEW_PAGES).map(function(k){return '<a class="chip" style="'+(k===slug?"background:var(--navy-950);color:var(--gold-400)":"")+'" href="javascript:void(0)" onclick="go({name:\'tool-review\',slug:\''+k+'\'})">'+REVIEW_PAGES[k].title.replace("AI","")+"</a>"}).join("")+'</div>'+
   '<form class="form" onsubmit="return reviewSubmit(this,\''+slug+'\')">'+
-  '<div class="q"><label>応募する職種（任意）</label><select name="oc"><option value="">選択しない</option>'+DATA.occupations.map(function(o){return '<option value="'+o.id+'">'+esc(tr(o).name)+"</option>"}).join("")+'</select></div>'+
+  '<div class="q"><label>応募する職種（任意）</label><select name="oc"><option value="">選択しない</option>'+DATA.occupations.filter(function(o){return o.featured}).map(function(o){return '<option value="'+o.id+'">'+esc(tr(o).name)+"</option>"}).join("")+'</select></div>'+
   '<div class="q"><label>本文</label><textarea name="text" placeholder="ここに文章を貼り付けてください"></textarea></div>'+
   '<button class="btn gold" type="submit">添削する</button>'+
   '<p class="small" style="margin-top:10px">※ルールベースのセルフチェックです。経験の書き換えや実績の追加提案は行いません（事実と異なる記載は推奨しません）。</p></form>'+

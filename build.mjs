@@ -46,8 +46,8 @@ const STATIC_PAGES = {
     "転職エージェント・スカウト型・求人検索サイト・派遣。タイプ別の仕組みの違いと選び方を整理し、目的別に比較できます。"],
   careers: ["/career/", "年代・状況から探す — 20代/30代/40代/女性/未経験/ハイクラス" + S,
     "20代・30代・40代・50代、女性、第二新卒、未経験、ハイクラス、管理職など、年代・状況別の転職の進め方とサービスの選び方。"],
-  occupations: ["/occupation/", "職種から探す — 仕事内容・スキル・キャリアパス・未経験転職" + S,
-    "営業・事務・経理・エンジニア・介護・看護など主要職種の仕事内容、必要なスキル、キャリアパス、未経験転職の目安を職種別に解説。"],
+  occupations: ["/occupation/", `職種から探す — 全${DATA.occupations.length}職種の仕事内容・スキル・キャリアパス・未経験転職` + S,
+    `営業・事務・経理・エンジニア・介護・看護など全${DATA.occupations.length}職種の仕事内容、必要なスキル、キャリアパス、未経験転職の目安を職種別に解説。`],
   industries: ["/industry/", "業界から探す — 16業界の概要と転職ガイド" + S,
     "IT・Web・金融・不動産・建設・製造・医療・介護など16業界の概要と代表的な職種、転職の入口を整理しています。"],
   areas: ["/area/", "地域から探す — 47都道府県の転職ガイド" + S,
@@ -207,12 +207,16 @@ function prerender(p) {
       `<p>${esc(DATA.siteSettings.legalNote)} ${esc(DATA.siteSettings.disclosure)}</p>`;
   } else if (p.kind === "occupation") {
     const t = tr(p.o);
+    const im = (DATA.images || {})["occ:" + p.o.slug] || (DATA.images || {})["cat:" + p.o.categoryId];
+    if (im) body += `<figure><img src="${SITE}/${esc(im.src)}" alt="${esc(t.name)}のイメージ" width="1200" loading="lazy"><figcaption>${esc(im.credit)}</figcaption></figure>`;
     body += `<h2>仕事内容</h2><p>${esc(t.summary)}</p><h2>必要なスキル</h2><p>${esc(t.skills)}</p>` +
       `<h2>キャリアパス</h2><p>${esc(t.careerPath)}</p><h2>未経験からの転職</h2><p>${esc(t.inexperienced)}</p>` +
       `<h2>平均年収</h2><p>公的統計データの接続後に出典・時点つきで掲載します（現在はデータ準備中）。</p>` +
       `<h2>FAQ</h2>` + occFaq(p.o).map(([q, a]) => `<h3>${esc(q)}</h3><p>${esc(a)}</p>`).join("");
   } else if (p.kind === "industry") {
-    const list = occs.filter((o) => (o.industryIds || []).includes(p.x.id));
+    const list = DATA.occupations.filter((o) => (o.industryIds || []).includes(p.x.id));
+    const im = (DATA.images || {})["ind:" + p.x.slug];
+    if (im) body += `<figure><img src="${SITE}/${esc(im.src)}" alt="${esc(nm(p.x))}業界のイメージ" width="1200" loading="lazy"><figcaption>${esc(im.credit)}</figcaption></figure>`;
     body += `<p>${esc(p.x.summaries.ja)}</p>` + (list.length ? `<h2>代表的な職種</h2>` + occLinks(list) : "");
   } else if (p.kind === "area") {
     body += `<p>${esc(p.p.summaries.ja)}</p><p>統計データ（有効求人倍率・平均年収等）は公的データ接続後に出典・時点つきで掲載します。</p>`;

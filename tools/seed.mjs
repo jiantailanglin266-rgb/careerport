@@ -58,16 +58,19 @@ const industries = INDS.map(([slug,name,sum])=>({
   id:"in_"+slug.replace(/-/g,"_"), slug, names:T(name), summaries:T(sum),
 }));
 
-/* ================= 職種カテゴリー 8 ================= */
+/* ================= 職種カテゴリー 11 ================= */
 const OCC_CATS = [
   ["occ_business","business","営業"],
   ["occ_office","office","事務・バックオフィス"],
-  ["occ_it","it-web","IT・Web・クリエイティブ"],
+  ["occ_it","it-web","IT・Web"],
+  ["occ_creative","creative","クリエイティブ・メディア"],
   ["occ_service","service","販売・サービス"],
   ["occ_medical","medical-welfare","医療・福祉・介護"],
   ["occ_estate","construction-estate","建設・不動産"],
   ["occ_technical","manufacturing-logistics","製造・物流・運輸"],
-  ["occ_professional","professional","教育・専門職"],
+  ["occ_education","education-training","教育・保育・スクール"],
+  ["occ_professional","professional","士業・専門職・コンサル"],
+  ["occ_public","public-region","公務・地域・農林水産"],
 ];
 const occCategories = OCC_CATS.map(([id,slug,name])=>({id,slug,names:T(name)}));
 
@@ -170,7 +173,7 @@ const OCCS = [
    "運転免許（中型・大型等）・安全運転・体調管理。",
    "ドライバー → 班長・運行管理者 → 管理職への展開があります。",
    "普通免許で始められる仕事もあります。免許取得支援制度を設ける企業もあります。"],
-  ["education","教育","occ_professional",["in_education"],
+  ["education","教育","occ_education",["in_education"],
    "学校・塾・研修などで教える仕事、および教室運営や教材企画の仕事です。",
    "教科知識・伝える力・保護者/受講者対応。",
    "講師 → 教室長 → エリア統括・教材企画への展開が代表的です。",
@@ -188,9 +191,39 @@ const OCCS = [
 ];
 const occupations = OCCS.map(([slug,name,categoryId,industryIds,summary,skills,careerPath,inexperienced])=>({
   id:"oc_"+slug.replace(/-/g,"_"), slug, categoryId, industryIds,
-  workers:null, dataLevel:2, status:"published",
+  workers:null, dataLevel:2, status:"published", featured:1,   // featured = トップ・検索フォームに出す主要職種
   translations:{ ja:{ name, summary, skills, careerPath, inexperienced } },
 }));
+
+/* ===== 職種カタログ拡張（tools/data-occupations/*.mjs を全ロード） =====
+   各バッチは [slug,名称,カテゴリid,業界slug|区切り,仕事内容,スキル,パス,未経験目安] の配列。
+   カテゴリ・業界の参照エラーはここで検出して throw（dangling ref をビルドに乗せない）。 */
+{
+  const { readdirSync } = await import("fs");
+  const { pathToFileURL } = await import("url");
+  const dir = join(ROOT, "tools", "data-occupations");
+  const catIds = new Set(occCategories.map((c) => c.id));
+  const indIds = new Set(industries.map((x) => x.id));
+  const seen = new Set(occupations.map((o) => o.slug));
+  let added = 0, dup = 0;
+  for (const f of readdirSync(dir).filter((x) => x.endsWith(".mjs")).sort()) {
+    const rows = (await import(pathToFileURL(join(dir, f)).href)).default;
+    for (const [slug, name, categoryId, inds, summary, skills, careerPath, inexperienced] of rows) {
+      if (seen.has(slug)) { dup++; continue; }
+      seen.add(slug);
+      if (!catIds.has(categoryId)) throw new Error(`${f}: ${slug} 不明カテゴリ ${categoryId}`);
+      const industryIds = (inds || "").split("|").filter(Boolean).map((s) => "in_" + s.replace(/-/g, "_"));
+      for (const iid of industryIds) if (!indIds.has(iid)) throw new Error(`${f}: ${slug} 不明業界 ${iid}`);
+      occupations.push({
+        id: "oc_" + slug.replace(/-/g, "_"), slug, categoryId, industryIds,
+        workers: null, dataLevel: 1, status: "published",
+        translations: { ja: { name, summary, skills, careerPath, inexperienced } },
+      });
+      added++;
+    }
+  }
+  console.log(`occupation batches: +${added} (dup skipped: ${dup}) total=${occupations.length}`);
+}
 
 /* ================= 資格（実在・基本情報のみ）================= */
 const QUALS = [
@@ -842,6 +875,7 @@ const siteSettings = {
    tools/data/*.json は各インポータ（import-wikidata-companies / import-salary-csv /
    register-articles）が生成する。存在しなければ空のまま（=「データ準備中」表示）。 */
 const companies = loadJson("tools/data/companies.json") || [];      // Wikidata 上場企業カタログ（cat:1）
+const images = loadJson("tools/data/images.json") || {};            // Commons キービジュアル（全点目視検証済み・クレジット付き）
 const salaryData = loadJson("tools/data/salary.json") || [];        // 公的統計（出典必須）
 const extraArticles = (loadJson("tools/data/articles-extra.json") || []).filter(
   (a) => !articles.some((b) => b.slug === a.slug)                   // seed側と重複するslugはseed優先
@@ -853,7 +887,7 @@ const DATA = {
   qualifications, services, schools, jobs, rankings, attributes,
   articles: articles.concat(extraArticles),
   stories, faqs, ctaRules,
-  companies, salaryData,
+  companies, salaryData, images,
 };
 writeFileSync(join(ROOT, "data.js"), "var DATA=" + JSON.stringify(DATA) + ";", "utf-8");
 console.log("OK: data.js written —",

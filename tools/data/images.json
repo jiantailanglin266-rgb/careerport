@@ -1,0 +1,290 @@
+{
+ "cat:occ_office": {
+  "src": "images/kv/cat-occ_office.jpg",
+  "file": "File:Helloquence-61189.jpg",
+  "credit": "Photo: helloquence / Wikimedia Commons, CC0",
+  "page": "https://commons.wikimedia.org/wiki/File:Helloquence-61189.jpg"
+ },
+ "cat:occ_creative": {
+  "src": "images/kv/cat-occ_creative.jpg",
+  "file": "File:EMI CPS Emitron Camera Head, 1950 (7649950230).jpg",
+  "credit": "Photo: National Media Museum from UK / Wikimedia Commons, No restrictions",
+  "page": "https://commons.wikimedia.org/wiki/File:EMI_CPS_Emitron_Camera_Head,_1950_(7649950230).jpg"
+ },
+ "cat:occ_service": {
+  "src": "images/kv/cat-occ_service.jpg",
+  "file": "File:Kawabata Shopping Arcade SE from the middle of Kawabata Chūō Shōtengai Kami-kawabatamachi Hakata-ku Fukuoka 20231123.jpg",
+  "credit": "Photo: Hirho / Wikimedia Commons, CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Kawabata_Shopping_Arcade_SE_from_the_middle_of_Kawabata_Ch%C5%AB%C5%8D_Sh%C5%8Dtengai_Kami-kawabatamachi_Hakata-ku_Fukuoka_20231123.jpg"
+ },
+ "cat:occ_medical": {
+  "src": "images/kv/cat-occ_medical.jpg",
+  "file": "File:Hospital corridor 2.jpg",
+  "credit": "Photo: tanakawho from Tokyo, Japan / Wikimedia Commons, CC BY 2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Hospital_corridor_2.jpg"
+ },
+ "cat:occ_estate": {
+  "src": "images/kv/cat-occ_estate.jpg",
+  "file": "File:Crane on Akihabara Center Place Building construction site (2006-08-19 18.21.29 by OiMax).jpg",
+  "credit": "Photo: OiMax / Wikimedia Commons, CC BY 2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Crane_on_Akihabara_Center_Place_Building_construction_site_(2006-08-19_18.21.29_by_OiMax).jpg"
+ },
+ "cat:occ_technical": {
+  "src": "images/kv/cat-occ_technical.jpg",
+  "file": "File:001 Car factory assembly line - Opel factory in Gliwice, Poland.jpg",
+  "credit": "Photo: Marek Ślusarczyk (Tupungato) Photo portfolio / Wikimedia Commons, CC BY 3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:001_Car_factory_assembly_line_-_Opel_factory_in_Gliwice,_Poland.jpg"
+ },
+ "cat:occ_education": {
+  "src": "images/kv/cat-occ_education.jpg",
+  "file": "File:Hitane Elementary School classroom 2.jpg",
+  "credit": "Photo: Douglas P Perkins / Wikimedia Commons, CC BY 3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Hitane_Elementary_School_classroom_2.jpg"
+ },
+ "cat:occ_professional": {
+  "src": "images/kv/cat-occ_professional.jpg",
+  "file": "File:Statutes of England Great Library Toronto.jpg",
+  "credit": "Photo: Neal Jennings / Wikimedia Commons, CC BY-SA 2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Statutes_of_England_Great_Library_Toronto.jpg"
+ },
+ "cat:occ_public": {
+  "src": "images/kv/cat-occ_public.jpg",
+  "file": "File:Central-Government-Building-4-01.jpg",
+  "credit": "Photo: Rs1421 / Wikimedia Commons, CC BY-SA 3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Central-Government-Building-4-01.jpg"
+ },
+ "ind:advertising": {
+  "src": "images/kv/ind-advertising.jpg",
+  "file": "File:Shibuya Crossing, Tokyo, Japan (6790070270).jpg",
+  "credit": "Photo: yeowatzup / Wikimedia Commons, CC BY 2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Shibuya_Crossing,_Tokyo,_Japan_(6790070270).jpg"
+ },
+ "ind:finance": {
+  "src": "images/kv/ind-finance.jpg",
+  "file": "File:Market centre in Tokyo stock exchange.jpg",
+  "credit": "Photo: ehnmark / Wikimedia Commons, CC BY 2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Market_centre_in_Tokyo_stock_exchange.jpg"
+ },
+ "ind:real-estate": {
+  "src": "images/kv/ind-real-estate.jpg",
+  "file": "File:隅田川と勝どき Sumida Riv in Kachidoki 20121127 - panoramio.jpg",
+  "credit": "Photo: 690 Noda / Wikimedia Commons, CC BY 3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:%E9%9A%85%E7%94%B0%E5%B7%9D%E3%81%A8%E5%8B%9D%E3%81%A9%E3%81%8D_Sumida_Riv_in_Kachidoki_20121127_-_panoramio.jpg"
+ },
+ "ind:construction": {
+  "src": "images/kv/ind-construction.jpg",
+  "file": "File:US Navy 050331-N-3113G-025 Seabees assigned to Naval Mobile Construction Battalion Four Zero (NMCB-40), Detachment Sasebo, and Japanese contractors pour and smooth-out concrete.jpg",
+  "credit": "Photo: U.S. Navy photo by Steelworker 3rd Class Eric J. Gauvin / Wikimedia Commons, Public Domain",
+  "page": "https://commons.wikimedia.org/wiki/File:US_Navy_050331-N-3113G-025_Seabees_assigned_to_Naval_Mobile_Construction_Battalion_Four_Zero_(NMCB-40),_Detachment_Sasebo,_and_Japanese_contractors_pour_and_smooth-out_concrete.jpg"
+ },
+ "ind:manufacturing": {
+  "src": "images/kv/ind-manufacturing.jpg",
+  "file": "File:Industrial pipes and tanks at a plant in Japan - 63v 89 (47174128).jpg",
+  "credit": "Photo: Kenny Gil / Wikimedia Commons, CC BY 3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Industrial_pipes_and_tanks_at_a_plant_in_Japan_-_63v_89_(47174128).jpg"
+ },
+ "ind:retail": {
+  "src": "images/kv/ind-retail.jpg",
+  "file": "File:Food shops in Japan - DSC05043.JPG",
+  "credit": "Photo: Daderot / Wikimedia Commons, CC0",
+  "page": "https://commons.wikimedia.org/wiki/File:Food_shops_in_Japan_-_DSC05043.JPG"
+ },
+ "ind:food": {
+  "src": "images/kv/ind-food.jpg",
+  "file": "File:Ticket Vendor, ramen shop, Tokyo, Japan 2020-01-10.jpg",
+  "credit": "Photo: Nikos Roussos from Athens, Greece / Wikimedia Commons, CC BY-SA 2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Ticket_Vendor,_ramen_shop,_Tokyo,_Japan_2020-01-10.jpg"
+ },
+ "ind:logistics": {
+  "src": "images/kv/ind-logistics.jpg",
+  "file": "File:Container ship MSC Tokyo - IMO 9318046 - moored at Container Terminal Burchardkai, Hamburg-9496.jpg",
+  "credit": "Photo: Raimond Spekking / Wikimedia Commons, CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Container_ship_MSC_Tokyo_-_IMO_9318046_-_moored_at_Container_Terminal_Burchardkai,_Hamburg-9496.jpg"
+ },
+ "ind:medical": {
+  "src": "images/kv/ind-medical.jpg",
+  "file": "File:20080312-StLukesInternationalHospital.jpg",
+  "credit": "Photo: Bobak Ha'Eri / Wikimedia Commons, CC BY 3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:20080312-StLukesInternationalHospital.jpg"
+ },
+ "ind:care": {
+  "src": "images/kv/ind-care.jpg",
+  "file": "File:2024 Ścinawka Dolna, Dom Pomocy Społecznej (1).jpg",
+  "credit": "Photo: Jacek Halicki / Wikimedia Commons, CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:2024_%C5%9Acinawka_Dolna,_Dom_Pomocy_Spo%C5%82ecznej_(1).jpg"
+ },
+ "ind:beauty": {
+  "src": "images/kv/ind-beauty.jpg",
+  "file": "File:Salon z perukami Hair Lux – wnętrze.jpg",
+  "credit": "Photo: Tabrus / Wikimedia Commons, CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Salon_z_perukami_Hair_Lux_%E2%80%93_wn%C4%99trze.jpg"
+ },
+ "ind:education": {
+  "src": "images/kv/ind-education.jpg",
+  "file": "File:Sabine Marcelis at the Craft x Tech Lecture Series (University of Tokyo).jpg",
+  "credit": "Photo: Craft x Tech / Wikimedia Commons, CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Sabine_Marcelis_at_the_Craft_x_Tech_Lecture_Series_(University_of_Tokyo).jpg"
+ },
+ "ind:hr": {
+  "src": "images/kv/ind-hr.jpg",
+  "file": "File:2024 Fire Hire in Sacramento (53513296369).jpg",
+  "credit": "Photo: blmcalifornia / Wikimedia Commons, Public Domain",
+  "page": "https://commons.wikimedia.org/wiki/File:2024_Fire_Hire_in_Sacramento_(53513296369).jpg"
+ },
+ "occ:sales": {
+  "src": "images/kv/occ-sales.jpg",
+  "file": "File:Informal Meeting of Ministers Responsible for Competitiveness (Industry) Handshake (39119244335).jpg",
+  "credit": "Photo: EU2018BG Bulgarian Presidency / Wikimedia Commons, CC BY 2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Informal_Meeting_of_Ministers_Responsible_for_Competitiveness_(Industry)_Handshake_(39119244335).jpg"
+ },
+ "occ:office-admin": {
+  "src": "images/kv/occ-office-admin.jpg",
+  "file": "File:Helloquence-61189.jpg",
+  "credit": "Photo: helloquence / Wikimedia Commons, CC0",
+  "page": "https://commons.wikimedia.org/wiki/File:Helloquence-61189.jpg"
+ },
+ "occ:hr": {
+  "src": "images/kv/occ-hr.jpg",
+  "file": "File:2024 Fire Hire in Sacramento (53513414015).jpg",
+  "credit": "Photo: blmcalifornia / Wikimedia Commons, Public Domain",
+  "page": "https://commons.wikimedia.org/wiki/File:2024_Fire_Hire_in_Sacramento_(53513414015).jpg"
+ },
+ "occ:retail-sales": {
+  "src": "images/kv/occ-retail-sales.jpg",
+  "file": "File:Itoya (20076839120).jpg",
+  "credit": "Photo: Antonio Rubio / Wikimedia Commons, CC BY 2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Itoya_(20076839120).jpg"
+ },
+ "occ:food-service": {
+  "src": "images/kv/occ-food-service.jpg",
+  "file": "File:Chef cooking Mysore masala dosa in Mysuru, July 2013.jpg",
+  "credit": "Photo: Sunnya343 / Wikimedia Commons, CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Chef_cooking_Mysore_masala_dosa_in_Mysuru,_July_2013.jpg"
+ },
+ "occ:construction": {
+  "src": "images/kv/occ-construction.jpg",
+  "file": "File:A worker wears a helmet and visor at a Hong Kong construction site during a heatwave.jpg",
+  "credit": "Photo: Hong Kong Free Press / Wikimedia Commons, CC BY 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:A_worker_wears_a_helmet_and_visor_at_a_Hong_Kong_construction_site_during_a_heatwave.jpg"
+ },
+ "occ:nurse": {
+  "src": "images/kv/occ-nurse.jpg",
+  "file": "File:Nurse shows a heart sign to a child during a medical visit in a bright room.jpg",
+  "credit": "Photo: Shixart1985 / Wikimedia Commons, CC BY 2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Nurse_shows_a_heart_sign_to_a_child_during_a_medical_visit_in_a_bright_room.jpg"
+ },
+ "occ:medical-staff": {
+  "src": "images/kv/occ-medical-staff.jpg",
+  "file": "File:Reception desk for Clinical Physiology - NÄL hospital 1.jpg",
+  "credit": "Photo: W.carter / Wikimedia Commons, CC0",
+  "page": "https://commons.wikimedia.org/wiki/File:Reception_desk_for_Clinical_Physiology_-_N%C3%84L_hospital_1.jpg"
+ },
+ "occ:manufacturing": {
+  "src": "images/kv/occ-manufacturing.jpg",
+  "file": "File:Gila River Relocation Center, Rivers, Arizona. Roy Katsura and Haruo Yoshimoto (L. to R.) check the . . . - NARA - 537095.jpg",
+  "credit": "Photo: Francis Stewart / Wikimedia Commons, Public Domain",
+  "page": "https://commons.wikimedia.org/wiki/File:Gila_River_Relocation_Center,_Rivers,_Arizona._Roy_Katsura_and_Haruo_Yoshimoto_(L._to_R.)_check_the_._._._-_NARA_-_537095.jpg"
+ },
+ "occ:logistics": {
+  "src": "images/kv/occ-logistics.jpg",
+  "file": "File:Modern warehouse with pallet rack storage system.jpg",
+  "credit": "Photo: Axisadman / Wikimedia Commons, CC BY-SA 3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Modern_warehouse_with_pallet_rack_storage_system.jpg"
+ },
+ "occ:education": {
+  "src": "images/kv/occ-education.jpg",
+  "file": "File:Better quality learning in a safe environment (8423292169).jpg",
+  "credit": "Photo: DFID - UK Department for International Development / Wikimedia Commons, CC BY 2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Better_quality_learning_in_a_safe_environment_(8423292169).jpg"
+ },
+ "occ:beauty": {
+  "src": "images/kv/occ-beauty.jpg",
+  "file": "File:DZ6 0589 A barber carefully trims a customers hair inside a cozy cluttered shop adorned with an American flag and various tools.jpg",
+  "credit": "Photo: PattayaPatrol / Wikimedia Commons, CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:DZ6_0589_A_barber_carefully_trims_a_customers_hair_inside_a_cozy_cluttered_shop_adorned_with_an_American_flag_and_various_tools.jpg"
+ },
+ "occ:it-support": {
+  "src": "images/kv/occ-it-support.jpg",
+  "file": "File:AFREP optimizes resources, sustaining aircraft readiness (8199834).jpg",
+  "credit": "Photo: U.S. Air Force photo by Staff Sgt. Lawrence Sena / Wikimedia Commons, Public Domain",
+  "page": "https://commons.wikimedia.org/wiki/File:AFREP_optimizes_resources,_sustaining_aircraft_readiness_(8199834).jpg"
+ },
+ "cat:occ_it": {
+  "src": "images/kv/cat-occ_it.jpg",
+  "file": "File:Laptop coding programs (Unsplash).jpg",
+  "credit": "Photo: Tirza van Dijk tirzavandijk / Wikimedia Commons, CC0",
+  "page": "https://commons.wikimedia.org/wiki/File:Laptop_coding_programs_(Unsplash).jpg"
+ },
+ "ind:it": {
+  "src": "images/kv/ind-it.jpg",
+  "file": "File:Datacenter Server Racks (22370909788).jpg",
+  "credit": "Photo: Carl Lender from Sunrise, USA / Wikimedia Commons, CC BY 2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Datacenter_Server_Racks_(22370909788).jpg"
+ },
+ "ind:web": {
+  "src": "images/kv/ind-web.jpg",
+  "file": "File:Working Late (Unsplash).jpg",
+  "credit": "Photo: Muhammad Raufan Yusup muhraufan / Wikimedia Commons, CC0",
+  "page": "https://commons.wikimedia.org/wiki/File:Working_Late_(Unsplash).jpg"
+ },
+ "ind:consulting": {
+  "src": "images/kv/ind-consulting.jpg",
+  "file": "File:Conference room in the Berlaymont building 2.JPG",
+  "credit": "Photo: Gnom / Wikimedia Commons, CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Conference_room_in_the_Berlaymont_building_2.JPG"
+ },
+ "occ:real-estate": {
+  "src": "images/kv/occ-real-estate.jpg",
+  "file": "File:William J. Hayes House, Buffalo, New York - 20220313.jpg",
+  "credit": "Photo: Andre Carrotflower / Wikimedia Commons, CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:William_J._Hayes_House,_Buffalo,_New_York_-_20220313.jpg"
+ },
+ "occ:driver": {
+  "src": "images/kv/occ-driver.jpg",
+  "file": "File:Yamato delivery electrick truck, Hino.jpg",
+  "credit": "Photo: Syced / Wikimedia Commons, CC0",
+  "page": "https://commons.wikimedia.org/wiki/File:Yamato_delivery_electrick_truck,_Hino.jpg"
+ },
+ "cat:occ_business": {
+  "src": "images/kv/cat-occ_business.jpg",
+  "file": "File:クロスタワー前、新入社員たちのグループ.jpg",
+  "credit": "Photo: Syced / Wikimedia Commons, CC0",
+  "page": "https://commons.wikimedia.org/wiki/File:%E3%82%AF%E3%83%AD%E3%82%B9%E3%82%BF%E3%83%AF%E3%83%BC%E5%89%8D%E3%80%81%E6%96%B0%E5%85%A5%E7%A4%BE%E5%93%A1%E3%81%9F%E3%81%A1%E3%81%AE%E3%82%B0%E3%83%AB%E3%83%BC%E3%83%97.jpg"
+ },
+ "occ:accounting": {
+  "src": "images/kv/occ-accounting.jpg",
+  "file": "File:Latte and calculator.jpg",
+  "credit": "Photo: Dennis Wong from Hong Kong, Hong Kong / Wikimedia Commons, CC BY 2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Latte_and_calculator.jpg"
+ },
+ "occ:marketing": {
+  "src": "images/kv/occ-marketing.jpg",
+  "file": "File:20170403-AMS-LSC-1208 (33763989742).jpg",
+  "credit": "Photo: U.S. Department of Agriculture / Wikimedia Commons, Public Domain",
+  "page": "https://commons.wikimedia.org/wiki/File:20170403-AMS-LSC-1208_(33763989742).jpg"
+ },
+ "occ:web-marketing": {
+  "src": "images/kv/occ-web-marketing.jpg",
+  "file": "File:Google analytics phone (Unsplash).jpg",
+  "credit": "Photo: Edho Pratama edhoradic / Wikimedia Commons, CC0",
+  "page": "https://commons.wikimedia.org/wiki/File:Google_analytics_phone_(Unsplash).jpg"
+ },
+ "occ:engineer": {
+  "src": "images/kv/occ-engineer.jpg",
+  "file": "File:Software Developer at Work.jpg",
+  "credit": "Photo: Tsinkala / Wikimedia Commons, CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Software_Developer_at_Work.jpg"
+ },
+ "occ:web-designer": {
+  "src": "images/kv/occ-web-designer.jpg",
+  "file": "File:Responsive-web-design-devices.jpg",
+  "credit": "Photo: Muhammad Rafizeldi (MRafizeldi) / Wikimedia Commons, CC BY-SA 3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Responsive-web-design-devices.jpg"
+ },
+ "occ:consultant": {
+  "src": "images/kv/occ-consultant.jpg",
+  "file": "File:Ejay presenting a business seminar.jpg",
+  "credit": "Photo: Ejay273 / Wikimedia Commons, CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Ejay_presenting_a_business_seminar.jpg"
+ }
+}
