@@ -70,7 +70,19 @@ JobPosting 構造化データは build.mjs が「実求人・期限内」のみ�
   1つのslugを複数区分に割り当てるとエラーになる
 - **翌年更新**：新年度の第1表xlsxを e-Stat から取得して src/ を差し替え → importer の SOURCE（年・URL・公表日）を
   更新 → 実行 → seed → v バンプ → build
-- 手動追加（業界別・地域別等）は従来どおり `tools/import-salary-csv.mjs`（出典3列必須）
+- **業界・都道府県（投入済み）**：`python tools/import-wage-census-industry.py`
+  - 業界: 産業中分類の第1表13区分（産業計＋12業界対応）。産業大分類のxlsxが公表されていないため、
+    対応する**中分類**の値を区分名明示で掲載（大分類値として偽装しない）。対応表はスクリプト内 INDUSTRY_FILES
+  - 都道府県: 都道府県別第2表（4分割xlsx）から47都道府県×職業大分類11区分=517行。
+    各エリアページに職業別平均年収表として表示
+  - 元xlsxは tools/data/src/industry/ にキャッシュ（statInfId.xlsx）。翌年更新は INDUSTRY_FILES /
+    PREF_FILES の statInfId と SOURCE_BASE を新年度のものに差し替えて再実行
+- 手動追加は従来どおり `tools/import-salary-csv.mjs`（出典3列必須）
+
+### 記事のヒーロー画像
+`tools/seed.mjs` の `ARTICLE_HERO`（記事slug → images.json のキー）で割り当てる。
+新しい画像は image-plan.mjs に `art:<名前>` キーを追加 → fetch → **目視検証** → ARTICLE_HERO に登録。
+未割り当ての記事はヒーローなしで表示される。OGP画像も自動で追随する。
 
 ### 企業カタログを更新する
 `node tools/import-wikidata-companies.mjs` → seed→v バンプ→build。
