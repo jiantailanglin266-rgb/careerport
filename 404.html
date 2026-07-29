@@ -307,7 +307,7 @@ footer .legal{border-top:1px solid rgba(210,168,70,.2);margin-top:34px;padding-t
   var p=location.pathname, mm=p.match(/^(.*?)\/(ja|en)(\/|$)/);
   var b=mm?mm[1]:p.replace(/\/index\.html$/,"").replace(/\/$/,"");
   window.CP_BASE=b;
-  try{var x=new XMLHttpRequest();x.open("GET",b+"/data.js?v=12",false);x.send();if(x.status===200||x.status===0){(0,eval)(x.responseText)}}catch(e){}
+  try{var x=new XMLHttpRequest();x.open("GET",b+"/data.js?v=13",false);x.send();if(x.status===200||x.status===0){(0,eval)(x.responseText)}}catch(e){}
   try{var y=new XMLHttpRequest();y.open("GET",b+"/logic.js?v=1",false);y.send();if(y.status===200||y.status===0){(0,eval)(y.responseText)}}catch(e){}
 })();
 if(!window.DATA){document.getElementById("app").innerHTML='<div class="skel">データの読み込みに失敗しました。再読み込みしてください。</div>';}
@@ -326,10 +326,31 @@ var KINDS={agent:"転職エージェント",scout:"スカウト型","job-site":"
 var AGE_L={"20s":"20代","30s":"30代","40s":"40代","50s":"50代"};
 function badgeDemo(){return '<span class="badge demo">デモ</span>'}
 function badgePR(){return '<span class="badge pr">PR</span>'}
-function evTrack(ev,params){try{(window.dataLayer=window.dataLayer||[]).push(Object.assign({event:ev},params||{}))}catch(e){}}
+function evTrack(ev,params){try{
+  (window.dataLayer=window.dataLayer||[]).push(Object.assign({event:ev},params||{}));
+  if(window.gtag&&AF_CONF.ga4)window.gtag("event",ev,params||{});
+}catch(e){}}
 
 /* ---------- affiliate module ---------- */
-var AF_CONF={ga4:"",prefix:{}}; // GA4 ID・ASP計測プレフィックスは承認後に設定（README参照）
+/* 計測設定。ga4 に測定ID（G-XXXXXXXXXX）を入れるだけで解析が有効になる。
+   空のままなら外部スクリプトを一切読み込まない（＝Cookieも発行しない）。 */
+var AF_CONF={ga4:"",prefix:{}};
+function initAnalytics(){
+  if(!AF_CONF.ga4||window.gtag)return;
+  var s=document.createElement("script");
+  s.async=true;s.src="https://www.googletagmanager.com/gtag/js?id="+encodeURIComponent(AF_CONF.ga4);
+  document.head.appendChild(s);
+  window.dataLayer=window.dataLayer||[];
+  window.gtag=function(){window.dataLayer.push(arguments)};
+  window.gtag("js",new Date());
+  // SPAなので自動ページビューは切り、ルート変更時に自前で送る
+  window.gtag("config",AF_CONF.ga4,{send_page_view:false});
+  trackPageView();
+}
+function trackPageView(){
+  if(!window.gtag||!AF_CONF.ga4)return;
+  window.gtag("event","page_view",{page_location:location.href,page_path:location.pathname,page_title:document.title});
+}
 function afTrack(id){evTrack("af_click",{af_id:id,page:location.pathname})}
 function svcOfficialBtn(s){
   // affiliateUrl 未設定（=ASP未承認/未確認）の間は公式リンクCTAを出さない（正直運用）
@@ -1307,7 +1328,7 @@ function go(v){
     if(qs)url+="?"+qs;
   }
   try{history.pushState({},"",url)}catch(e){}
-  render();window.scrollTo(0,0);
+  render();window.scrollTo(0,0);trackPageView();
 }
 window.go=go;
 
@@ -1390,6 +1411,7 @@ window.mypageClear=mypageClear;window.afTrack=afTrack;
 (function init(){
   if(!window.DATA)return;
   state.view=parsePath();
+  initAnalytics();
   bgMarquee();
   renderFoot();
   render();
