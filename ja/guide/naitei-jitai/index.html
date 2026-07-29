@@ -180,7 +180,8 @@ nav.g a.on{color:var(--gold-400)}
 .thumb-card .tc-body{padding:14px 18px 18px}
 /* photo marquee（ホバーで停止しない・reduced-motionで静止） */
 .pmq{overflow:hidden;position:relative;margin:0 -20px;background:var(--navy-950);padding:18px 0}
-.pmq .mqtrack{gap:14px;animation-duration:60s}
+.pmq .mqtrack{gap:14px;animation-duration:70s}
+.pmq.rev .mqtrack{animation-direction:reverse;animation-duration:80s}
 .pmq figure{position:relative;flex:none;width:230px;height:140px;border-radius:10px;overflow:hidden;margin:0}
 .pmq img{width:100%;height:100%;object-fit:cover;filter:saturate(.82) contrast(1.05) brightness(.92)}
 .pmq figure:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,20,38,.1),rgba(8,20,38,.35))}
@@ -275,7 +276,7 @@ footer .legal{border-top:1px solid rgba(210,168,70,.2);margin-top:34px;padding-t
   var p=location.pathname, mm=p.match(/^(.*?)\/(ja|en)(\/|$)/);
   var b=mm?mm[1]:p.replace(/\/index\.html$/,"").replace(/\/$/,"");
   window.CP_BASE=b;
-  try{var x=new XMLHttpRequest();x.open("GET",b+"/data.js?v=5",false);x.send();if(x.status===200||x.status===0){(0,eval)(x.responseText)}}catch(e){}
+  try{var x=new XMLHttpRequest();x.open("GET",b+"/data.js?v=6",false);x.send();if(x.status===200||x.status===0){(0,eval)(x.responseText)}}catch(e){}
   try{var y=new XMLHttpRequest();y.open("GET",b+"/logic.js?v=1",false);y.send();if(y.status===200||y.status===0){(0,eval)(y.responseText)}}catch(e){}
 })();
 if(!window.DATA){document.getElementById("app").innerHTML='<div class="skel">データの読み込みに失敗しました。再読み込みしてください。</div>';}
@@ -399,12 +400,22 @@ function kvBanner(keys,alt,small){
   var im=imgFor.apply(null,keys);if(!im)return"";
   return '<div class="kv'+(small?" sm":"")+'"><img loading="lazy" src="'+window.CP_BASE+"/"+esc(im.src)+'" alt="'+esc(alt||"")+'"><span class="cr">'+esc(im.credit)+"</span></div>";
 }
-function photoMarquee(){
-  var keys=Object.keys(DATA.images||{});if(!keys.length)return"";
-  var pick=keys.filter(function(k){return k.indexOf("ind:")===0||k.indexOf("cat:")===0}).slice(0,14);
-  var items=pick.map(function(k){var im=DATA.images[k];return '<figure><img loading="lazy" src="'+window.CP_BASE+"/"+esc(im.src)+'" alt=""><span class="cr">'+esc(im.credit)+"</span></figure>"}).join("");
-  return '<div class="pmq" aria-hidden="true"><div class="mqtrack">'+items+items+"</div></div>";
+/* フォトマーキー: 1本=横長画像12枚構成（Commons・目視検証済み・クレジット付き）
+   セットは重複なしの12枚で固定。ホバーで停止しない（プロジェクト共通規約）。 */
+var PMQ_SETS={
+  industry:["ind:it","ind:construction","ind:manufacturing","ind:logistics","ind:advertising","ind:finance","ind:retail","ind:beauty","ind:care","ind:education","ind:real-estate","ind:web"],
+  people:["occ:sales","occ:engineer","occ:nurse","occ:retail-sales","occ:food-service","occ:construction","occ:driver","occ:beauty","occ:medical-staff","occ:logistics","occ:it-support","occ:education"],
+  career:["cat:occ_business","cat:occ_office","cat:occ_it","cat:occ_creative","cat:occ_education","cat:occ_professional","cat:occ_public","cat:occ_technical","art:study","art:resume","art:calendar","art:rural"],
+  occhub:["occ:accounting","occ:marketing","occ:web-marketing","occ:web-designer","occ:consultant","occ:office-admin","occ:hr","occ:manufacturing","ind:consulting","ind:hr","ind:medical","occ:engineer"],
+  guide:["art:study","art:resume","art:calendar","art:rural","cat:occ_office","cat:occ_business","ind:web","ind:consulting","occ:accounting","occ:hr","occ:sales","cat:occ_it"]
+};
+function pmqBand(setName,rev){
+  var keys=(PMQ_SETS[setName]||[]).filter(function(k){return (DATA.images||{})[k]}).slice(0,12);
+  if(keys.length<12)return"";
+  var items=keys.map(function(k){var im=DATA.images[k];return '<figure><img loading="lazy" src="'+window.CP_BASE+"/"+esc(im.src)+'" alt=""><span class="cr">'+esc(im.credit)+"</span></figure>"}).join("");
+  return '<div class="pmq'+(rev?" rev":"")+'" aria-hidden="true"><div class="mqtrack">'+items+items+"</div></div>";
 }
+function photoMarquee(){return pmqBand("career")}
 
 /* ---------- 年収データ描画（出典必須。無ければ「データ準備中」） ---------- */
 function salaryRows(filter){
@@ -487,6 +498,7 @@ function vHome(){
   '<section class="sec rv"><div class="sec-h"><div class="eyebrow">Your Compass</div><h2>いまの悩みから探す</h2></div>'+
   '<div class="grid g4">'+nayami.map(function(n){return '<a class="tile" href="javascript:void(0)" onclick="go({name:\''+n[1]+'\''+(n[2]?",slug:'"+n[2]+"'":"")+'})"><span class="ic">🧭</span>'+n[0]+"</a>"}).join("")+'</div></section>'+
 
+  pmqBand("industry")+
   '<section class="sec rv"><div class="sec-h"><div class="eyebrow">Compare Services</div><h2>転職サービスを比較する</h2>'+
   '<p class="lead">エージェント・スカウト・求人サイト・派遣。タイプ別の違いを理解して、自分に合う支援を選べます。<br><span class="small">'+esc(DATA.siteSettings.disclosure)+'　現在の掲載はデモです。</span></p></div>'+
   '<div class="grid g4">'+DATA.rankings.map(function(r){return '<a class="tile" href="javascript:void(0)" onclick="go({name:\'ranking\',slug:\''+esc(r.slug)+'\'})"><span class="ic">⚖️</span>'+esc(nm(r))+"</a>"}).join("")+'</div>'+
@@ -505,6 +517,7 @@ function vHome(){
   '<p style="margin-top:10px"><a href="javascript:void(0)" onclick="go({name:\'areas\'})" style="text-decoration:underline;font-size:13.5px">47都道府県の一覧を見る →</a></p></section>'+
   '<section class="sec rv"><div class="sec-h"><div class="eyebrow">Attributes</div><h2>年代・状況から探す</h2></div><div class="grid g4">'+DATA.attributes.map(function(a){return '<a class="tile" href="javascript:void(0)" onclick="go({name:\'career\',slug:\''+esc(a.slug)+'\'})"><span class="ic">🚩</span>'+esc(tr(a).name)+"</a>"}).join("")+'</div></section>'+
 
+  pmqBand("people",true)+
   '<section class="sec rv"><div class="sec-h"><div class="eyebrow">Salary Data</div><h2>年収データベース</h2>'+
   '<p class="lead">'+esc(DATA.siteSettings.dataNote)+'</p></div>'+
   (function(){var occ=salaryRows({group:"occupation"});return occ.length
@@ -639,6 +652,7 @@ function vOccupations(){
   return crumb([["職種から探す"]])+
   '<div class="pagehead"><h1>職種から探す<span style="font-family:var(--en);font-size:16px;color:var(--gold-500);margin-left:10px">'+total+' OCCUPATIONS</span></h1><p class="lead">全'+total+'職種の仕事内容・必要なスキル・キャリアパス・未経験転職の目安を職種別に整理しています。</p>'+
   '<input class="occ-filter" type="text" placeholder="職種名で絞り込み（例：営業、看護、エンジニア）" oninput="occFilter(this)"></div>'+
+  pmqBand("occhub")+
   '<div id="occlist">'+DATA.occCategories.map(function(c){
     var os=DATA.occupations.filter(function(o){return o.categoryId===c.id});
     if(!os.length)return"";
@@ -755,6 +769,7 @@ function vArticles(cat){
   return crumb([["転職ノウハウ"]])+
   '<div class="pagehead"><h1>転職ノウハウ</h1><p class="lead">退職・書類・面接・年収交渉まで。転職活動の各段階の疑問に答える実用ガイドです。</p></div>'+
   '<div style="margin:14px 0"><a class="chip" style="'+(!cat?"background:var(--navy-950);color:var(--gold-400)":"")+'" href="javascript:void(0)" onclick="go({name:\'articles\'})">すべて</a>'+cats.map(function(c){return '<a class="chip" style="'+(cat===c?"background:var(--navy-950);color:var(--gold-400)":"")+'" href="javascript:void(0)" onclick="go({name:\'articles\',cat:\''+c+'\'})">'+ART_CATS[c]+"</a>"}).join("")+'</div>'+
+  (!cat?pmqBand("guide",true):"")+
   (list.length?list.map(artLi).join(""):'<div class="empty">このカテゴリの記事は準備中です。</div>');
 }
 function vArticle(slug){
