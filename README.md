@@ -62,11 +62,15 @@ published に変更 → seed→v バンプ→build。
 実求人には雇用形態・賃金・業務内容・受動喫煙対策等の必須項目と掲載期限を設定する。
 JobPosting 構造化データは build.mjs が「実求人・期限内」のみに出力する設計（現状は全デモ＝出力ゼロ）。
 
-### 年収データを載せる
-e-Stat（賃金構造基本統計調査）等から数値を取得し、`tools/data/salary-template.csv` の列形式で
-CSV を作成 → `node tools/import-salary-csv.mjs <path.csv>` → seed→v バンプ→build。
-出典3列（sourceName/sourceUrl/sourceDate）の無い行・不明slug・異常値は自動で拒否される。
-**出典のない数値・推定値は登録しない**（データが入ると職種ページ・年収DBに出典つき表で自動表示）。
+### 年収データ（投入済み・更新方法）
+**投入済み**：厚生労働省「令和7年賃金構造基本統計調査」（職種）第1表（e-Stat, statInfId=000040421116）。
+`tools/data/src/wage-census-r7-occ1.xlsx` → `python tools/import-wage-census.py` → salary.json（143区分）。
+- 年収は「きまって支給する現金給与額×12＋年間賞与」の算出値。算出式・出典・統計区分名をサイト側で常時表示
+- 統計区分→職種slugの対応は importer 内 `NAME_MAP`（85区分/113職種）。中核が一致する場合のみ対応付け、
+  1つのslugを複数区分に割り当てるとエラーになる
+- **翌年更新**：新年度の第1表xlsxを e-Stat から取得して src/ を差し替え → importer の SOURCE（年・URL・公表日）を
+  更新 → 実行 → seed → v バンプ → build
+- 手動追加（業界別・地域別等）は従来どおり `tools/import-salary-csv.mjs`（出典3列必須）
 
 ### 企業カタログを更新する
 `node tools/import-wikidata-companies.mjs` → seed→v バンプ→build。
