@@ -275,7 +275,7 @@ footer .legal{border-top:1px solid rgba(210,168,70,.2);margin-top:34px;padding-t
   var p=location.pathname, mm=p.match(/^(.*?)\/(ja|en)(\/|$)/);
   var b=mm?mm[1]:p.replace(/\/index\.html$/,"").replace(/\/$/,"");
   window.CP_BASE=b;
-  try{var x=new XMLHttpRequest();x.open("GET",b+"/data.js?v=6",false);x.send();if(x.status===200||x.status===0){(0,eval)(x.responseText)}}catch(e){}
+  try{var x=new XMLHttpRequest();x.open("GET",b+"/data.js?v=7",false);x.send();if(x.status===200||x.status===0){(0,eval)(x.responseText)}}catch(e){}
   try{var y=new XMLHttpRequest();y.open("GET",b+"/logic.js?v=1",false);y.send();if(y.status===200||y.status===0){(0,eval)(y.responseText)}}catch(e){}
 })();
 if(!window.DATA){document.getElementById("app").innerHTML='<div class="skel">データの読み込みに失敗しました。再読み込みしてください。</div>';}
@@ -401,12 +401,13 @@ function kvBanner(keys,alt,small){
 }
 /* フォトマーキー: 1本=横長画像12枚構成（Commons・目視検証済み・クレジット付き）
    セットは重複なしの12枚で固定。ホバーで停止しない（プロジェクト共通規約）。 */
+/* マーキーの画像は日本国内で撮影されたもののみ（ユーザー指定）。各セット12枚・重複なし。 */
 var PMQ_SETS={
-  industry:["ind:it","ind:construction","ind:manufacturing","ind:logistics","ind:advertising","ind:finance","ind:retail","ind:beauty","ind:care","ind:education","ind:real-estate","ind:web"],
-  people:["occ:sales","occ:engineer","occ:nurse","occ:retail-sales","occ:food-service","occ:construction","occ:driver","occ:beauty","occ:medical-staff","occ:logistics","occ:it-support","occ:education"],
-  career:["cat:occ_business","cat:occ_office","cat:occ_it","cat:occ_creative","cat:occ_education","cat:occ_professional","cat:occ_public","cat:occ_technical","art:study","art:resume","art:calendar","art:rural"],
-  occhub:["occ:accounting","occ:marketing","occ:web-marketing","occ:web-designer","occ:consultant","occ:office-admin","occ:hr","occ:manufacturing","ind:consulting","ind:hr","ind:medical","occ:engineer"],
-  guide:["art:study","art:resume","art:calendar","art:rural","cat:occ_office","cat:occ_business","ind:web","ind:consulting","occ:accounting","occ:hr","occ:sales","cat:occ_it"]
+  industry:["jp:umeda","ind:advertising","ind:finance","ind:real-estate","ind:manufacturing","jp:plant","jp:yokkaichi","ind:retail","jp:supermarket","ind:medical","ind:education","jp:university"],
+  people:["cat:occ_business","jp:ramen","jp:tobi","jp:construction","jp:barber","occ:driver","occ:retail-sales","jp:shinkansen","jp:supermarket","ind:retail","cat:occ_education","jp:university"],
+  career:["cat:occ_education","jp:university","ind:education","cat:occ_public","art:rural","jp:riceterrace","jp:umeda","ind:advertising","cat:occ_business","jp:shinkansen","ind:real-estate","jp:barber"],
+  occhub:["jp:ramen","jp:barber","jp:tobi","jp:construction","occ:driver","occ:retail-sales","jp:supermarket","ind:medical","cat:occ_business","ind:finance","jp:university","cat:occ_education"],
+  guide:["art:rural","jp:riceterrace","jp:shinkansen","jp:umeda","ind:advertising","cat:occ_public","ind:education","cat:occ_business","ind:real-estate","jp:plant","ind:manufacturing","jp:supermarket"]
 };
 function pmqBand(setName,rev){
   var keys=(PMQ_SETS[setName]||[]).filter(function(k){return (DATA.images||{})[k]}).slice(0,12);

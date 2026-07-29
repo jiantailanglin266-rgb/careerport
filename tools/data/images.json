@@ -310,5 +310,71 @@
   "file": "File:Pen-writing-notes-studying.jpg",
   "credit": "Photo: Tookapic / Wikimedia Commons, CC0",
   "page": "https://commons.wikimedia.org/wiki/File:Pen-writing-notes-studying.jpg"
+ },
+ "jp:supermarket": {
+  "src": "images/kv/jp-supermarket.jpg",
+  "file": "File:Interior of Supermarket in Japan 01.jpg",
+  "credit": "Photo: Corpse Reviver / Wikimedia Commons, CC BY-SA 3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Interior_of_Supermarket_in_Japan_01.jpg"
+ },
+ "jp:construction": {
+  "src": "images/kv/jp-construction.jpg",
+  "file": "File:Construction works Japan, Osaka.jpg",
+  "credit": "Photo: Editorq35 / Wikimedia Commons, CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Construction_works_Japan,_Osaka.jpg"
+ },
+ "jp:university": {
+  "src": "images/kv/jp-university.jpg",
+  "file": "File:Students walking towards Komaba Campus, University of Tokyo.jpg",
+  "credit": "Photo: Tokyo538 / Wikimedia Commons, CC0",
+  "page": "https://commons.wikimedia.org/wiki/File:Students_walking_towards_Komaba_Campus,_University_of_Tokyo.jpg"
+ },
+ "jp:ramen": {
+  "src": "images/kv/jp-ramen.jpg",
+  "file": "File:Kyushu Jangara Ramen, Akihabara - Chefs in the open kitchen facing to the counter (2006-07-08 17.03.17 by Marufish).jpg",
+  "credit": "Photo: Marufish from Alor Setar, Malaysia / Wikimedia Commons, CC BY-SA 2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Kyushu_Jangara_Ramen,_Akihabara_-_Chefs_in_the_open_kitchen_facing_to_the_counter_(2006-07-08_17.03.17_by_Marufish).jpg"
+ },
+ "jp:shinkansen": {
+  "src": "images/kv/jp-shinkansen.jpg",
+  "file": "File:Shinkansen platform at Tokyo Station 22.jpg",
+  "credit": "Photo: Syced / Wikimedia Commons, CC0",
+  "page": "https://commons.wikimedia.org/wiki/File:Shinkansen_platform_at_Tokyo_Station_22.jpg"
+ },
+ "jp:tobi": {
+  "src": "images/kv/jp-tobi.jpg",
+  "file": "File:Workers in tobi pants.jpg",
+  "credit": "Photo: Brianhe / Wikimedia Commons, CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Workers_in_tobi_pants.jpg"
+ },
+ "jp:barber": {
+  "src": "images/kv/jp-barber.jpg",
+  "file": "File:Barber Tatsumiya in Kahoku, Yamagata 2009-10-23.jpg",
+  "credit": "Photo: 克年 三沢 / Wikimedia Commons, CC BY 2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Barber_Tatsumiya_in_Kahoku,_Yamagata_2009-10-23.jpg"
+ },
+ "jp:umeda": {
+  "src": "images/kv/jp-umeda.jpg",
+  "file": "File:Evening cityscape of Osaka.jpg",
+  "credit": "Photo: Benlisquare / Wikimedia Commons, CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Evening_cityscape_of_Osaka.jpg"
+ },
+ "jp:riceterrace": {
+  "src": "images/kv/jp-riceterrace.jpg",
+  "file": "File:Fukuoka-Tsuzura Rice Terrace in an Early Summer-xl.jpg",
+  "credit": "Photo: うきは市 / Wikimedia Commons, CC BY 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Fukuoka-Tsuzura_Rice_Terrace_in_an_Early_Summer-xl.jpg"
+ },
+ "jp:plant": {
+  "src": "images/kv/jp-plant.jpg",
+  "file": "File:Okayama-Night view of the industrial plant in Mizushima-xl.jpg",
+  "credit": "Photo: Yudai_photography / Wikimedia Commons, CC BY 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Okayama-Night_view_of_the_industrial_plant_in_Mizushima-xl.jpg"
+ },
+ "jp:yokkaichi": {
+  "src": "images/kv/jp-yokkaichi.jpg",
+  "file": "File:Factory buildings in Yokkaichi at night; 2016.jpg",
+  "credit": "Photo: ot0rip 604 from Japan / Wikimedia Commons, CC BY 2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Factory_buildings_in_Yokkaichi_at_night;_2016.jpg"
  }
 }

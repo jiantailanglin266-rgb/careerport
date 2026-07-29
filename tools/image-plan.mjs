@@ -59,4 +59,16 @@ export default {
   "art:study":    { file: "File:Pen-writing-notes-studying.jpg" },
   "art:resume":   { file: "File:Person writing in a notebook while sitting at a desk.jpg" },
   "art:rural":    { file: "File:Nagano Matsukawa.jpg" },
+  // ---- 日本国内マーキー用（jp: プレフィックス。マーキーは国内画像に限定する） ----
+  "jp:supermarket":  { file: "File:Interior of Supermarket in Japan 01.jpg" },
+  "jp:construction": { file: "File:Construction works Japan, Osaka.jpg" },
+  "jp:university":   { file: "File:Students walking towards Komaba Campus, University of Tokyo.jpg" },
+  "jp:ramen":        { file: "File:Kyushu Jangara Ramen, Akihabara - Chefs in the open kitchen facing to the counter (2006-07-08 17.03.17 by Marufish).jpg" },
+  "jp:shinkansen":   { file: "File:Shinkansen platform at Tokyo Station 22.jpg" },
+  "jp:tobi":         { file: "File:Workers in tobi pants.jpg" },
+  "jp:barber":       { file: "File:Barber Tatsumiya in Kahoku, Yamagata 2009-10-23.jpg" },
+  "jp:umeda":      { file: "File:Evening cityscape of Osaka.jpg" },
+  "jp:riceterrace":{ file: "File:Fukuoka-Tsuzura Rice Terrace in an Early Summer-xl.jpg" },
+  "jp:plant":      { file: "File:Okayama-Night view of the industrial plant in Mizushima-xl.jpg" },
+  "jp:yokkaichi":  { file: "File:Factory buildings in Yokkaichi at night; 2016.jpg" },
 };
