@@ -875,19 +875,54 @@ const siteSettings = {
    tools/data/*.json は各インポータ（import-wikidata-companies / import-salary-csv /
    register-articles）が生成する。存在しなければ空のまま（=「データ準備中」表示）。 */
 const companies = loadJson("tools/data/companies.json") || [];      // Wikidata 上場企業カタログ（cat:1）
+const salaryIndustry = loadJson("tools/data/salary-industry.json") || []; // 産業中分類（賃金構造基本統計調査）
+const salaryArea = loadJson("tools/data/salary-area.json") || [];         // 都道府県×職業大分類（同上）
 const images = loadJson("tools/data/images.json") || {};            // Commons キービジュアル（全点目視検証済み・クレジット付き）
-const salaryData = loadJson("tools/data/salary.json") || [];        // 公的統計（出典必須）
+const salaryData = (loadJson("tools/data/salary.json") || [])
+  .map((r) => ({ group: "occupation", ...r }));                     // 職種別（公的統計・出典必須）
 const extraArticles = (loadJson("tools/data/articles-extra.json") || []).filter(
   (a) => !articles.some((b) => b.slug === a.slug)                   // seed側と重複するslugはseed優先
 );
+
+/* ===== 記事ヒーロー画像（Commons・全点目視検証済みの images キーを再利用） =====
+   heroKey は DATA.images のキー。未指定の記事はヒーローなし（本文内画像のみ）。 */
+const ARTICLE_HERO = {
+  "tenshoku-hajimekata": "cat:occ_business", "taishoku-kirikata": "cat:occ_office",
+  "taishoku-todoke": "art:resume", "rirekisho-kakikata": "art:resume",
+  "shokumukeirekisho-kakikata": "cat:occ_office", "shibou-douki": "art:study",
+  "jiko-pr": "occ:marketing", "mensetsu-taisaku": "ind:hr", "mensetsu-taishokuriyu": "occ:hr",
+  "nenshu-koushou": "occ:accounting", "naitei-jitai": "ind:consulting",
+  "shitsugyou-hoken": "cat:occ_public", "mikeiken-tenshoku": "art:study",
+  "risukiringu": "ind:web", "tenshoku-agent-erabikata": "occ:sales",
+  // shushinkoyou-rekishi は本文内に歴史画像があるためヒーローなし
+  "tenshoku-jiki": "art:calendar", "zaishoku-katsudo": "ind:web",
+  "tenshoku-jiku": "cat:occ_business", "hitori-tenshoku": "occ:office-admin",
+  "taishoku-hikitsugi": "cat:occ_office", "taishoku-daiko": "cat:occ_public",
+  "yukyu-shoka": "art:calendar", "taishoku-tetsuzuki": "cat:occ_public",
+  "shokureki-blank": "art:resume", "taishoku-riyu-kakikata": "art:resume",
+  "shikaku-ran-kakikata": "art:study", "web-oubo-kihon": "ind:web",
+  "dainishinsotsu-keirekisho": "cat:occ_business", "hanbai-keirekisho": "occ:retail-sales",
+  "jimu-keirekisho": "cat:occ_office", "mensetsu-fukuso": "cat:occ_business",
+  "web-mensetsu": "ind:web", "mensetsu-jikoshokai": "ind:hr", "gyakushitsumon-rei": "ind:consulting",
+  "mensetsu-ochita": "occ:hr", "saishu-mensetsu": "ind:consulting",
+  "nenshu-mikata": "occ:accounting", "nenshu-souba": "occ:web-marketing",
+  "kenko-hoken-sentaku": "ind:medical", "seikatsuhi-junbi": "occ:accounting",
+  "tenshoku-kaisu": "occ:sales", "30dai-mikeiken": "art:study", "chiho-tenshoku": "art:rural",
+  "ryoritsu-shokuba": "cat:occ_education", "shikaku-erabikata": "art:study",
+  "manabinaoshi-jikan": "art:calendar", "online-gakushu": "ind:web", "naitei-hikaku": "ind:consulting",
+};
 
 /* ================= 書き出し ================= */
 const DATA = {
   siteSettings, regions, prefectures, industries, occCategories, occupations,
   qualifications, services, schools, jobs, rankings, attributes,
-  articles: articles.concat(extraArticles),
+  articles: articles.concat(extraArticles).map((a) => {
+    const heroKey = ARTICLE_HERO[a.slug];
+    if (heroKey && !images[heroKey]) throw new Error(`記事 ${a.slug} の heroKey ${heroKey} が images に存在しません`);
+    return heroKey ? { ...a, heroKey } : a;
+  }),
   stories, faqs, ctaRules,
-  companies, salaryData, images,
+  companies, salaryData: salaryData.concat(salaryIndustry, salaryArea), images,
 };
 writeFileSync(join(ROOT, "data.js"), "var DATA=" + JSON.stringify(DATA) + ";", "utf-8");
 console.log("OK: data.js written —",

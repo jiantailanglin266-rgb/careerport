@@ -54,4 +54,9 @@ export default {
   "occ:education":        { file: "File:Better quality learning in a safe environment (8423292169).jpg" },
   "occ:beauty":           { file: "File:DZ6 0589 A barber carefully trims a customers hair inside a cozy cluttered shop adorned with an American flag and various tools.jpg" },
   "occ:it-support":       { q: "computer repair technician support" },
+  // ---- 記事ヒーロー用 6 ----
+  "art:calendar": { file: "File:EFTA00003027-Beach-House - Cluttered desk with a calendar filled with handwritten notes pens sticky notes and a calculator.jpg" },
+  "art:study":    { file: "File:Pen-writing-notes-studying.jpg" },
+  "art:resume":   { file: "File:Person writing in a notebook while sitting at a desk.jpg" },
+  "art:rural":    { file: "File:Nagano Matsukawa.jpg" },
 };

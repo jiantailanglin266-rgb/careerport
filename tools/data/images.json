@@ -286,5 +286,35 @@
   "file": "File:Ejay presenting a business seminar.jpg",
   "credit": "Photo: Ejay273 / Wikimedia Commons, CC BY-SA 4.0",
   "page": "https://commons.wikimedia.org/wiki/File:Ejay_presenting_a_business_seminar.jpg"
+ },
+ "art:money": {
+  "src": "images/kv/art-money.jpg",
+  "file": "File:JAPAN-10-Constitutional Monarchy-One Yen (1873).jpg",
+  "credit": "Photo: National Museum of American History / Wikimedia Commons, Public Domain",
+  "page": "https://commons.wikimedia.org/wiki/File:JAPAN-10-Constitutional_Monarchy-One_Yen_(1873).jpg"
+ },
+ "art:resume": {
+  "src": "images/kv/art-resume.jpg",
+  "file": "File:Person writing in a notebook while sitting at a desk.jpg",
+  "credit": "Photo: Shixart1985 / Wikimedia Commons, CC BY 2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Person_writing_in_a_notebook_while_sitting_at_a_desk.jpg"
+ },
+ "art:rural": {
+  "src": "images/kv/art-rural.jpg",
+  "file": "File:Nagano Matsukawa.jpg",
+  "credit": "Photo: MaedaAkihiko / Wikimedia Commons, CC BY-SA 4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Nagano_Matsukawa.jpg"
+ },
+ "art:calendar": {
+  "src": "images/kv/art-calendar.jpg",
+  "file": "File:EFTA00003027-Beach-House - Cluttered desk with a calendar filled with handwritten notes pens sticky notes and a calculator.jpg",
+  "credit": "Photo: Federal Bureau of Investigation / Wikimedia Commons, Public Domain",
+  "page": "https://commons.wikimedia.org/wiki/File:EFTA00003027-Beach-House_-_Cluttered_desk_with_a_calendar_filled_with_handwritten_notes_pens_sticky_notes_and_a_calculator.jpg"
+ },
+ "art:study": {
+  "src": "images/kv/art-study.jpg",
+  "file": "File:Pen-writing-notes-studying.jpg",
+  "credit": "Photo: Tookapic / Wikimedia Commons, CC0",
+  "page": "https://commons.wikimedia.org/wiki/File:Pen-writing-notes-studying.jpg"
  }
 }

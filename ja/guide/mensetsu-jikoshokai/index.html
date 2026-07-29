@@ -10,7 +10,7 @@
 <meta property="og:site_name" content="CAREERPORT">
 <meta property="og:locale" content="ja_JP">
 <meta property="og:url" content="https://jiantailanglin266-rgb.github.io/careerport/ja/guide/mensetsu-jikoshokai/">
-<meta property="og:image" content="https://jiantailanglin266-rgb.github.io/careerport/images/ogp.png">
+<meta property="og:image" content="https://jiantailanglin266-rgb.github.io/careerport/images/kv/ind-hr.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="robots" content="index,follow">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23081426'/%3E%3Ccircle cx='32' cy='32' r='19' fill='none' stroke='%23d2a846' stroke-width='3'/%3E%3Cpath d='M32 15 L37 32 L32 49 L27 32 Z' fill='%23d2a846'/%3E%3Ccircle cx='32' cy='32' r='4' fill='%23081426' stroke='%23d2a846' stroke-width='2'/%3E%3C/svg%3E">
@@ -261,7 +261,7 @@ footer .legal{border-top:1px solid rgba(210,168,70,.2);margin-top:34px;padding-t
   </div>
   <div class="m-nav" id="mnav"></div>
 </header>
-<main><div class="wrap" id="app"><h1>面接の自己紹介は1分で —「経歴の音読」にしない構成</h1><p>「自己紹介をお願いします」への答え方。1分構成のテンプレート、自己PRとの違い、やってはいけないパターンを解説します。</p><p>公開: 2026-07-28 / 著者: CAREERPORT編集部</p><p>結論：面接冒頭の自己紹介は「氏名 → 経歴の要約 → 強みの一言 → 意欲」の順で約1分。詳細は後の質問で話すので、ここは全体地図を渡す場面です。</p><h2>1分構成のテンプレート</h2><p>1. 挨拶と氏名（5秒）
+<main><div class="wrap" id="app"><h1>面接の自己紹介は1分で —「経歴の音読」にしない構成</h1><p>「自己紹介をお願いします」への答え方。1分構成のテンプレート、自己PRとの違い、やってはいけないパターンを解説します。</p><figure><img src="https://jiantailanglin266-rgb.github.io/careerport/images/kv/ind-hr.jpg" alt="面接の自己紹介は1分で —「経歴の音読」にしない構成" width="1200" loading="lazy"><figcaption>Photo: blmcalifornia / Wikimedia Commons, Public Domain</figcaption></figure><p>公開: 2026-07-28 / 著者: CAREERPORT編集部</p><p>結論：面接冒頭の自己紹介は「氏名 → 経歴の要約 → 強みの一言 → 意欲」の順で約1分。詳細は後の質問で話すので、ここは全体地図を渡す場面です。</p><h2>1分構成のテンプレート</h2><p>1. 挨拶と氏名（5秒）
 2. 経歴の要約（30秒）：社数・職種・担当領域を大づかみに
 3. 強み・実績の一言（15秒）：この後深掘りしてほしい話の予告編
 4. 本日の意欲（10秒）：「本日はよろしくお願いいたします」で締め</p><h2>自己紹介と自己PRの違い</h2><p>自己紹介は「概要の説明」、自己PRは「強みの証明」です。冒頭から実績を語り込むと「話が長い人」の印象になります。聞かれたことに答える、が原則です。</p><h2>やってはいけないパターン</h2><p>- 履歴書の音読（相手は手元で見えています）
@@ -278,7 +278,7 @@ footer .legal{border-top:1px solid rgba(210,168,70,.2);margin-top:34px;padding-t
   var p=location.pathname, mm=p.match(/^(.*?)\/(ja|en)(\/|$)/);
   var b=mm?mm[1]:p.replace(/\/index\.html$/,"").replace(/\/$/,"");
   window.CP_BASE=b;
-  try{var x=new XMLHttpRequest();x.open("GET",b+"/data.js?v=4",false);x.send();if(x.status===200||x.status===0){(0,eval)(x.responseText)}}catch(e){}
+  try{var x=new XMLHttpRequest();x.open("GET",b+"/data.js?v=5",false);x.send();if(x.status===200||x.status===0){(0,eval)(x.responseText)}}catch(e){}
   try{var y=new XMLHttpRequest();y.open("GET",b+"/logic.js?v=1",false);y.send();if(y.status===200||y.status===0){(0,eval)(y.responseText)}}catch(e){}
 })();
 if(!window.DATA){document.getElementById("app").innerHTML='<div class="skel">データの読み込みに失敗しました。再読み込みしてください。</div>';}
@@ -414,6 +414,9 @@ function salaryRows(filter){
   filter=filter||{};
   return (DATA.salaryData||[]).filter(function(r){
     if(filter.occupationSlug&&(r.occupationSlugs||[]).indexOf(filter.occupationSlug)<0)return false;
+    if(filter.industrySlug&&(r.industrySlugs||[]).indexOf(filter.industrySlug)<0)return false;
+    if(filter.prefSlug&&(r.prefSlugs||[]).indexOf(filter.prefSlug)<0)return false;
+    if(filter.group&&r.group!==filter.group)return false;
     return true;
   });
 }
@@ -507,10 +510,10 @@ function vHome(){
 
   '<section class="sec rv"><div class="sec-h"><div class="eyebrow">Salary Data</div><h2>年収データベース</h2>'+
   '<p class="lead">'+esc(DATA.siteSettings.dataNote)+'</p></div>'+
-  ((DATA.salaryData||[]).length
-    ?salaryTable(DATA.salaryData.slice(0,5),true)+'<button class="btn line sm" style="margin-top:12px" onclick="go({name:\'salary\'})">全'+DATA.salaryData.length+'区分の職種別年収一覧を見る</button>'
+  (function(){var occ=salaryRows({group:"occupation"});return occ.length
+    ?salaryTable(occ.slice(0,5),true)+'<button class="btn line sm" style="margin-top:12px" onclick="go({name:\'salary\'})">職種'+occ.length+'区分・業界・都道府県別の年収一覧を見る</button>'
     :'<div class="notice blue">職種別・業界別・地域別・年代別の年収データは、公的統計（賃金構造基本統計調査 等）との接続後に出典・時点つきで公開します。現在は<b>データ準備中</b>です。</div>'+
-     '<button class="btn line sm" onclick="go({name:\'salary\'})">年収データベースの方針を見る</button>')+'</section>'+
+     '<button class="btn line sm" onclick="go({name:\'salary\'})">年収データベースの方針を見る</button>'})()+'</section>'+
 
   '<section class="sec rv"><div class="sec-h"><div class="eyebrow">Guide</div><h2>転職ノウハウ</h2></div>'+arts.map(artLi).join("")+
   '<p style="margin-top:14px"><a class="btn line sm" href="javascript:void(0)" onclick="go({name:\'articles\'})">記事一覧を見る</a></p></section>'+
@@ -691,7 +694,12 @@ function vIndustry(slug){
   return crumb([["業界から探す",{name:"industries"}],[nm(x)]])+
   '<div class="pagehead"><h1>'+esc(nm(x))+'業界の転職ガイド</h1><p class="lead">'+esc(x.summaries.ja)+'</p></div>'+
   kvBanner(["ind:"+x.slug],nm(x)+"業界のイメージ")+
-  '<div class="card" style="margin-top:10px"><h3>平均年収・市場データ</h3><p class="small">出典を明示できる統計データの接続後に掲載します。現在は<b>データ準備中</b>です。</p></div>'+
+  (function(){
+    var rows=salaryRows({industrySlug:x.slug});
+    return '<div class="card" style="margin-top:10px"><h3>関連する産業の平均年収</h3>'+(rows.length
+      ?'<p class="small" style="margin-bottom:8px">この業界に関連する統計上の産業区分の値です（区分名をご確認ください）。</p>'+salaryTable(rows)
+      :'<p class="small">この業界に対応する統計区分のデータは準備中です。公的統計のみを掲載する方針のため、推定値は表示しません。</p>')+'</div>';
+  })()+
   (occs.length?'<section class="sec" style="padding:24px 0"><div class="sec-h"><h2 style="font-size:20px">この業界の代表的な職種</h2></div><div class="grid g4">'+occs.map(occCard).join("")+'</section>':"")+
   ctaBlock({},null,nm(x)+"業界の転職に使えるサービス");
 }
@@ -708,7 +716,11 @@ function vArea(slug){
   var jobsN=DATA.jobs.filter(function(j){return j.prefId===p.id});
   return crumb([["地域から探す",{name:"areas"}],[nm(p)]])+
   '<div class="pagehead"><h1>'+esc(nm(p))+'の転職ガイド</h1><p class="lead">'+esc(p.summaries.ja)+'</p></div>'+
-  '<div class="grid g2" style="margin-top:12px"><div class="card"><h3>地域の求人統計</h3><p class="small">有効求人倍率・平均年収などの統計は、公的データ（e-Stat 等）接続後に出典・時点つきで掲載します。現在は<b>データ準備中</b>です。</p></div>'+
+  (function(){
+    var rows=salaryRows({prefSlug:p.slug});
+    return rows.length?'<section class="sec" style="padding:18px 0"><div class="sec-h"><h2 style="font-size:20px">'+esc(nm(p))+'の職業別平均年収（職業大分類）</h2></div>'+salaryTable(rows)+'</section>':'';
+  })()+
+  '<div class="grid g2" style="margin-top:12px">'+
   '<div class="card"><h3>U・Iターン転職</h3><p style="font-size:13.5px" class="desc">地方転職では、リモート求人の活用や、地域特化の転職サービス・自治体の移住支援制度の確認が有効とされます。</p></div></div>'+
   (jobsN.length?'<section class="sec" style="padding:22px 0"><div class="sec-h"><h2 style="font-size:20px">'+esc(nm(p))+'のデモ求人</h2></div><div class="grid g2">'+jobsN.map(jobCard).join("")+'</div></section>':"")+
   ctaBlock({},null,nm(p)+"での転職に使えるサービス");
@@ -718,11 +730,19 @@ function vArea(slug){
 function vSalary(){
   return crumb([["年収データベース"]])+
   '<div class="pagehead"><h1>年収データベース</h1><p class="lead">職種別・業界別・地域別・年代別の年収統計を、出典と時点を明示して掲載するデータベースです。</p></div>'+
-  ((DATA.salaryData||[]).length
-    ?'<section class="sec" style="padding:20px 0"><div class="sec-h"><h2 style="font-size:20px">職種別 平均年収一覧（'+DATA.salaryData.length+'区分・年収の高い順）</h2>'+
+  (function(){
+    var occ=salaryRows({group:"occupation"}),ind=salaryRows({group:"industry"});
+    if(!occ.length)return '<div class="notice blue"><b>現在、全データが「データ準備中」です。</b>当サイトは出典を明示できる公的統計（賃金構造基本統計調査 等）のみを掲載する方針のため、データ接続が完了するまで推定値・架空の数値を表示しません。</div>';
+    var h='<section class="sec" style="padding:20px 0"><div class="sec-h"><h2 style="font-size:20px">職種別 平均年収一覧（'+occ.length+'区分・年収の高い順）</h2>'+
       '<p class="small" style="margin-top:6px">一般労働者・産業計・男女計・企業規模計（10人以上）。「平均年収（算出）」は、きまって支給する現金給与額×12＋年間賞与その他特別給与額による算出値で、公的統計の原数値（月額給与・賞与）に基づきます。個人差が大きいため参考値です。</p></div>'+
-      salaryTable(DATA.salaryData,true)+'</section>'
-    :'<div class="notice blue"><b>現在、全データが「データ準備中」です。</b>当サイトは出典を明示できる公的統計（賃金構造基本統計調査 等）のみを掲載する方針のため、データ接続が完了するまで推定値・架空の数値を表示しません。</div>')+
+      salaryTable(occ,true)+'</section>';
+    if(ind.length)h+='<section class="sec" style="padding:20px 0"><div class="sec-h"><h2 style="font-size:20px">業界（産業）別 平均年収（'+ind.length+'区分）</h2>'+
+      '<p class="small" style="margin-top:6px">産業計と、各業界ページに対応付けた産業中分類の値です。産業大分類の統計はxlsx公表がないため、区分名を明示のうえ中分類の値を掲載しています。</p></div>'+salaryTable(ind,true)+'</section>';
+    h+='<section class="sec" style="padding:20px 0"><div class="sec-h"><h2 style="font-size:20px">都道府県別 平均年収（職業大分類）</h2>'+
+      '<p class="small" style="margin-top:6px">47都道府県それぞれの職業大分類別の平均年収は、各都道府県ページに掲載しています。</p></div>'+
+      '<div class="grid g4">'+DATA.prefectures.map(function(pp){return '<a class="tile" href="javascript:void(0)" onclick="go({name:\'area\',slug:\''+pp.slug+'\'})"><span class="ic">🗾</span>'+esc(nm(pp))+'</a>'}).join("")+'</div></section>';
+    return h;
+  })()+
   '<div class="grid g2" style="margin-top:14px">'+
   '<div class="card"><h3>掲載予定のデータ</h3><ul class="doc" style="padding-left:20px;font-size:14px"><li>職種別の平均年収・中央値・分布</li><li>業界別・地域別・年代別の年収</li><li>経験年数別・企業規模別の年収</li></ul></div>'+
   '<div class="card"><h3>データの方針</h3><p style="font-size:14px">すべての統計に出典名・出典URL・データ時点・更新日を付記します。詳細は<a href="javascript:void(0)" onclick="go({name:\'data-policy\'})" style="text-decoration:underline">データポリシー</a>をご覧ください。</p></div></div>'+
@@ -748,6 +768,7 @@ function vArticle(slug){
   return crumb([["転職ノウハウ",{name:"articles"}],[t.title]])+
   '<div class="pagehead"><span class="badge cat">'+esc(ART_CATS[a.category]||a.category)+'</span><h1 style="margin-top:8px">'+esc(t.title)+'</h1>'+
   '<div class="artmeta"><span>公開: '+fmtDate(a.publishedAt)+'</span><span>更新: '+fmtDate(a.updatedAt||a.publishedAt)+'</span><span>著者: '+esc(a.authorName)+'</span>'+(a.supervisorName?'<span>監修: '+esc(a.supervisorName)+'</span>':'<span>監修: 準備中</span>')+(a.factCheck==="reviewed"?' <span class="badge ok">ファクトチェック済</span>':"")+'</div></div>'+
+  (a.heroKey?kvBanner([a.heroKey],t.title):"")+
   '<div class="article-body">'+artToc(t.body)+artBody(t.body)+
   (a.sources&&a.sources.length?'<div class="src"><b>出典・参考資料</b><ul style="padding-left:18px;margin-top:6px">'+a.sources.map(function(s){return '<li><a href="'+esc(s.url)+'" target="_blank" rel="noopener" style="text-decoration:underline">'+esc(s.title)+"</a>"+(s.note?"（"+esc(s.note)+"）":"")+"</li>"}).join("")+"</ul></div>":"")+
   '<div class="src">本記事は一般的な情報の提供を目的としており、個別の状況への適用を保証するものではありません。誤りを見つけた場合は<a href="javascript:void(0)" onclick="go({name:\'correction-request\'})" style="text-decoration:underline">訂正依頼窓口</a>までご連絡ください。</div></div>'+

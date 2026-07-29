@@ -57,8 +57,8 @@ const STATIC_PAGES = {
   areas: ["/area/", "地域から探す — 47都道府県の転職ガイド" + S,
     "47都道府県別の転職情報の入口。地域の求人傾向・統計データは公的データ接続後に出典つきで掲載します。"],
   salary: (DATA.salaryData || []).length
-    ? ["/salary/", `職種別平均年収一覧【${DATA.salaryData[0].period}・${DATA.salaryData.length}区分】賃金構造基本統計調査` + S,
-       `賃金構造基本統計調査（${DATA.salaryData[0].period}）に基づく職種別の平均年収一覧。きまって支給する現金給与額×12＋年間賞与で算出した参考値を、出典・平均年齢・労働者数つきで${DATA.salaryData.length}区分掲載。`]
+    ? ["/salary/", `職種・業界・都道府県別の平均年収一覧【${DATA.salaryData[0].period}】賃金構造基本統計調査` + S,
+       `賃金構造基本統計調査（${DATA.salaryData[0].period}）に基づく職種${DATA.salaryData.filter(r=>r.group==="occupation").length}区分・産業${DATA.salaryData.filter(r=>r.group==="industry").length}区分・47都道府県の平均年収一覧。きまって支給する現金給与額×12＋年間賞与で算出した参考値を出典つきで掲載。`]
     : ["/salary/", "年収データベース — 職種別・業界別・地域別・年代別（準備中）" + S,
        "職種別・業界別・地域別・年代別の年収統計を出典と時点を明示して掲載するデータベース。現在は公的統計との接続準備中です。"],
   articles: ["/guide/", "転職ノウハウ — 退職・書類・面接・年収交渉の実用ガイド" + S,
@@ -239,14 +239,25 @@ function prerender(p) {
     const list = DATA.occupations.filter((o) => (o.industryIds || []).includes(p.x.id));
     const im = (DATA.images || {})["ind:" + p.x.slug];
     if (im) body += `<figure><img src="${SITE}/${esc(im.src)}" alt="${esc(nm(p.x))}業界のイメージ" width="1200" loading="lazy"><figcaption>${esc(im.credit)}</figcaption></figure>`;
-    body += `<p>${esc(p.x.summaries.ja)}</p>` + (list.length ? `<h2>代表的な職種</h2>` + occLinks(list) : "");
+    const indRows = (DATA.salaryData || []).filter((r) => (r.industrySlugs || []).includes(p.x.slug));
+    body += `<p>${esc(p.x.summaries.ja)}</p>` +
+      (indRows.length ? `<h2>関連する産業の平均年収</h2><ul>` + indRows.map((r) =>
+        `<li>${esc(r.label)} — 平均年収 約${r.averageSalary}万円（${esc(r.period)}・平均年齢${r.averageAge}歳・年収は、きまって支給する現金給与額×12＋年間賞与による算出値。出典: ${esc(r.sourceName)}）</li>`).join("") + `</ul>` : "") +
+      (list.length ? `<h2>代表的な職種</h2>` + occLinks(list) : "");
   } else if (p.kind === "area") {
-    body += `<p>${esc(p.p.summaries.ja)}</p><p>統計データ（有効求人倍率・平均年収等）は公的データ接続後に出典・時点つきで掲載します。</p>`;
+    const areaRows = (DATA.salaryData || []).filter((r) => (r.prefSlugs || []).includes(p.p.slug));
+    body += `<p>${esc(p.p.summaries.ja)}</p>` +
+      (areaRows.length ? `<h2>${esc(nm(p.p))}の職業別平均年収（職業大分類・${esc(areaRows[0].period)}）</h2>` +
+        `<p>年収は、きまって支給する現金給与額×12＋年間賞与その他特別給与額による算出値（一般労働者・男女計）。出典: ${esc(areaRows[0].sourceName)}。</p><ul>` +
+        areaRows.map((r) => `<li>${esc(r.occLabel)} — 平均年収 約${r.averageSalary}万円（平均年齢${r.averageAge}歳）</li>`).join("") + `</ul>`
+        : `<p>統計データは公的データ接続後に出典・時点つきで掲載します。</p>`);
   } else if (p.kind === "attr") {
     const t = tr(p.a);
     body += `<h2>進め方のポイント</h2><p>${esc(t.advice)}</p>`;
   } else if (p.kind === "article") {
     const t = tr(p.a);
+    const him = p.a.heroKey && (DATA.images || {})[p.a.heroKey];
+    if (him) body += `<figure><img src="${SITE}/${esc(him.src)}" alt="${esc(t.title)}" width="1200" loading="lazy"><figcaption>${esc(him.credit)}</figcaption></figure>`;
     body += `<p>公開: ${p.a.publishedAt.slice(0, 10)} / 著者: ${esc(p.a.authorName)}</p>` +
       String(t.body).split(/\n\n+/).map((x) => x.trim())
         .filter((x) => x && !/^\[img:/.test(x) && x !== "---")
@@ -278,8 +289,15 @@ function prerender(p) {
   } else if (p.kind === "salary") {
     if ((DATA.salaryData || []).length) {
       const first = DATA.salaryData[0];
-      body += `<p>一般労働者・産業計・男女計・企業規模計（10人以上）。「平均年収（算出）」は、きまって支給する現金給与額×12＋年間賞与その他特別給与額による算出値です。出典: ${esc(first.sourceName)}（${esc(first.period)}・${esc(first.sourceDate)}公表）。個人差が大きいため参考値としてご覧ください。</p><ol>` +
-        DATA.salaryData.map((r) => `<li>${esc(r.label)} — 平均年収 約${r.averageSalary}万円（平均年齢${r.averageAge}歳・労働者数約${r.sampleCount.toLocaleString()}人）</li>`).join("") + `</ol>`;
+      const occ = DATA.salaryData.filter((r) => r.group === "occupation");
+      const ind = DATA.salaryData.filter((r) => r.group === "industry");
+      body += `<p>一般労働者・男女計・企業規模計（10人以上）。「平均年収（算出）」は、きまって支給する現金給与額×12＋年間賞与その他特別給与額による算出値です。出典: ${esc(first.sourceName)}（${esc(first.period)}・${esc(first.sourceDate)}公表）。個人差が大きいため参考値としてご覧ください。</p>` +
+        `<h2>職種別（${occ.length}区分）</h2><ol>` +
+        occ.map((r) => `<li>${esc(r.label)} — 平均年収 約${r.averageSalary}万円（平均年齢${r.averageAge}歳・労働者数約${r.sampleCount.toLocaleString()}人）</li>`).join("") + `</ol>` +
+        (ind.length ? `<h2>業界（産業）別（${ind.length}区分・産業中分類）</h2><ol>` +
+          ind.map((r) => `<li>${esc(r.label)} — 平均年収 約${r.averageSalary}万円（平均年齢${r.averageAge}歳）</li>`).join("") + `</ol>` : "") +
+        `<h2>都道府県別</h2><p>47都道府県それぞれの職業大分類別平均年収は各都道府県ページに掲載。</p><ul>` +
+        DATA.prefectures.map((pp) => `<li><a href="${u(`/${L}/area/${pp.slug}/`)}">${esc(nm(pp))}の職業別平均年収</a></li>`).join("") + `</ul>`;
     } else {
       body += `<p>${esc(DATA.siteSettings.dataNote)}</p><p>現在、全データが「データ準備中」です。出典を明示できる公的統計（賃金構造基本統計調査 等）のみを掲載する方針のため、接続完了まで推定値・架空の数値を表示しません。</p>`;
     }
@@ -320,6 +338,11 @@ function buildPage(p) {
   html = html.replace(/(<meta property="og:title" content=")[^"]*(">)/, `$1${esc(p.title)}$2`);
   html = html.replace(/(<meta property="og:description" content=")[^"]*(">)/, `$1${esc(p.desc)}$2`);
   html = html.replace(/(<meta property="og:url" content=")[^"]*(">)/, `$1${SITE}${p.path}$2`);
+  // 記事・職種・業界のOGP画像はキービジュアルに差し替え（Commons・クレジットはページ内表示）
+  const ogIm = p.kind === "article" ? (p.a.heroKey && (DATA.images || {})[p.a.heroKey])
+    : p.kind === "occupation" ? ((DATA.images || {})["occ:" + p.o.slug] || (DATA.images || {})["cat:" + p.o.categoryId])
+    : p.kind === "industry" ? (DATA.images || {})["ind:" + p.x.slug] : null;
+  if (ogIm) html = html.replace(/(<meta property="og:image" content=")[^"]*(">)/, `$1${SITE}/${ogIm.src}$2`);
   const head = [
     `<link rel="canonical" href="${SITE}${p.path}">`,
     `<link rel="alternate" hreflang="ja" href="${SITE}${p.path}">`,
