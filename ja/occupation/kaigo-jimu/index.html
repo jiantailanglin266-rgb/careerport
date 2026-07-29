@@ -168,6 +168,20 @@ nav.g a.on{color:var(--gold-400)}
 .mq .it b{color:var(--gold-400);font-family:var(--en);font-weight:600;letter-spacing:.05em}
 @keyframes mqL{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media (prefers-reduced-motion:reduce){.mqtrack{animation:none}}
+/* 背景テキストマーキー（右上→左下の斜めライン・青・装飾のみ）
+   固定レイヤーで本文の背後に敷く。クリック透過・スクリーンリーダー非対象。
+   ホバーで停止しない（プロジェクト共通規約）／reduced-motion では静止 */
+.bgmq{position:fixed;inset:-28% -38%;z-index:0;pointer-events:none;overflow:hidden;
+  transform:rotate(-30deg);contain:strict}
+.bgmq .row{overflow:hidden}
+.bgmq .trk{display:flex;gap:46px;width:max-content;animation:bgmqRun 72s linear infinite;will-change:transform}
+.bgmq b{font-family:var(--en);font-weight:800;text-transform:uppercase;white-space:nowrap;
+  font-size:clamp(19px,2.5vw,36px);line-height:1.9;letter-spacing:.055em;color:rgba(36,64,110,.10)}
+.bgmq b.o{color:transparent;-webkit-text-stroke:1px rgba(36,64,110,.16)}
+@keyframes bgmqRun{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.bgmq .trk{animation:none}}
+main,footer.site{position:relative;z-index:1}
+
 /* key visual（Commons画像・カラーグレード統一＋クレジット常時表示） */
 .kv{position:relative;border-radius:var(--r);overflow:hidden;margin:18px 0 6px;box-shadow:var(--shadow)}
 .kv img{display:block;width:100%;height:300px;object-fit:cover;filter:saturate(.88) contrast(1.04) brightness(.97)}
@@ -252,6 +266,10 @@ footer .legal{border-top:1px solid rgba(210,168,70,.2);margin-top:34px;padding-t
   .hero{background-position:70% center}
   .hero:before{background:linear-gradient(180deg,rgba(255,255,255,.93) 0%,rgba(255,255,255,.82) 55%,rgba(255,255,255,.55) 100%)}
 }
+@media(max-width:960px){
+  .bgmq b{font-size:clamp(15px,4.2vw,24px);line-height:1.75}
+  .bgmq{inset:-35% -45%}
+}
 @media(max-width:560px){
   body{font-size:14.5px}
   .g2,.g3,.g4{grid-template-columns:1fr}
@@ -269,6 +287,7 @@ footer .legal{border-top:1px solid rgba(210,168,70,.2);margin-top:34px;padding-t
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"CAREERPORT","item":"https://jiantailanglin266-rgb.github.io/careerport/ja/"},{"@type":"ListItem","position":2,"name":"職種から探す","item":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/"},{"@type":"ListItem","position":3,"name":"介護事務","item":"https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/kaigo-jimu/"}]}</script>
 </head>
 <body>
+<div class="bgmq" id="bgmq" aria-hidden="true"></div>
 <header class="site">
   <div class="wrap hd">
     <a href="javascript:void(0)" onclick="go({name:'home'})" class="logo" aria-label="CAREERPORT トップへ">
@@ -293,7 +312,7 @@ footer .legal{border-top:1px solid rgba(210,168,70,.2);margin-top:34px;padding-t
   var p=location.pathname, mm=p.match(/^(.*?)\/(ja|en)(\/|$)/);
   var b=mm?mm[1]:p.replace(/\/index\.html$/,"").replace(/\/$/,"");
   window.CP_BASE=b;
-  try{var x=new XMLHttpRequest();x.open("GET",b+"/data.js?v=9",false);x.send();if(x.status===200||x.status===0){(0,eval)(x.responseText)}}catch(e){}
+  try{var x=new XMLHttpRequest();x.open("GET",b+"/data.js?v=10",false);x.send();if(x.status===200||x.status===0){(0,eval)(x.responseText)}}catch(e){}
   try{var y=new XMLHttpRequest();y.open("GET",b+"/logic.js?v=1",false);y.send();if(y.status===200||y.status===0){(0,eval)(y.responseText)}}catch(e){}
 })();
 if(!window.DATA){document.getElementById("app").innerHTML='<div class="skel">データの読み込みに失敗しました。再読み込みしてください。</div>';}
@@ -452,6 +471,29 @@ function kvBanner(keys,alt,small){
   var im=imgFor.apply(null,keys);if(!im)return"";
   return '<div class="kv'+(small?" sm":"")+'"><img loading="lazy" src="'+window.CP_BASE+"/"+esc(im.src)+'" alt="'+esc(alt||"")+'"><span class="cr">'+esc(im.credit)+"</span></div>";
 }
+/* 背景テキストマーキー（装飾）— 転職・求人に関する英語ワードを斜めに流す */
+var BGMQ_ROWS=[
+ ["CAREER","JOB SEARCH","RECRUITMENT","HIRING","RESUME","INTERVIEW","NEXT STEP"],
+ ["CAREER CHANGE","JOB OFFER","HEADHUNTING","SCOUT","TALENT","EMPLOYMENT","MATCHING"],
+ ["SALARY","COMPENSATION","PROMOTION","NEGOTIATION","BENEFITS","ANNUAL INCOME"],
+ ["MID-CAREER","NEW GRADUATE","SECOND CAREER","POTENTIAL","FIRST JOB","GROWTH"],
+ ["SKILL UP","RESKILLING","CERTIFICATION","QUALIFICATION","PORTFOLIO","LEARNING"],
+ ["HUMAN RESOURCES","RECRUITER","CAREER ADVISOR","AGENT","CONSULTING","SUPPORT"],
+ ["WORK STYLE","REMOTE WORK","WORK LIFE BALANCE","FULL-TIME","CONTRACT","FLEXTIME"],
+ ["CAREER PATH","EXPERIENCE","LEADERSHIP","MANAGEMENT","PROFESSIONAL","EXPERTISE"],
+ ["JOB VACANCY","APPLICATION","ONBOARDING","OFFER LETTER","RETENTION","WELCOME"],
+ ["ENGINEERING","MARKETING","SALES","DESIGN","FINANCE","MEDICAL CARE","LOGISTICS"],
+ ["TURNING POINT","YOUR COMPASS","DEPARTURE","NEW CHAPTER","CAREER PORT","SET SAIL"]
+];
+function bgMarquee(){
+  var el=document.getElementById("bgmq");if(!el||el.childNodes.length)return;
+  el.innerHTML=BGMQ_ROWS.map(function(ws,i){
+    var items=ws.map(function(w,j){return '<b'+((i+j)%3===0?' class="o"':'')+'>'+esc(w)+'</b>'}).join("");
+    return '<div class="row"><div class="trk" style="animation-duration:'+(58+i*9)+'s;'+
+      'margin-left:'+(i%2?'-8%':'-2%')+'">'+items+items+items+'</div></div>';
+  }).join("");
+}
+
 /* フォトマーキー: 1本=横長画像12枚構成（Commons・目視検証済み・クレジット付き）
    セットは重複なしの12枚で固定。ホバーで停止しない（プロジェクト共通規約）。 */
 /* マーキーの画像は日本国内で撮影されたもののみ（ユーザー指定）。各セット12枚・重複なし。 */
@@ -1218,6 +1260,7 @@ window.mypageClear=mypageClear;window.afTrack=afTrack;
 (function init(){
   if(!window.DATA)return;
   state.view=parsePath();
+  bgMarquee();
   renderFoot();
   render();
   window.addEventListener("popstate",function(){state.view=parsePath();render()});
