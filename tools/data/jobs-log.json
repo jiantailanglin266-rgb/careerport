@@ -1,0 +1,60 @@
+[
+ {
+  "at": "2026-07-29T19:04:26.404Z",
+  "providerId": "csv",
+  "provider": "CSV直接提供",
+  "fetched": 4,
+  "accepted": 1,
+  "rejected": 3,
+  "totalAfter": 1,
+  "rejectReasons": [
+   {
+    "key": "csv:TEST-002",
+    "errs": [
+     "必須項目 smokingPolicy が空"
+    ]
+   },
+   {
+    "key": "csv:TEST-003",
+    "errs": [
+     "差別的な募集条件の可能性: /(男性|女性|男子|女子)\\s*(のみ|限定|歓迎|向け)/"
+    ]
+   },
+   {
+    "key": "csv:TEST-004",
+    "errs": [
+     "掲載期限切れ"
+    ]
+   }
+  ]
+ },
+ {
+  "at": "2026-07-29T18:46:48.933Z",
+  "providerId": "csv",
+  "provider": "CSV直接提供",
+  "fetched": 4,
+  "accepted": 1,
+  "rejected": 3,
+  "totalAfter": 1,
+  "rejectReasons": [
+   {
+    "key": "csv:TEST-002",
+    "errs": [
+     "必須項目 smokingPolicy が空"
+    ]
+   },
+   {
+    "key": "csv:TEST-003",
+    "errs": [
+     "差別的な募集条件の可能性: /(男性|女性|男子|女子)\\s*(のみ|限定|歓迎|向け)/"
+    ]
+   },
+   {
+    "key": "csv:TEST-004",
+    "errs": [
+     "掲載期限切れ"
+    ]
+   }
+  ]
+ }
+]

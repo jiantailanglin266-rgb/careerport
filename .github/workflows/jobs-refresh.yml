@@ -1,0 +1,69 @@
+﻿# 求人データの定期更新
+#
+# 動作:
+#   1. プロバイダーが設定されていれば取り込み（未設定ならスキップ）
+#   2. 掲載期限切れの求人を削除（--prune）
+#   3. data.js を再生成して静的ページをビルド
+#   4. 差分があればコミット＆プッシュ（＝GitHub Pages に反映）
+#
+# 有効化の手順:
+#   1. 求人提供元との契約・許諾を得る（README「実求人の接続」参照）
+#   2. リポジトリの Settings → Secrets and variables → Actions で設定
+#        変数 JOB_PROVIDER : csv | jobposting
+#        変数 JOB_FEED_URL : jobposting の場合のフィードURL
+#        （認証が必要なフィードは Secrets に置き、下の run で参照する）
+#   3. Settings → Actions → Workflow permissions を "Read and write" にする
+#
+# JOB_PROVIDER が未設定のうちは prune とビルドのみが走る（＝安全に空回りする）。
+name: jobs-refresh
+
+on:
+  schedule:
+    - cron: "0 20 * * *"   # 毎日 05:00 JST
+  workflow_dispatch:
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: 求人を取り込む（プロバイダー設定時のみ）
+        env:
+          JOB_PROVIDER: ${{ vars.JOB_PROVIDER }}
+          JOB_FEED_URL: ${{ vars.JOB_FEED_URL }}
+        run: |
+          if [ -z "$JOB_PROVIDER" ]; then
+            echo "JOB_PROVIDER が未設定のため取り込みをスキップします（prune とビルドのみ実行）"
+          elif [ "$JOB_PROVIDER" = "jobposting" ]; then
+            node tools/import-jobs.mjs jobposting --url "$JOB_FEED_URL"
+          else
+            node tools/import-jobs.mjs "$JOB_PROVIDER"
+          fi
+
+      - name: 掲載期限切れを削除
+        run: node tools/import-jobs.mjs --prune
+
+      - name: データ再生成・検証・ビルド
+        run: |
+          node tools/seed.mjs
+          node tools/test-logic.mjs
+          node build.mjs
+
+      - name: 差分をコミット
+        run: |
+          git config user.name  "careerport-bot"
+          git config user.email "noreply@users.noreply.github.com"
+          if [ -n "$(git status --porcelain)" ]; then
+            git add -A
+            git commit -m "求人データの定期更新 ($(date -u +%Y-%m-%d))"
+            git pull --rebase --autostash
+            git push
+          else
+            echo "差分なし"
+          fi

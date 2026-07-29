@@ -925,10 +925,31 @@ const ARTICLE_HERO = {
   "manabinaoshi-jikan": "art:calendar", "online-gakushu": "ind:web", "naitei-hikaku": "ind:consulting",
 };
 
+/* ===== 実求人（tools/import-jobs.mjs が取り込んだもの）=====
+   デモ求人とは別配列で保持し、実求人が1件でもあれば求人検索は実求人を優先表示する。
+   実求人は掲載期限内・法定項目ありの検証を通ったものだけがここに来る。 */
+const realJobs = (loadJson("tools/data/jobs.json") || [])
+  .filter((j) => new Date(j.expiresAt) >= new Date())
+  .map((j) => ({
+    ...j, isDemo: false, status: "published",
+    id: "rj_" + j.slug.replace(/-/g, "_"),
+    prefId: j.prefSlug ? "pf_" + j.prefSlug.replace(/-/g, "_") : null,
+    occupationId: j.occupationSlug ? "oc_" + j.occupationSlug.replace(/-/g, "_") : null,
+  }));
+{
+  const prefIds = new Set(prefectures.map((p) => p.id));
+  const occIds = new Set(occupations.map((o) => o.id));
+  for (const j of realJobs) {
+    if (j.prefId && !prefIds.has(j.prefId)) throw new Error(`実求人 ${j.slug}: 不明な都道府県 ${j.prefId}`);
+    if (j.occupationId && !occIds.has(j.occupationId)) throw new Error(`実求人 ${j.slug}: 不明な職種 ${j.occupationId}`);
+  }
+  if (realJobs.length) console.log(`real jobs: ${realJobs.length} 件（掲載期限内）`);
+}
+
 /* ================= 書き出し ================= */
 const DATA = {
   siteSettings, regions, prefectures, industries, occCategories, occupations,
-  qualifications, services, schools, jobs, rankings, attributes,
+  qualifications, services, schools, jobs, realJobs, rankings, attributes,
   articles: articles.concat(extraArticles).map((a) => {
     const heroKey = ARTICLE_HERO[a.slug];
     if (heroKey && !images[heroKey]) throw new Error(`記事 ${a.slug} の heroKey ${heroKey} が images に存在しません`);

@@ -318,7 +318,7 @@ footer .legal{border-top:1px solid rgba(210,168,70,.2);margin-top:34px;padding-t
   var p=location.pathname, mm=p.match(/^(.*?)\/(ja|en)(\/|$)/);
   var b=mm?mm[1]:p.replace(/\/index\.html$/,"").replace(/\/$/,"");
   window.CP_BASE=b;
-  try{var x=new XMLHttpRequest();x.open("GET",b+"/data.js?v=10",false);x.send();if(x.status===200||x.status===0){(0,eval)(x.responseText)}}catch(e){}
+  try{var x=new XMLHttpRequest();x.open("GET",b+"/data.js?v=11",false);x.send();if(x.status===200||x.status===0){(0,eval)(x.responseText)}}catch(e){}
   try{var y=new XMLHttpRequest();y.open("GET",b+"/logic.js?v=1",false);y.send();if(y.status===200||y.status===0){(0,eval)(y.responseText)}}catch(e){}
 })();
 if(!window.DATA){document.getElementById("app").innerHTML='<div class="skel">データの読み込みに失敗しました。再読み込みしてください。</div>';}
@@ -410,14 +410,17 @@ function svcCard(s,idx){
   '<div style="margin-top:auto;display:flex;gap:8px;flex-wrap:wrap;align-items:center"><a class="btn line sm" href="javascript:void(0)" onclick="go({name:\'service\',slug:\''+esc(s.slug)+'\'})">詳細・比較</a>'+favBtn("services",s.id)+'</div></div></div>';
 }
 function jobCard(j){
-  var t=tr(j),oc=byId(DATA.occupations,j.occupationId),pf=byId(DATA.prefectures,j.prefId);
+  var real=j.isDemo===false;
+  var oc=byId(DATA.occupations,j.occupationId),pf=byId(DATA.prefectures,j.prefId);
+  var title=real?j.title:tr(j).title, desc=real?j.description:tr(j).description;
   return '<div class="card job thumb-card">'+
   cardThumb(oc?["occ:"+oc.slug,"cat:"+oc.categoryId]:["cat:occ_business"],oc?tr(oc).name:"")+
   '<div class="tc-body">'+
-  '<div>'+(j.isDemo?badgeDemo():"")+' <span class="badge cat">'+esc(EMP[j.employmentType]||"")+'</span></div>'+
-  '<div class="ttl" style="margin-top:6px"><a href="javascript:void(0)" onclick="go({name:\'job\',slug:\''+esc(j.slug)+'\'})">'+esc(t.title)+'</a></div>'+
-  '<div class="meta"><span>📍 '+esc(pf?nm(pf):"")+'</span><span>💼 '+esc(oc?tr(oc).name:"")+'</span><span>💰 '+(j.salaryMin==null?'年収非公開（デモ）':money(j.salaryMin)+"〜")+'</span></div>'+
-  '<p class="desc">'+esc((t.description||"").slice(0,64))+'…</p>'+
+  '<div>'+(real?"":badgeDemo()+" ")+'<span class="badge cat">'+esc(EMP[j.employmentType]||"")+'</span>'+(real&&j.remote?' <span class="badge ok">リモート可</span>':"")+'</div>'+
+  '<div class="ttl" style="margin-top:6px"><a href="javascript:void(0)" onclick="go({name:\'job\',slug:\''+esc(j.slug)+'\'})">'+esc(title)+'</a></div>'+
+  (real?'<p class="small" style="margin:2px 0 0">'+esc(j.companyName)+'</p>':"")+
+  '<div class="meta"><span>📍 '+esc([pf?nm(pf):"",real?j.city:""].filter(Boolean).join(" "))+'</span><span>💼 '+esc(oc?tr(oc).name:"")+'</span><span>💰 '+esc(jobSalaryText(j))+'</span></div>'+
+  '<p class="desc">'+esc(String(desc||"").slice(0,64))+'…</p>'+
   '<div style="margin-top:10px;display:flex;gap:8px"><a class="btn line sm" href="javascript:void(0)" onclick="go({name:\'job\',slug:\''+esc(j.slug)+'\'})">詳細を見る</a>'+favBtn("jobs",j.id)+'</div></div></div>';
 }
 function occCard(o){
@@ -644,46 +647,94 @@ function homeSearch(f){
 }
 
 /* ----- 求人 ----- */
+/* ----- 求人 -----
+   実求人（DATA.realJobs＝法定明示項目の検証を通過し掲載期限内のもの）があればそれを表示し、
+   1件も無い場合のみデモ求人にフォールバックする。両者を混在させない。 */
+function jobPool(){
+  var real=(DATA.realJobs||[]).filter(function(j){return j.status==="published"});
+  return real.length?{list:real,real:true}:{list:DATA.jobs.filter(function(j){return j.status==="published"}),real:false};
+}
+function jobBySlug(slug){return bySlug(DATA.realJobs||[],slug)||bySlug(DATA.jobs,slug)}
+function jobTitle(j){return j.isDemo===false?j.title:tr(j).title}
+function jobDesc(j){return j.isDemo===false?j.description:tr(j).description}
+function jobSalaryText(j){
+  if(j.isDemo!==false)return j.salaryMin==null?"年収非公開（デモ）":money(j.salaryMin)+"〜";
+  if(j.salaryMin==null)return"応相談";
+  var U={year:"年収",month:"月給",day:"日給",hour:"時給"};
+  var f=function(v){return j.salaryUnit==="year"?Math.round(v/10000)+"万円":v.toLocaleString()+"円"};
+  return (U[j.salaryUnit]||"")+" "+f(j.salaryMin)+(j.salaryMax?"〜"+f(j.salaryMax):"〜");
+}
 function vJobs(q){
   q=q||{};
-  var list=DATA.jobs.filter(function(j){
-    if(j.status!=="published")return false;
+  var pool=jobPool();
+  var list=pool.list.filter(function(j){
     if(q.oc){var o=bySlug(DATA.occupations,q.oc);if(!o||j.occupationId!==o.id)return false}
     if(q.pf){var p=bySlug(DATA.prefectures,q.pf);if(!p||j.prefId!==p.id)return false}
     if(q.et&&j.employmentType!==q.et)return false;
-    if(q.kw){var t=tr(j);if((t.title+t.description).indexOf(q.kw)<0)return false}
+    if(q.kw&&(jobTitle(j)+jobDesc(j)+(j.companyName||"")).indexOf(q.kw)<0)return false;
     return true;
   });
+  var notice=pool.real
+    ?'<div class="notice blue">掲載中の求人は、提携先から提供を受けた実求人です。応募は各求人の募集主体または掲載元サイトで行っていただきます（<b>当サイトは職業紹介・仲介を行いません</b>）。掲載内容は取得時点のもので、募集終了後に反映が遅れる場合があります。</div>'
+    :'<div class="notice">🚧 <b>求人データは提携準備中です。</b>現在表示されているのはレイアウト確認用のデモ求人であり、実在の募集ではありません。正規の求人データ提携（API・CSV）の開始後、実求人に切り替わります。求人情報の無断転載は行いません。</div>';
   return crumb([["求人を探す"]])+
-  '<div class="pagehead"><h1>求人を探す</h1><p class="lead">条件を組み合わせて求人を検索できます。</p></div>'+
-  '<div class="notice">🚧 <b>求人データは提携準備中です。</b>現在表示されているのはレイアウト確認用のデモ求人であり、実在の募集ではありません。正規の求人データ提携（API・CSV）の開始後、実求人に切り替わります。求人情報の無断転載は行いません。</div>'+
+  '<div class="pagehead"><h1>求人を探す</h1><p class="lead">条件を組み合わせて求人を検索できます。</p></div>'+notice+
   '<form class="card" style="margin:14px 0" onsubmit="return jobsSearch(this)"><div class="grid g4">'+
   '<input name="kw" type="text" placeholder="キーワード" value="'+esc(q.kw||"")+'" style="padding:10px 12px;border:1px solid var(--border);border-radius:9px;font-family:var(--sans)">'+
   '<select name="oc" style="padding:10px;border:1px solid var(--border);border-radius:9px"><option value="">職種：すべて</option>'+DATA.occupations.filter(function(o){return o.featured}).map(function(o){return '<option value="'+o.slug+'"'+(q.oc===o.slug?" selected":"")+'>'+esc(tr(o).name)+"</option>"}).join("")+'</select>'+
   '<select name="pf" style="padding:10px;border:1px solid var(--border);border-radius:9px"><option value="">勤務地：すべて</option>'+DATA.prefectures.map(function(p){return '<option value="'+p.slug+'"'+(q.pf===p.slug?" selected":"")+'>'+esc(nm(p))+"</option>"}).join("")+'</select>'+
   '<div style="display:flex;gap:8px"><select name="et" style="flex:1;padding:10px;border:1px solid var(--border);border-radius:9px"><option value="">雇用形態</option>'+Object.keys(EMP).map(function(k){return '<option value="'+k+'"'+(q.et===k?" selected":"")+'>'+EMP[k]+"</option>"}).join("")+'</select>'+
   '<button class="btn navy sm" type="submit">検索</button></div></div></form>'+
-  '<p class="small" style="margin:8px 0">'+list.length+'件（すべてデモ）</p>'+
+  '<p class="small" style="margin:8px 0">'+list.length+'件'+(pool.real?"":"（すべてデモ）")+'</p>'+
   (list.length?'<div class="grid g2">'+list.map(jobCard).join("")+"</div>":'<div class="empty">条件に一致する求人がありません。条件を減らすか、<a href="javascript:void(0)" onclick="go({name:\'occupations\'})" style="text-decoration:underline">職種ページ</a>から情報収集を始めてみてください。</div>')+
   ctaBlock({},["agent","job-site"],"求人探しと並行して使えるサービス");
 }
 function jobsSearch(f){go({name:"jobs",q:{kw:f.kw.value,oc:f.oc.value,pf:f.pf.value,et:f.et.value}});return false}
+function applyBtn(j){
+  if(j.isDemo!==false||!j.applyUrl)return '<span class="small" style="align-self:center">外部応募リンクは正規求人データ接続後に設置されます</span>';
+  return '<a class="btn gold sm" target="_blank" rel="nofollow noopener" href="'+esc(j.applyUrl)+'" onclick="evTrack(\'job_apply_click\',{job:\''+esc(j.slug)+'\'})">応募ページへ（外部サイト）</a>';
+}
 function vJob(slug){
-  var j=bySlug(DATA.jobs,slug);if(!j)return vNotFound();
-  var t=tr(j),oc=byId(DATA.occupations,j.occupationId),pf=byId(DATA.prefectures,j.prefId);
+  var j=jobBySlug(slug);if(!j)return vNotFound();
+  var real=j.isDemo===false;
+  var oc=byId(DATA.occupations,j.occupationId),pf=byId(DATA.prefectures,j.prefId);
   pushHistory("job",j.id);
-  var rel=DATA.jobs.filter(function(x){return x.id!==j.id&&x.occupationId===j.occupationId}).slice(0,2);
-  return crumb([["求人を探す",{name:"jobs"}],[t.title]])+
-  '<div class="pagehead"><div>'+badgeDemo()+' <span class="badge cat">'+esc(EMP[j.employmentType]||"")+'</span></div><h1 style="margin-top:8px">'+esc(t.title)+'</h1></div>'+
-  '<div class="notice">この求人はレイアウト確認用の<b>デモ求人</b>です。実在の募集ではなく、応募はできません。</div>'+
+  var pool=jobPool();
+  var rel=pool.list.filter(function(x){return x.id!==j.id&&x.occupationId===j.occupationId}).slice(0,2);
+  var rows=real?[
+    ["仕事内容",j.description],["応募資格",j.requirements||"—"],
+    ["募集主体",j.companyName],["雇用形態",EMP[j.employmentType]||"—"],
+    ["契約期間",j.contractPeriod],["試用期間",j.trialPeriod],
+    ["就業場所",[pf?nm(pf):"",j.city,j.workplaceNote].filter(Boolean).join(" ")],
+    ["就業時間",[j.workingHours,j.breakTime?"休憩 "+j.breakTime:"",j.overtime?"時間外 "+j.overtime:""].filter(Boolean).join("／")],
+    ["休日",j.holidays],["賃金",jobSalaryText(j)+(j.salaryNote?"（"+j.salaryNote+"）":"")],
+    ["加入保険",j.insurance],["受動喫煙防止措置",j.smokingPolicy],
+    ["掲載元",j.sourceName],["掲載期限",j.expiresAt?fmtDate(j.expiresAt):"—"],
+    ["情報取得日",j.fetchedAt?fmtDate(j.fetchedAt):"—"]
+  ]:[
+    ["仕事内容",tr(j).description],["応募資格",tr(j).requirements||"—"],["勤務地",pf?nm(pf):"—"],
+    ["雇用形態",EMP[j.employmentType]||"—"],["想定年収",jobSalaryText(j)],
+    ["掲載元","デモデータ（正規プロバイダー接続前）"],["更新日",fmtDate(j.publishedAt)]
+  ];
+  return crumb([["求人を探す",{name:"jobs"}],[jobTitle(j)]])+
+  '<div class="pagehead"><div>'+(real?"":badgeDemo()+" ")+'<span class="badge cat">'+esc(EMP[j.employmentType]||"")+'</span></div>'+
+  '<h1 style="margin-top:8px">'+esc(jobTitle(j))+'</h1>'+(real?'<p class="lead">'+esc(j.companyName)+'</p>':"")+'</div>'+
+  (real
+    ?'<div class="notice blue">この求人情報は<b>'+esc(j.sourceName)+'</b>から提供を受けて掲載しています。応募・お問い合わせは応募ページ（外部サイト）で行ってください。<b>当サイトは職業紹介事業者ではなく、選考・条件交渉には関与しません。</b>最新の募集状況は掲載元でご確認ください。</div>'
+    :'<div class="notice">この求人はレイアウト確認用の<b>デモ求人</b>です。実在の募集ではなく、応募はできません。</div>')+
   '<div class="two-col"><div>'+
   '<div class="card"><h3>募集要項</h3><div class="tbl-scroll"><table class="tbl">'+
-  [["仕事内容",t.description],["応募資格",t.requirements||"—"],["勤務地",pf?nm(pf):"—"],["雇用形態",EMP[j.employmentType]||"—"],["想定年収",j.salaryMin==null?"非公開（デモ）":""],["掲載元","デモデータ（正規プロバイダー接続前）"],["更新日",fmtDate(j.publishedAt)]].map(function(r){return "<tr><th style='width:120px'>"+r[0]+"</th><td>"+esc(r[1])+"</td></tr>"}).join("")+
-  '</table></div><div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">'+favBtn("jobs",j.id)+'<span class="small" style="align-self:center">外部応募リンクは正規求人データ接続後に設置されます</span></div></div>'+
+  rows.map(function(r){return "<tr><th style='width:140px'>"+esc(r[0])+"</th><td>"+esc(r[1]||"—").replace(/\n/g,"<br>")+"</td></tr>"}).join("")+
+  '</table></div><div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;align-items:center">'+applyBtn(j)+favBtn("jobs",j.id)+'</div>'+
+  (real&&j.sourceUrl?'<p class="small" style="margin-top:10px">掲載元の求人ページ: <a href="'+esc(j.sourceUrl)+'" target="_blank" rel="nofollow noopener" style="text-decoration:underline">'+esc(j.sourceUrl)+'</a></p>':"")+'</div>'+
   (oc?'<div class="card" style="margin-top:14px"><h3>この職種について：'+esc(tr(oc).name)+'</h3><p class="desc">'+esc(tr(oc).summary)+'</p><a class="btn line sm" style="margin-top:10px" href="javascript:void(0)" onclick="go({name:\'occupation\',slug:\''+oc.slug+'\'})">職種ページを見る</a></div>':"")+
   '</div><div class="side">'+
-  (rel.length?'<div class="card"><h3 style="font-size:14px">類似のデモ求人</h3>'+rel.map(function(x){return '<p style="font-size:13px;margin:8px 0"><a href="javascript:void(0)" onclick="go({name:\'job\',slug:\''+x.slug+'\'})" style="text-decoration:underline">'+esc(tr(x).title)+"</a></p>"}).join("")+"</div>":"")+
-  '<div class="card"><h3 style="font-size:14px">年収データ</h3><p class="small">この職種の統計年収はデータ準備中です。<a href="javascript:void(0)" onclick="go({name:\'salary\'})" style="text-decoration:underline">方針を見る</a></p></div>'+
+  (rel.length?'<div class="card"><h3 style="font-size:14px">類似の求人</h3>'+rel.map(function(x){return '<p style="font-size:13px;margin:8px 0"><a href="javascript:void(0)" onclick="go({name:\'job\',slug:\''+x.slug+'\'})" style="text-decoration:underline">'+esc(jobTitle(x))+"</a></p>"}).join("")+"</div>":"")+
+  '<div class="card"><h3 style="font-size:14px">年収データ</h3>'+(function(){
+    var sr=oc?salaryRows({occupationSlug:oc.slug}):[];
+    return sr.length?'<p class="small">統計区分「'+esc(sr[0].label)+'」の平均年収は約'+sr[0].averageSalary+'万円（'+esc(sr[0].period)+'・参考値）。</p><a class="btn line sm" style="margin-top:8px" href="javascript:void(0)" onclick="go({name:\'salary\'})">年収一覧</a>'
+      :'<p class="small">この職種の統計年収はデータ準備中です。<a href="javascript:void(0)" onclick="go({name:\'salary\'})" style="text-decoration:underline">方針を見る</a></p>';
+  })()+'</div>'+
   '</div></div>'+
   ctaBlock({occCats:oc?[oc.categoryId]:[]},null,"この職種の転職に使えるサービス");
 }
@@ -771,7 +822,7 @@ function vOccupation(slug){
   var o=bySlug(DATA.occupations,slug);if(!o)return vNotFound();
   var t=tr(o);pushHistory("occupation",o.id);
   var quals=DATA.qualifications.filter(function(q){return q.occupationIds.indexOf(o.id)>=0});
-  var jobsN=DATA.jobs.filter(function(j){return j.occupationId===o.id});
+  var jobsN=jobPool().list.filter(function(j){return j.occupationId===o.id});
   var inds=(o.industryIds||[]).map(function(id){return byId(DATA.industries,id)}).filter(Boolean);
   return crumb([["職種から探す",{name:"occupations"}],[t.name]])+
   '<div class="pagehead"><div class="eyebrow">'+esc(o.slug.toUpperCase().replace(/-/g," "))+'</div><h1>'+esc(t.name)+'の転職ガイド</h1><p class="lead">'+esc(t.summary)+'</p></div>'+
@@ -823,7 +874,7 @@ function vAreas(){
 }
 function vArea(slug){
   var p=bySlug(DATA.prefectures,slug);if(!p)return vNotFound();
-  var jobsN=DATA.jobs.filter(function(j){return j.prefId===p.id});
+  var jobsN=jobPool().list.filter(function(j){return j.prefId===p.id});
   return crumb([["地域から探す",{name:"areas"}],[nm(p)]])+
   '<div class="pagehead"><h1>'+esc(nm(p))+'の転職ガイド</h1><p class="lead">'+esc(p.summaries.ja)+'</p></div>'+
   (function(){
@@ -1033,7 +1084,7 @@ function chatSend(f){
 
 /* ----- マイページ ----- */
 function vMypage(){
-  var favJ=lsGet("fav-jobs",[]).map(function(id){return byId(DATA.jobs,id)}).filter(Boolean);
+  var favJ=lsGet("fav-jobs",[]).map(function(id){return byId(DATA.realJobs||[],id)||byId(DATA.jobs,id)}).filter(Boolean);
   var favS=lsGet("fav-services",[]).map(function(id){return byId(DATA.services,id)}).filter(Boolean);
   var diag=lsGet("diag-history",[]);
   var hist=lsGet("history",[]);

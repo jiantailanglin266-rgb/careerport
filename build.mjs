@@ -135,6 +135,16 @@ for (const r of DATA.rankings) {
   push(`/${L}/services/ranking/${r.slug}/`, `${nm(r)}【デモ表示】` + S,
     String(r.descriptions.ja).slice(0, 155), { kind: "ranking", r });
 }
+// 実求人: 個別ページを生成する（デモ求人は生成しない）
+// 生成対象は「掲載期限内 かつ 応募先URL・掲載元URLあり」のものだけ
+const REAL_JOBS = (DATA.realJobs || []).filter((j) =>
+  j.status === "published" && j.expiresAt && new Date(j.expiresAt) >= new Date() && j.applyUrl && j.sourceUrl);
+for (const j of REAL_JOBS) {
+  const pf = DATA.prefectures.find((p) => p.id === j.prefId);
+  push(`/${L}/jobs/${j.slug}/`,
+    `${j.title}｜${j.companyName}${pf ? "（" + nm(pf) + "）" : ""}の求人` + S,
+    String(j.description).replace(/\s+/g, " ").slice(0, 155), { kind: "job", j, pf });
+}
 // ※デモ求人・デモサービスの個別ページは意図的に生成しない（SPA+404フォールバックで表示）
 
 /* ---- JSON-LD ---- */
@@ -179,6 +189,30 @@ function jsonLd(p) {
     crumbs.push({ name: "地域から探す", item: `${SITE}/${L}/area/` }, { name: nm(p.p), item: url });
   } else if (p.kind === "attr") {
     crumbs.push({ name: "年代・状況から探す", item: `${SITE}/${L}/career/` }, { name: tr(p.a).name, item: url });
+  } else if (p.kind === "job") {
+    // JobPosting は「実求人・期限内・出典あり」のみ。デモ求人には一切出力しない（方針どおり）
+    const j = p.j, pf = p.pf;
+    const UNIT = { year: "YEAR", month: "MONTH", day: "DAY", hour: "HOUR" };
+    const TYPE = { fulltime: "FULL_TIME", parttime: "PART_TIME", contract: "CONTRACTOR", dispatch: "TEMPORARY", temporary: "TEMPORARY" };
+    const posting = {
+      "@context": "https://schema.org", "@type": "JobPosting",
+      title: j.title, description: j.description, url,
+      identifier: { "@type": "PropertyValue", name: j.sourceName, value: j.externalId },
+      datePosted: j.postedAt, validThrough: j.expiresAt,
+      employmentType: TYPE[j.employmentType] || "OTHER",
+      hiringOrganization: { "@type": "Organization", name: j.companyName },
+      jobLocation: { "@type": "Place", address: {
+        "@type": "PostalAddress", addressCountry: "JP",
+        ...(pf ? { addressRegion: nm(pf) } : {}), ...(j.city ? { addressLocality: j.city } : {}) } },
+      ...(j.remote ? { jobLocationType: "TELECOMMUTE" } : {}),
+      ...(j.requirements ? { qualifications: j.requirements } : {}),
+      ...(j.workingHours ? { workHours: j.workingHours } : {}),
+      ...(j.salaryMin != null ? { baseSalary: { "@type": "MonetaryAmount", currency: "JPY",
+        value: { "@type": "QuantitativeValue", minValue: j.salaryMin,
+          ...(j.salaryMax != null ? { maxValue: j.salaryMax } : {}), unitText: UNIT[j.salaryUnit] || "MONTH" } } } : {}),
+    };
+    out.push(posting);
+    crumbs.push({ name: "求人を探す", item: `${SITE}/${L}/jobs/` }, { name: j.title, item: url });
   } else if (p.kind === "salary" && (DATA.salaryData || []).length) {
     out.push({ "@context": "https://schema.org", "@type": "Dataset",
       name: `職種別平均年収一覧（${DATA.salaryData[0].period}・賃金構造基本統計調査に基づく算出値）`,
@@ -303,8 +337,25 @@ function prerender(p) {
     }
   } else if (p.kind === "faq") {
     body += DATA.faqs.map(([q, a]) => `<h2>${esc(q)}</h2><p>${esc(a)}</p>`).join("");
+  } else if (p.kind === "job") {
+    const j = p.j, pf = p.pf;
+    const row = (k, v) => (v ? `<li><b>${esc(k)}</b>: ${esc(v)}</li>` : "");
+    body += `<p>掲載元: ${esc(j.sourceName)}／掲載期限: ${esc(String(j.expiresAt).slice(0, 10))}。応募は掲載元の応募ページで行ってください。当サイトは職業紹介事業者ではなく、選考・条件交渉には関与しません。</p><ul>` +
+      row("募集主体", j.companyName) + row("仕事内容", j.description) + row("応募資格", j.requirements) +
+      row("雇用形態", { fulltime: "正社員", contract: "契約社員", dispatch: "派遣", parttime: "アルバイト・パート", temporary: "臨時" }[j.employmentType]) +
+      row("契約期間", j.contractPeriod) + row("試用期間", j.trialPeriod) +
+      row("就業場所", [pf ? nm(pf) : "", j.city, j.workplaceNote].filter(Boolean).join(" ")) +
+      row("就業時間", [j.workingHours, j.breakTime && "休憩 " + j.breakTime, j.overtime && "時間外 " + j.overtime].filter(Boolean).join("／")) +
+      row("休日", j.holidays) + row("加入保険", j.insurance) + row("受動喫煙防止措置", j.smokingPolicy) +
+      `</ul><p><a href="${esc(j.sourceUrl)}" rel="nofollow noopener">掲載元の求人ページ</a></p>`;
   } else if (p.kind === "jobs") {
-    body += `<p>【重要】求人データは正規提携の準備中です。表示中の求人はレイアウト確認用のデモであり、実在の募集ではありません。</p><h2>職種から求人情報を探す</h2>` + occLinks(occs.slice(0, 12));
+    if (REAL_JOBS.length) {
+      body += `<p>提携先から提供を受けた実求人 ${REAL_JOBS.length} 件を掲載しています。応募は各求人の募集主体または掲載元サイトで行っていただきます（当サイトは職業紹介・仲介を行いません）。</p><ul>` +
+        REAL_JOBS.slice(0, 200).map((j) => `<li><a href="${u(`/${L}/jobs/${j.slug}/`)}">${esc(j.title)}</a> — ${esc(j.companyName)}</li>`).join("") + `</ul>`;
+    } else {
+      body += `<p>【重要】求人データは正規提携の準備中です。表示中の求人はレイアウト確認用のデモであり、実在の募集ではありません。</p>`;
+    }
+    body += `<h2>職種から求人情報を探す</h2>` + occLinks(occs.slice(0, 12));
   } else if (p.kind === "companies" && (DATA.companies || []).length) {
     const list = DATA.companies.slice().sort((a, b) => (b.employees || 0) - (a.employees || 0));
     body += `<p>出典: Wikidata（CC0）。従業員数はWikidataの登録値で、時点は各出典を参照。名称・従業員数・設立年のみの基本情報カタログであり、評価・年収等の判断情報は含まない。</p><ul>` +
