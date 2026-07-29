@@ -877,7 +877,20 @@ const siteSettings = {
 const companies = loadJson("tools/data/companies.json") || [];      // Wikidata 上場企業カタログ（cat:1）
 const salaryIndustry = loadJson("tools/data/salary-industry.json") || []; // 産業中分類（賃金構造基本統計調査）
 const salaryArea = loadJson("tools/data/salary-area.json") || [];         // 都道府県×職業大分類（同上）
-const images = loadJson("tools/data/images.json") || {};            // Commons キービジュアル（全点目視検証済み・クレジット付き）
+/* Commons キービジュアル（全点目視検証済み・クレジット付き・すべて日本国内で撮影）
+   image-plan.mjs の { alias: "<key>" } は同一画像の別名。ここで実体に解決する。 */
+const images = loadJson("tools/data/images.json") || {};
+{
+  const { pathToFileURL } = await import("url");
+  const plan = (await import(pathToFileURL(join(ROOT, "tools", "image-plan.mjs")).href)).default;
+  for (const [k, v] of Object.entries(plan)) {
+    if (!v.alias) continue;
+    if (!images[v.alias]) throw new Error(`image alias ${k} → ${v.alias} の実体がありません`);
+    images[k] = images[v.alias];
+  }
+  const missing = Object.keys(plan).filter((k) => !images[k]);
+  if (missing.length) throw new Error("画像未取得のキー: " + missing.join(", "));
+}
 const salaryData = (loadJson("tools/data/salary.json") || [])
   .map((r) => ({ group: "occupation", ...r }));                     // 職種別（公的統計・出典必須）
 const extraArticles = (loadJson("tools/data/articles-extra.json") || []).filter(

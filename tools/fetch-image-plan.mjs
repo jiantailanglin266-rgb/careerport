@@ -52,7 +52,8 @@ async function fetchFile(title, dest) {
   };
 }
 
-const keys = Object.keys(PLAN).filter((k) => (filterKey ? k === filterKey : !manifest[k]));
+// alias は実体キーの画像を共有するため取得しない（seed.mjs が解決する）
+const keys = Object.keys(PLAN).filter((k) => !PLAN[k].alias && (filterKey ? k === filterKey : !manifest[k]));
 if (!keys.length) { console.log("取得対象なし（全キー取得済み。差し替えは key と候補番号を指定）"); process.exit(0); }
 for (const key of keys) {
   const plan = PLAN[key];
