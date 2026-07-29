@@ -180,6 +180,18 @@ nav.g a.on{color:var(--gold-400)}
 .thumb-card .tc-img:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,20,38,0) 40%,rgba(8,20,38,.45))}
 .thumb-card .tc-cr{position:absolute;right:6px;bottom:4px;z-index:2;color:rgba(255,255,255,.85);font-size:8.5px;background:rgba(8,20,38,.6);padding:1px 7px;border-radius:999px}
 .thumb-card .tc-body{padding:14px 18px 18px}
+.thumb-card .tc-body.svc{display:flex;flex-direction:column;gap:8px;height:calc(100% - 120px)}
+.card.svc.thumb-card,.card.job.thumb-card{display:block}
+/* 記事リストのサムネイル */
+.art-thumb{position:relative;flex:none;width:132px;height:88px;border-radius:10px;overflow:hidden;display:block}
+.art-thumb img{width:100%;height:100%;object-fit:cover;filter:saturate(.88) contrast(1.04)}
+.art-thumb:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,20,38,0) 45%,rgba(8,20,38,.4))}
+.art-thumb .tc-cr{position:absolute;right:4px;bottom:3px;z-index:2;color:rgba(255,255,255,.85);font-size:7.5px;background:rgba(8,20,38,.6);padding:1px 6px;border-radius:999px;max-width:94%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* 写真つきタイル（ランキング等） */
+.ptile{display:block;background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)}
+.ptile:hover{border-color:var(--gold-400)}
+.ptile .tc-img{height:96px}
+.ptile .lb{display:block;padding:11px 14px;font-size:14px;font-weight:600;color:var(--navy-950)}
 /* photo marquee（ホバーで停止しない・reduced-motionで静止） */
 .pmq{overflow:hidden;position:relative;margin:0 -20px;background:var(--navy-950);padding:18px 0}
 .pmq .mqtrack{gap:14px;animation-duration:70s}
@@ -282,7 +294,7 @@ footer .legal{border-top:1px solid rgba(210,168,70,.2);margin-top:34px;padding-t
   var p=location.pathname, mm=p.match(/^(.*?)\/(ja|en)(\/|$)/);
   var b=mm?mm[1]:p.replace(/\/index\.html$/,"").replace(/\/$/,"");
   window.CP_BASE=b;
-  try{var x=new XMLHttpRequest();x.open("GET",b+"/data.js?v=7",false);x.send();if(x.status===200||x.status===0){(0,eval)(x.responseText)}}catch(e){}
+  try{var x=new XMLHttpRequest();x.open("GET",b+"/data.js?v=8",false);x.send();if(x.status===200||x.status===0){(0,eval)(x.responseText)}}catch(e){}
   try{var y=new XMLHttpRequest();y.open("GET",b+"/logic.js?v=1",false);y.send();if(y.status===200||y.status===0){(0,eval)(y.responseText)}}catch(e){}
 })();
 if(!window.DATA){document.getElementById("app").innerHTML='<div class="skel">データの読み込みに失敗しました。再読み込みしてください。</div>';}
@@ -345,33 +357,68 @@ function favToggle(kind,id){var a=lsGet("fav-"+kind,[]),i=a.indexOf(id);if(i>=0)
 function favBtn(kind,id){var on=favHas(kind,id);return '<button class="fav-btn'+(on?" on":"")+'" onclick="favToggle(\''+kind+'\',\''+esc(id)+'\')">'+(on?"★ お気に入り済み":"☆ お気に入り")+'</button>'}
 function pushHistory(kind,id){var a=lsGet("history",[]);a=a.filter(function(x){return!(x.k===kind&&x.id===id)});a.unshift({k:kind,id:id,t:Date.now()});lsSet("history",a.slice(0,30))}
 
-/* ---------- cards ---------- */
+/* ---------- cards ----------
+   カードのサムネイルは DATA.images（Commons・目視検証済み）から引き当てる。
+   写真は「その職種・業界の一般的な情景」を表す装飾であり、掲載サービスや求人そのものの
+   写真ではない。クレジットは各サムネイルに常時表示する。 */
+var CARD_IMG={
+  svcKind:{agent:"cat:occ_business",scout:"ind:web","job-site":"cat:occ_it",dispatch:"cat:occ_office","part-time":"occ:retail-sales",school:"art:study"},
+  ranking:{"agent-overall":"cat:occ_business","20s":"jp:university",women:"cat:occ_office",it:"cat:occ_it","high-class":"ind:finance",scout:"ind:web"},
+  attr:{"20s":"cat:occ_business","30s":"cat:occ_office","40s":"ind:consulting","50s":"ind:finance",women:"cat:occ_office",
+        "second-career":"jp:university",inexperienced:"art:study","high-class":"ind:finance",manager:"cat:occ_business",
+        freelance:"ind:web","return-to-work":"art:calendar"},
+  school:{programming:"cat:occ_it",qualification:"art:study",english:"ind:education",marketing:"occ:marketing"},
+  story:"cat:occ_business"
+};
+function cardThumb(keys,alt,h){
+  var im=imgFor.apply(null,keys);if(!im)return"";
+  return '<div class="tc-img"'+(h?' style="height:'+h+'px"':'')+'><img loading="lazy" src="'+window.CP_BASE+"/"+esc(im.src)+'" alt="'+esc(alt||"")+'"><span class="tc-cr">'+esc(im.credit)+'</span></div>';
+}
 function svcCard(s,idx){
   var t=tr(s);
-  return '<div class="card svc">'+
+  return '<div class="card svc thumb-card">'+
+  cardThumb([CARD_IMG.svcKind[s.kind],"cat:occ_business"],KINDS[s.kind]||"")+
+  '<div class="tc-body svc">'+
   '<div>'+(idx!=null?'<span class="rank-no">No.'+(idx+1)+'</span> ':'')+(s.isDemo?badgeDemo():"")+' '+(s.isPR?badgePR():"")+' <span class="badge cat">'+esc(KINDS[s.kind]||s.kind)+'</span></div>'+
   '<div class="nm"><a href="javascript:void(0)" onclick="go({name:\'service\',slug:\''+esc(s.slug)+'\'})">'+esc(t.name)+'</a></div>'+
   '<div class="tag">'+esc(t.tagline||"")+'</div>'+
   '<div class="desc" style="font-size:13px">'+esc(t.target||"")+'</div>'+
-  '<div style="margin-top:auto;display:flex;gap:8px;flex-wrap:wrap;align-items:center"><a class="btn line sm" href="javascript:void(0)" onclick="go({name:\'service\',slug:\''+esc(s.slug)+'\'})">詳細・比較</a>'+favBtn("services",s.id)+'</div></div>';
+  '<div style="margin-top:auto;display:flex;gap:8px;flex-wrap:wrap;align-items:center"><a class="btn line sm" href="javascript:void(0)" onclick="go({name:\'service\',slug:\''+esc(s.slug)+'\'})">詳細・比較</a>'+favBtn("services",s.id)+'</div></div></div>';
 }
 function jobCard(j){
   var t=tr(j),oc=byId(DATA.occupations,j.occupationId),pf=byId(DATA.prefectures,j.prefId);
-  return '<div class="card job">'+
+  return '<div class="card job thumb-card">'+
+  cardThumb(oc?["occ:"+oc.slug,"cat:"+oc.categoryId]:["cat:occ_business"],oc?tr(oc).name:"")+
+  '<div class="tc-body">'+
   '<div>'+(j.isDemo?badgeDemo():"")+' <span class="badge cat">'+esc(EMP[j.employmentType]||"")+'</span></div>'+
   '<div class="ttl" style="margin-top:6px"><a href="javascript:void(0)" onclick="go({name:\'job\',slug:\''+esc(j.slug)+'\'})">'+esc(t.title)+'</a></div>'+
   '<div class="meta"><span>📍 '+esc(pf?nm(pf):"")+'</span><span>💼 '+esc(oc?tr(oc).name:"")+'</span><span>💰 '+(j.salaryMin==null?'年収非公開（デモ）':money(j.salaryMin)+"〜")+'</span></div>'+
   '<p class="desc">'+esc((t.description||"").slice(0,64))+'…</p>'+
-  '<div style="margin-top:10px;display:flex;gap:8px"><a class="btn line sm" href="javascript:void(0)" onclick="go({name:\'job\',slug:\''+esc(j.slug)+'\'})">詳細を見る</a>'+favBtn("jobs",j.id)+'</div></div>';
+  '<div style="margin-top:10px;display:flex;gap:8px"><a class="btn line sm" href="javascript:void(0)" onclick="go({name:\'job\',slug:\''+esc(j.slug)+'\'})">詳細を見る</a>'+favBtn("jobs",j.id)+'</div></div></div>';
 }
 function occCard(o){
   var t=tr(o);
   return '<a class="tile" href="javascript:void(0)" onclick="go({name:\'occupation\',slug:\''+esc(o.slug)+'\'})"><span class="ic">⚓</span>'+esc(t.name)+'</a>';
 }
+/* 比較ランキングの写真タイル */
+function rankTile(r){
+  return '<a class="ptile" href="javascript:void(0)" onclick="go({name:\'ranking\',slug:\''+esc(r.slug)+'\'})">'+
+  cardThumb([CARD_IMG.ranking[r.slug],"cat:occ_business"],nm(r))+'<span class="lb">⚖️ '+esc(nm(r))+'</span></a>';
+}
+/* 職種カード（写真つき）— トップの人気職種など、点数を絞って使う */
+function occThumbCard(o){
+  var t=tr(o);
+  return '<div class="card thumb-card">'+cardThumb(["occ:"+o.slug,"cat:"+o.categoryId],t.name,110)+
+  '<div class="tc-body"><h3 style="font-size:15.5px"><a href="javascript:void(0)" onclick="go({name:\'occupation\',slug:\''+esc(o.slug)+'\'})">'+esc(t.name)+'</a></h3>'+
+  '<p class="desc" style="font-size:12.5px">'+esc(String(t.summary).slice(0,48))+'…</p></div></div>';
+}
 function artLi(a){
   var t=tr(a);
-  return '<div class="art-li"><span class="badge cat cat">'+esc(ART_CATS[a.category]||a.category)+'</span><div>'+
-  '<h3><a href="javascript:void(0)" onclick="go({name:\'article\',slug:\''+esc(a.slug)+'\'})">'+esc(t.title)+'</a></h3>'+
+  var im=a.heroKey?imgFor(a.heroKey):null;
+  return '<div class="art-li">'+
+  (im?'<a class="art-thumb" href="javascript:void(0)" onclick="go({name:\'article\',slug:\''+esc(a.slug)+'\'})"><img loading="lazy" src="'+window.CP_BASE+"/"+esc(im.src)+'" alt=""><span class="tc-cr">'+esc(im.credit)+'</span></a>':'')+
+  '<div style="flex:1;min-width:0"><span class="badge cat">'+esc(ART_CATS[a.category]||a.category)+'</span>'+
+  '<h3 style="margin-top:5px"><a href="javascript:void(0)" onclick="go({name:\'article\',slug:\''+esc(a.slug)+'\'})">'+esc(t.title)+'</a></h3>'+
   '<p>'+esc((t.metaDesc||"").slice(0,80))+'</p><p class="small">'+fmtDate(a.publishedAt)+'・'+esc(a.authorName)+'</p></div></div>';
 }
 var ART_CATS={start:"始め方",resignation:"退職",resume:"履歴書・応募書類","career-history":"職務経歴書",interview:"面接","salary-negotiation":"年収交渉",unemployment:"失業保険",career:"キャリア",reskilling:"リスキリング",story:"仕事の歴史"};
@@ -502,7 +549,7 @@ function vHome(){
   pmqBand("industry")+
   '<section class="sec rv"><div class="sec-h"><div class="eyebrow">Compare Services</div><h2>転職サービスを比較する</h2>'+
   '<p class="lead">エージェント・スカウト・求人サイト・派遣。タイプ別の違いを理解して、自分に合う支援を選べます。<br><span class="small">'+esc(DATA.siteSettings.disclosure)+'　現在の掲載はデモです。</span></p></div>'+
-  '<div class="grid g4">'+DATA.rankings.map(function(r){return '<a class="tile" href="javascript:void(0)" onclick="go({name:\'ranking\',slug:\''+esc(r.slug)+'\'})"><span class="ic">⚖️</span>'+esc(nm(r))+"</a>"}).join("")+'</div>'+
+  '<div class="grid g3">'+DATA.rankings.map(rankTile).join("")+'</div>'+
   '<div style="margin-top:18px" class="grid g3">'+DATA.services.slice(0,3).map(svcCard).join("")+'</div></section>'+
 
   '<section class="sec rv"><div class="card" style="background:linear-gradient(150deg,var(--navy-950),var(--navy-800));color:#fff;padding:36px;border:1px solid var(--gold-500)">'+
@@ -511,9 +558,10 @@ function vHome(){
   '<button class="btn gold" onclick="go({name:\'tool-diagnosis\'})">診断を始める</button> '+
   '<button class="btn ghost" onclick="go({name:\'tool-review\',slug:\'career-history-review\'})">AI書類添削を試す</button></div></section>'+
 
-  '<section class="sec rv"><div class="sec-h"><div class="eyebrow">By Occupation</div><h2>職種から探す</h2><p class="lead">主要職種のほか、全'+occTotal+'職種の紹介ページを用意しています。</p></div><div class="grid g4">'+occs.map(occCard).join("")+'</div>'+
+  '<section class="sec rv"><div class="sec-h"><div class="eyebrow">By Occupation</div><h2>職種から探す</h2><p class="lead">主要職種のほか、全'+occTotal+'職種の紹介ページを用意しています。</p></div><div class="grid g4">'+occs.map(occThumbCard).join("")+'</div>'+
   '<p style="margin-top:14px"><a class="btn line sm" href="javascript:void(0)" onclick="go({name:\'occupations\'})">全'+occTotal+'職種の一覧を見る</a></p></section>'+
-  '<section class="sec rv"><div class="sec-h"><div class="eyebrow">By Industry</div><h2>業界から探す</h2></div><div class="grid g4">'+DATA.industries.map(function(x){return '<a class="tile" href="javascript:void(0)" onclick="go({name:\'industry\',slug:\''+esc(x.slug)+'\'})"><span class="ic">🏙️</span>'+esc(nm(x))+"</a>"}).join("")+'</div></section>'+
+  '<section class="sec rv"><div class="sec-h"><div class="eyebrow">By Industry</div><h2>業界から探す</h2></div><div class="grid g4">'+DATA.industries.map(function(x){
+    return '<a class="ptile" href="javascript:void(0)" onclick="go({name:\'industry\',slug:\''+esc(x.slug)+'\'})">'+cardThumb(["ind:"+x.slug],nm(x))+'<span class="lb">'+esc(nm(x))+'</span></a>'}).join("")+'</div></section>'+
   '<section class="sec rv"><div class="sec-h"><div class="eyebrow">By Area</div><h2>地域から探す</h2></div><div class="grid g4">'+DATA.regions.map(function(rg){return '<a class="tile" href="javascript:void(0)" onclick="go({name:\'areas\'})"><span class="ic">🗾</span>'+esc(nm(rg))+"</a>"}).join("")+'</div>'+
   '<p style="margin-top:10px"><a href="javascript:void(0)" onclick="go({name:\'areas\'})" style="text-decoration:underline;font-size:13.5px">47都道府県の一覧を見る →</a></p></section>'+
   '<section class="sec rv"><div class="sec-h"><div class="eyebrow">Attributes</div><h2>年代・状況から探す</h2></div><div class="grid g4">'+DATA.attributes.map(function(a){return '<a class="tile" href="javascript:void(0)" onclick="go({name:\'career\',slug:\''+esc(a.slug)+'\'})"><span class="ic">🚩</span>'+esc(tr(a).name)+"</a>"}).join("")+'</div></section>'+
@@ -604,7 +652,7 @@ function vServices(kind){
   '<div class="notice">'+esc(DATA.siteSettings.disclosure)+'　<b>現在の掲載はすべてレイアウト確認用のデモであり、実在のサービスではありません。</b>掲載基準は<a href="javascript:void(0)" onclick="go({name:\'advertising-policy\'})" style="text-decoration:underline">広告掲載方針</a>をご覧ください。</div>'+
   '<div style="margin:14px 0">'+tabs.map(function(tb){return '<a class="chip" style="'+((kind||"")===tb[0]?"background:var(--navy-950);color:var(--gold-400)":"")+'" href="javascript:void(0)" onclick="go({name:\'services\',kind:\''+tb[0]+'\'})">'+tb[1]+"</a>"}).join("")+'</div>'+
   '<div class="grid g3">'+list.map(function(s,i){return svcCard(s,i)}).join("")+'</div>'+
-  '<section class="sec"><div class="sec-h"><h2 style="font-size:21px">目的別の比較ランキング</h2></div><div class="grid g3">'+DATA.rankings.map(function(r){return '<a class="tile" href="javascript:void(0)" onclick="go({name:\'ranking\',slug:\''+r.slug+'\'})"><span class="ic">⚖️</span>'+esc(nm(r))+"</a>"}).join("")+'</div></section>';
+  '<section class="sec"><div class="sec-h"><h2 style="font-size:21px">目的別の比較ランキング</h2></div><div class="grid g3">'+DATA.rankings.map(rankTile).join("")+'</div></section>';
 }
 function vRanking(slug){
   var r=bySlug(DATA.rankings,slug);if(!r)return vNotFound();
@@ -635,7 +683,9 @@ function vService(slug){
 function vCareers(){
   return crumb([["年代・状況から探す"]])+
   '<div class="pagehead"><h1>年代・状況から探す</h1><p class="lead">年代やいまの状況によって、転職活動の進め方とサービスの選び方は変わります。</p></div>'+
-  '<div class="grid g3" style="margin-top:14px">'+DATA.attributes.map(function(a){var t=tr(a);return '<div class="card"><h3><a href="javascript:void(0)" onclick="go({name:\'career\',slug:\''+a.slug+'\'})">'+esc(t.name)+'</a></h3><p class="desc">'+esc(t.summary.slice(0,70))+'…</p></div>'}).join("")+'</div>';
+  '<div class="grid g3" style="margin-top:14px">'+DATA.attributes.map(function(a){var t=tr(a);
+    return '<div class="card thumb-card">'+cardThumb([CARD_IMG.attr[a.slug],"cat:occ_business"],t.name)+
+    '<div class="tc-body"><h3><a href="javascript:void(0)" onclick="go({name:\'career\',slug:\''+a.slug+'\'})">'+esc(t.name)+'</a></h3><p class="desc">'+esc(t.summary.slice(0,70))+'…</p></div></div>'}).join("")+'</div>';
 }
 function vCareer(slug){
   var a=bySlug(DATA.attributes,slug);if(!a)return vNotFound();
@@ -657,7 +707,8 @@ function vOccupations(){
   '<div id="occlist">'+DATA.occCategories.map(function(c){
     var os=DATA.occupations.filter(function(o){return o.categoryId===c.id});
     if(!os.length)return"";
-    return '<section class="sec occ-sec" style="padding:22px 0"><h2 style="font-size:18px;margin-bottom:12px">'+esc(nm(c))+' <span class="small">'+os.length+'職種</span></h2><div class="grid g4">'+os.map(occCard).join("")+"</div></section>";
+    return '<section class="sec occ-sec" style="padding:22px 0"><h2 style="font-size:18px;margin-bottom:10px">'+esc(nm(c))+' <span class="small">'+os.length+'職種</span></h2>'+
+      kvBanner(["cat:"+c.id],nm(c),1)+'<div class="grid g4" style="margin-top:12px">'+os.map(occCard).join("")+"</div></section>";
   }).join("")+'</div>';
 }
 function occFilter(inp){
@@ -794,14 +845,18 @@ function vStories(){
   return crumb([["体験談・ストーリー"]])+
   '<div class="pagehead"><h1>体験談・ストーリー</h1><p class="lead">転職経験者の実話インタビューと、「日本の仕事の歴史」をたどる読み物です。</p></div>'+
   '<div class="notice">実話の体験談は、ご本人の同意を得た取材に基づいて掲載する方針です。現在表示中のものは構成確認用の<b>サンプルストーリー</b>であり、実話ではありません。</div>'+
-  '<div class="grid g2" style="margin:14px 0">'+DATA.stories.map(function(s){var t=tr(s);return '<div class="card"><div>'+(s.isSample?'<span class="badge demo">サンプル</span>':"")+'</div><h3 style="margin-top:6px">'+esc(t.title)+'</h3><p class="desc">'+esc(t.body.split("\n")[0])+'</p></div>'}).join("")+'</div>'+
+  '<div class="grid g2" style="margin:14px 0">'+DATA.stories.map(function(s,i){var t=tr(s);
+    return '<div class="card thumb-card">'+cardThumb([i===0?"occ:web-marketing":"cat:occ_education",CARD_IMG.story],"")+
+    '<div class="tc-body"><div>'+(s.isSample?'<span class="badge demo">サンプル</span>':"")+'</div><h3 style="margin-top:6px">'+esc(t.title)+'</h3><p class="desc">'+esc(t.body.split("\n")[0])+'</p></div></div>'}).join("")+'</div>'+
   '<section class="sec"><div class="sec-h"><div class="eyebrow">History</div><h2 style="font-size:20px">日本の仕事の歴史</h2></div>'+DATA.articles.filter(function(a){return a.category==="story"}).map(artLi).join("")+'</section>';
 }
 function vLearning(){
   return crumb([["リスキリング・スクール"]])+
   '<div class="pagehead"><h1>リスキリング・スクール比較</h1><p class="lead">「目指す仕事から逆算して学ぶ」が原則です。学び直しの分野選びから講座比較までを支援します。</p></div>'+
   '<div class="notice">'+esc(DATA.siteSettings.disclosure)+'　現在の掲載はデモです。実在の講座を掲載する際は事実確認済みの情報のみを掲載します。</div>'+
-  '<div class="grid g3" style="margin-top:14px">'+DATA.schools.map(function(s){var t=tr(s);return '<div class="card svc"><div>'+badgeDemo()+' '+badgePR()+'</div><div class="nm">'+esc(t.name)+'</div><div class="tag">'+esc(t.tagline)+'</div><dl><dt>メリット</dt><dd>'+esc(t.merits)+'</dd><dt>注意点</dt><dd>'+esc(t.demerits)+'</dd><dt>対象</dt><dd>'+esc(t.target)+'</dd></dl>'+svcOfficialBtn(s)+'</div>'}).join("")+'</div>'+
+  '<div class="grid g3" style="margin-top:14px">'+DATA.schools.map(function(s){var t=tr(s);
+    return '<div class="card svc thumb-card">'+cardThumb([CARD_IMG.school[s.field],"art:study"],t.name)+
+    '<div class="tc-body svc"><div>'+badgeDemo()+' '+badgePR()+'</div><div class="nm">'+esc(t.name)+'</div><div class="tag">'+esc(t.tagline)+'</div><dl><dt>メリット</dt><dd>'+esc(t.merits)+'</dd><dt>注意点</dt><dd>'+esc(t.demerits)+'</dd><dt>対象</dt><dd>'+esc(t.target)+'</dd></dl>'+svcOfficialBtn(s)+'</div></div>'}).join("")+'</div>'+
   '<section class="sec">'+DATA.articles.filter(function(a){return a.category==="reskilling"}).map(artLi).join("")+'</section>';
 }
 
