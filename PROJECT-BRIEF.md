@@ -99,7 +99,15 @@
 /tools/career-diagnosis/           AIキャリア診断（ルールベース・結果保存・共有URL）
 /tools/resume-review/              AI書類添削（履歴書。クライアント完結・非送信）
 /tools/career-history-review/      職務経歴書添削 / /motivation-review/ 志望動機 / /self-promotion-review/ 自己PR
-/tools/salary-check/               年収比較ツール（自分の年収 vs 統計。出典明示）
+/tools/salary-check/               年収チェック（自分の年収 vs 統計。職種／業界／地域の3モード）
+/tools/take-home/                  手取り計算（社会保険料・所得税・住民税の内訳。都道府県別料率）
+/tools/unemployment-benefit/       失業給付シミュレーター（基本手当日額・所定給付日数・給付制限）
+/tools/paid-leave/                 有給休暇 日数計算（労基法39条。比例付与対応）
+/tools/overtime/                   残業代計算（労基法37条の割増率）
+/tools/resignation-schedule/       退職スケジュール逆算（申出時期・引き継ぎ・有給消化・退職後の手続き）
+/tools/interview-questions/        面接想定質問（職種×状況。逆質問つき）
+   ※法定値は tools/data/statutory.json に集約（全項目に出典URL＋適用時点）。
+     logic.js / index.html に数値を直書きしない。未投入時は計算せず「データ準備中」。
 /ai-consultation/                  AIチャット相談（ルールベース）
 /about/ /company/ /editorial-policy/ /expert-supervision/ /data-policy/ /advertising-policy/
 /privacy/ /terms/ /disclaimer/ /contact/ /faq/ /sitemap/ /correction-request/   固定ページ

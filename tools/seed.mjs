@@ -893,6 +893,16 @@ const VIDEO_TOPICS = {
   pension:    { name: "退職後の年金・社会保険",     desc: "退職に伴う年金・健康保険の手続き（日本年金機構の公式解説）。" },
   support:    { name: "就労支援（障害のある方など）", desc: "障害者雇用や就労支援機関の取り組みの紹介。" },
 };
+/* 無料ツールが使う法定値（保険料率・税率・雇用保険の給付・有給・割増賃金）。
+   全ての数値は官公庁の一次情報から取得し、出典URLと適用時点を持つ。改定時はこのJSONだけを更新する。
+   未投入なら null → ツール側は「データ準備中」を表示して計算しない（推測値を出さない）。 */
+const statutory = loadJson("tools/data/statutory.json");
+if (statutory) {
+  const need = ["insurance", "incomeTax", "residentTax", "unemployment", "paidLeave", "overtime", "resignation"];
+  for (const k of need) if (!statutory[k]) throw new Error(`statutory.json に ${k} がありません`);
+  const prefSlugs = new Set(Object.keys(statutory.insurance.health.byPref || {}));
+  if (prefSlugs.size !== 47) throw new Error(`健康保険料率の都道府県が47件ではありません（${prefSlugs.size}件）`);
+}
 const salaryIndustry = loadJson("tools/data/salary-industry.json") || []; // 産業中分類（賃金構造基本統計調査）
 const salaryArea = loadJson("tools/data/salary-area.json") || [];         // 都道府県×職業大分類（同上）
 /* Commons キービジュアル（全点目視検証済み・クレジット付き・すべて日本国内で撮影）
@@ -975,7 +985,7 @@ const DATA = {
   }),
   stories, faqs, ctaRules,
   companies, salaryData: salaryData.concat(salaryIndustry, salaryArea), images,
-  videos, videoTopics: VIDEO_TOPICS,
+  videos, videoTopics: VIDEO_TOPICS, statutory,
 };
 writeFileSync(join(ROOT, "data.js"), "var DATA=" + JSON.stringify(DATA) + ";", "utf-8");
 console.log("OK: data.js written —",

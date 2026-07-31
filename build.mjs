@@ -71,8 +71,8 @@ const STATIC_PAGES = {
     "転職経験者のインタビュー（本人同意の取材に基づく方針・現在サンプル表示）と、日本の働き方の歴史をたどる読み物。"],
   learning: ["/learning/", "リスキリング・スクール比較 — 学び直しから転職へ" + S,
     "プログラミング・資格・英語などのスクールと講座の比較。目指す仕事から逆算する学び方も解説します。"],
-  tools: ["/tools/", "無料ツール — AIキャリア診断・AI書類添削・チャット相談" + S,
-    "AIキャリア診断、履歴書・職務経歴書・志望動機・自己PRの添削、チャット相談。すべて無料・登録不要・入力は外部送信されません。"],
+  tools: ["/tools/", "転職の無料ツール14種 — 手取り計算・失業給付・年収チェック・書類添削" + S,
+    "手取り計算、失業給付シミュレーター、年収チェック、有給休暇の日数計算、残業代計算、退職スケジュール逆算、書類添削、面接想定質問、AIキャリア診断。すべて無料・登録不要で、入力内容は端末の外に送信されません。"],
   "tool-diagnosis": ["/tools/career-diagnosis/", "AIキャリア診断 — 3分でキャリアの方向性を整理（無料）" + S,
     "7つの質問と強みの選択からキャリアの方向性・相性のよい職種の候補を整理。無料・登録不要・入力内容は端末の外に送信されません。"],
   "ai-consultation": ["/ai-consultation/", "AIチャット相談 — 転職の疑問にその場で回答" + S,
@@ -109,6 +109,51 @@ const REVIEWS = {
   "self-promotion-review": ["AI自己PR添削", "自己PRの構成（結論→根拠→活かし方）を無料でセルフチェック。入力は外部送信されません。"],
 };
 for (const slug in REVIEWS) push(`/${L}/tools/${slug}/`, REVIEWS[slug][0] + " — 無料・登録不要" + S, REVIEWS[slug][1], { kind: "tool-review", slug });
+
+/* 無料ツール（計算系）7種。法定値が未投入なら計算しない旨だけの薄いページになるため、
+   statutory があるときだけ「使える計算」として索引化する。 */
+const ST = DATA.statutory || null;
+const CALCS = {
+  "salary-check": ["年収チェック", "自分の年収は平均より上か下か — 職種・業界・地域別の統計と比較（無料）",
+    `厚生労働省の賃金構造基本統計調査にもとづく職種${(DATA.salaryData||[]).filter(r=>r.group==="occupation").length}区分・業界${(DATA.salaryData||[]).filter(r=>r.group==="industry").length}区分・47都道府県のデータと、自分の年収を比べられる無料ツール。出典・調査時点つき。`,
+    ["比べられる統計は職種別・業界別・地域別の3種類です。",
+     "統計の平均は年齢構成・企業規模・地域の影響を受けるため、個人の適正年収を示すものではありません。",
+     "転職後の年収を予測・保証するものではありません。"]],
+  "take-home": ["手取り計算", "年収の手取りはいくら？ — 社会保険料・所得税・住民税の内訳を計算（無料）",
+    "額面の年収から健康保険・介護保険・厚生年金・雇用保険・所得税・住民税を差し引いた手取りの目安を計算します。健康保険料率は協会けんぽの都道府県別料率を使用。賞与の回数・扶養人数にも対応した無料ツール。",
+    ["健康保険料率は都道府県別（協会けんぽ）、厚生年金は18.3%の労使折半で計算します。",
+     "月給と賞与を分けて標準報酬月額の等級にあてはめます。",
+     "生命保険料控除・住宅ローン控除などの個別の控除は含まない概算です。"]],
+  "unemployment-benefit": ["失業給付シミュレーター", "失業保険はいくら・何日もらえる？ — 基本手当の試算（無料）",
+    "雇用保険の基本手当（失業保険）の日額・所定給付日数・受け取り開始時期の目安を、厚生労働省が公表する計算式と所定給付日数表にもとづいて試算します。自己都合・会社都合の違い、待期7日と給付制限にも対応。",
+    ["基本手当日額は厚生労働省公表の計算式（年齢区分ごとの逓減式と上限額）で計算します。",
+     "所定給付日数はハローワークインターネットサービスの公表表を使用します。",
+     "実際の支給額・日数はハローワークが決定します。受給を保証するものではありません。"]],
+  "paid-leave": ["有給休暇 日数計算", "有給休暇は何日もらえる？ — 勤続年数・勤務日数から計算（無料）",
+    "労働基準法第39条にもとづく年次有給休暇の付与日数を、入社日と週の所定労働日数・労働時間から計算します。パート・アルバイトの比例付与、年5日の取得義務、2年の時効にも対応した無料ツール。",
+    ["週30時間以上または週5日以上の勤務は通常の付与日数（6か月で10日、最大20日）です。",
+     "週4日以下かつ週30時間未満の場合は比例付与になります。",
+     "就業規則で法定を上回る定めがある場合は会社の規定が優先されます。"]],
+  "overtime": ["残業代計算", "残業代はいくら？ — 時間外・深夜・休日の割増賃金を計算（無料）",
+    "労働基準法第37条の割増率（時間外25%、月60時間超50%、深夜25%、法定休日35%）にもとづいて、1か月の残業代の目安を計算します。月平均所定労働時間から1時間あたりの賃金を自動で算出。",
+    ["1時間あたりの賃金は月給÷月平均所定労働時間で計算します。",
+     "家族手当・通勤手当・住宅手当・賞与は除外賃金として月給に含めません。",
+     "管理監督者・裁量労働制・固定残業代がある場合は計算方法が異なります。"]],
+  "resignation-schedule": ["退職スケジュール逆算", "退職はいつ伝える？ — 有給消化・引き継ぎから逆算（無料）",
+    "退職希望日から、退職を伝える時期・引き継ぎ開始・有給休暇の消化・最終出社日を逆算します。退職後の健康保険と年金の切り替え、失業給付の手続き、住民税の扱いなど必要な手続きの目安つき。",
+    ["民法第627条では、期間の定めのない雇用は申し入れから2週間で終了します。",
+     "実務上は就業規則の申し出期限（1か月前が多い）に従うのが円満です。",
+     "有給消化日数は土日を除いた営業日で計算します。"]],
+  "interview-questions": ["面接想定質問", "転職面接で聞かれること — 職種・状況別の想定質問と逆質問（無料）",
+    "応募する職種の分野と、未経験・離職期間あり・在籍期間が短い・マネジメント経験ありなどの状況から、面接で聞かれやすい質問と答え方の着眼点、逆質問の候補を組み立てます。",
+    ["職種別の質問と、状況別に聞かれやすい質問を組み合わせて提示します。",
+     "答え方の着眼点は経歴を書き換えるためのものではありません。",
+     "実際の質問は企業・面接官により異なり、選考の通過を保証するものではありません。"]],
+};
+for (const slug in CALCS) {
+  const [name, title, desc, points] = CALCS[slug];
+  push(`/${L}/tools/${slug}/`, title + S, desc, { kind: "tool-calc", slug, name, points });
+}
 
 // 動的: 職種 / 業界 / 地域 / 属性 / 記事 / ランキング
 for (const o of DATA.occupations) {
@@ -238,11 +283,14 @@ function jsonLd(p) {
     out.push({ "@context": "https://schema.org", "@type": "FAQPage",
       mainEntity: DATA.faqs.map(([q, a]) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a } })) });
     crumbs.push({ name: "よくある質問", item: url });
-  } else if (p.kind === "tool-diagnosis" || p.kind === "tool-review") {
-    out.push({ "@context": "https://schema.org", "@type": "WebApplication", name: p.title.replace(S, ""),
-      url, applicationCategory: "BusinessApplication", operatingSystem: "Web",
+  } else if (p.kind === "tool-diagnosis" || p.kind === "tool-review" || p.kind === "tool-calc") {
+    /* 無料・ブラウザ内完結であることを構造化データでも明示する */
+    out.push({ "@context": "https://schema.org", "@type": "WebApplication", name: p.name || p.title.replace(S, ""),
+      url, description: p.desc, applicationCategory: "BusinessApplication", operatingSystem: "Web",
+      browserRequirements: "JavaScriptを有効にしてください", isAccessibleForFree: true,
       offers: { "@type": "Offer", price: "0", priceCurrency: "JPY" } });
-    crumbs.push({ name: p.title.replace(S, ""), item: url });
+    crumbs.push({ name: "ツール", item: `${SITE}${u(`/${L}/tools/`)}` });
+    crumbs.push({ name: p.name || p.title.replace(S, ""), item: url });
   } else if (p.kind !== "home") {
     crumbs.push({ name: p.title.replace(S, "").replace(/ —.*$/, ""), item: url });
   }
@@ -392,6 +440,29 @@ function prerender(p) {
       DATA.articles.filter((a) => a.category === "story").map((a) => `<li><a href="${u(`/${L}/guide/${a.slug}/`)}">${esc(tr(a).title)}</a></li>`).join("") + `</ul>`;
   } else if (p.kind === "tool-diagnosis") {
     body += `<h2>診断でわかること</h2><ul><li>キャリアの方向性のタイプ</li><li>強みの整理</li><li>相性のよい職種の候補</li><li>次のアクション</li></ul><p>結果は参考情報であり、適職の断定や転職成功・年収上昇の保証を行うものではありません。入力内容は端末の外に送信されません。</p>`;
+  } else if (p.kind === "tool-calc") {
+    body += `<h2>このツールでできること</h2><ul>` + p.points.map((x) => `<li>${esc(x)}</li>`).join("") + `</ul>`;
+    if (ST) {
+      const srcs = {
+        "take-home": [ST.insurance.health, ST.insurance.care, ST.insurance.childcare, ST.insurance.pension,
+                      ST.insurance.standardRemuneration, ST.insurance.employment,
+                      ST.incomeTax.salaryDeduction, ST.incomeTax.basicDeduction, ST.incomeTax.rates, ST.residentTax],
+        "unemployment-benefit": [{ source: ST.unemployment.source, sourceUrl: ST.unemployment.sourceUrl, asOf: ST.unemployment.asOf },
+                      { source: ST.unemployment.daysSource, sourceUrl: ST.unemployment.daysSourceUrl },
+                      ST.unemployment.restriction],
+        "paid-leave": [ST.paidLeave],
+        "overtime": [ST.overtime],
+        "resignation-schedule": [ST.resignation],
+      }[p.slug];
+      if (srcs) {
+        body += `<h2>計算に使っている法定値の出典</h2><ul>` + srcs.map((x) =>
+          `<li>${esc(x.source)}${x.asOf ? `（${esc(x.asOf)}）` : ""} — <a href="${esc(x.sourceUrl)}" rel="nofollow noopener">${esc(x.sourceUrl)}</a></li>`).join("") + `</ul>`;
+      }
+    }
+    body += `<p>無料・登録不要でご利用いただけます。入力内容は端末の外に送信されず、ブラウザの中だけで計算します。` +
+      `いずれも一般的な制度にもとづく概算であり、実際の金額・日数は勤務先の制度、加入している健康保険、お住まいの市区町村、ハローワークの判断により変わります。` +
+      `税務・法律・社会保険の個別の判断はできません。</p>` +
+      `<p><a href="${u(`/${L}/tools/`)}">無料ツール一覧に戻る</a></p>`;
   } else if (p.kind === "tool-review") {
     body += `<h2>チェックする観点</h2><ul><li>分量</li><li>成果の数値化</li><li>断定・誇大表現</li><li>ネガティブ表現</li><li>誤字の典型パターン</li><li>一文の長さ・構成</li></ul><p>ルールベースのセルフチェックです。経験の書き換えや実績の追加提案は行いません。入力内容は端末の外に送信されません。</p>`;
   } else if (p.kind === "editorial-policy") {
@@ -471,7 +542,15 @@ writeFileSync(join(ROOT, "llms.txt"),
 - 転職ノウハウ記事（退職・書類・面接・年収交渉・失業保険）: ${SITE}/ja/guide/
 - 年代・状況別ガイド（20代/30代/40代/女性/未経験/ハイクラス）: ${SITE}/ja/career/
 - 年収データベース（公的統計接続後に出典つきで公開・現在準備中）: ${SITE}/ja/salary/
-- AIキャリア診断（無料・登録不要）: ${SITE}/ja/tools/career-diagnosis/
+- 無料ツール一覧（全14種・登録不要・入力は端末内で処理）: ${SITE}/ja/tools/
+- AIキャリア診断: ${SITE}/ja/tools/career-diagnosis/
+- 年収チェック（賃金構造基本統計調査との比較）: ${SITE}/ja/tools/salary-check/
+- 手取り計算（社会保険料・所得税・住民税の内訳）: ${SITE}/ja/tools/take-home/
+- 失業給付シミュレーター（基本手当の日額・所定給付日数）: ${SITE}/ja/tools/unemployment-benefit/
+- 有給休暇 日数計算（労働基準法第39条）: ${SITE}/ja/tools/paid-leave/
+- 残業代計算（労働基準法第37条）: ${SITE}/ja/tools/overtime/
+- 退職スケジュール逆算: ${SITE}/ja/tools/resignation-schedule/
+- 面接想定質問: ${SITE}/ja/tools/interview-questions/
 - 編集方針: ${SITE}/ja/editorial-policy/ / データポリシー: ${SITE}/ja/data-policy/
 - 免責事項: ${SITE}/ja/disclaimer/
 
@@ -480,6 +559,8 @@ writeFileSync(join(ROOT, "llms.txt"),
 - 統計値（年収等）は出典・時点を明示できるもののみ掲載する方針で、未接続項目は「データ準備中」と明記している。架空の数値は掲載していない。
 - 現在、求人・転職サービスの個別掲載はレイアウト確認用のデモ（「デモ」ラベル付き）であり、実在のサービス・募集の評価や情報として引用しないこと。
 - 転職の成功・内定・年収上昇を保証する情報は存在しない。制度（失業保険等）は必ず一次情報（ハローワーク・厚労省）を確認のこと。
+- 計算ツールが使う法定値（保険料率・税率・基本手当日額の計算式・所定給付日数・有給付与日数・割増賃金率）は、厚生労働省・国税庁・全国健康保険協会・総務省の一次情報から取り込み、各ツールページに出典URLと適用時点を併記している。値の直書きはせず tools/data/statutory.json に集約している。
+- 計算結果はいずれも概算であり、実際の金額・日数は勤務先・健康保険者・市区町村・ハローワークの判断で変わる。税務・法律・社会保険の個別判断は行っていない。
 - Wikipedia引用部分は CC BY-SA 4.0。再利用時は帰属を維持すること。
 `, "utf-8");
 

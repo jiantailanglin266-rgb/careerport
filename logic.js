@@ -454,7 +454,451 @@ function agentStep(st, input, ctx) {
   return { done: false, react: react, slot: next, question: AGENT_Q[next] };
 }
 
+  /* ================= 無料ツール：法定計算エンジン =================
+     率・金額はこのファイルに一切書かない。すべて S（DATA.statutory＝tools/data/statutory.json）
+     から受け取る。改定時は JSON を差し替えるだけでよく、出典表示と計算が食い違わない。
+     S が無い（未投入）ときは null を返し、UI 側は「データ準備中」を表示して計算しない。 */
+
+  function num(v, min, max, def) {
+    var n = Number(v);
+    if (!isFinite(n)) n = def;
+    if (min != null && n < min) n = min;
+    if (max != null && n > max) n = max;
+    return n;
+  }
+  function bracketOf(list, v) {
+    for (var i = 0; i < list.length; i++) if (list[i].upTo == null || v <= list[i].upTo) return list[i];
+    return list[list.length - 1];
+  }
+
+  /* ---- 給与所得控除（国税庁 No.1410） ---- */
+  function salaryDeduction(S, income) {
+    var b = bracketOf(S.incomeTax.salaryDeduction.brackets, income);
+    var d = b.flat != null ? b.flat : Math.floor(income * b.rate + b.add);
+    return Math.min(d, income); // 給与所得はマイナスにならない
+  }
+  /* ---- 標準報酬月額（協会けんぽ 保険料額表の等級） ---- */
+  function standardMonthly(S, monthly) {
+    var g = S.insurance.standardRemuneration, i = 0;
+    for (var k = 0; k < g.grades.length; k++) if (monthly >= g.lowerBounds[k]) i = k;
+    return g.grades[i];
+  }
+
+  /* ---- ツール1: 手取り計算 ---- */
+  function takeHome(S, inp) {
+    if (!S) return null;
+    inp = inp || {};
+    var annual = num(inp.annual, 0, 300000000, 0);
+    var bonus = num(inp.bonus, 0, annual, 0);
+    var bonusCount = num(inp.bonusCount, 1, 6, 2);
+    var age = num(inp.age, 15, 74, 30);
+    var deps = num(inp.dependents, 0, 10, 0);
+    var ins = S.insurance, sr = ins.standardRemuneration;
+    var pref = ins.health.byPref[inp.prefSlug] ? inp.prefSlug : "tokyo";
+    var hp = ins.health.byPref[pref];
+    if (annual <= 0) {
+      return { gross: 0, bonus: 0, prefSlug: pref, prefName: hp.name, age: age, dependents: deps,
+        standardMonthly: 0, standardPension: 0, careApplied: false,
+        insurance: { health: 0, care: 0, childcare: 0, pension: 0, employment: 0, total: 0 },
+        rates: { health: hp.rate, care: 0, childcare: ins.childcare.rate, pension: ins.pension.rate, employment: ins.employment.employeeRate },
+        salaryIncome: 0, basicDeduction: 0, taxableIncome: 0, incomeTax: 0, residentTax: 0,
+        net: 0, netMonthly: 0, netRate: 0, deductionTotal: 0,
+        assumptions: ["年収を入力すると、社会保険料・所得税・住民税の内訳と手取り額を計算します。"] };
+    }
+
+    var isCare = age >= ins.care.fromAge && age <= ins.care.toAge;
+    var half = ins.pension.employeeShare;
+    var sm = standardMonthly(S, (annual - bonus) / 12);
+    var sp = Math.min(Math.max(sm, sr.pensionMin), sr.pensionMax);
+    var per = Math.floor(bonus / bonusCount / sr.bonusRoundDown) * sr.bonusRoundDown;
+    var bHealth = Math.min(per * bonusCount, sr.bonusHealthAnnualCap);
+    var bPension = Math.min(per, sr.bonusPensionPerTimeCap) * bonusCount;
+
+    var health = Math.floor((sm * 12 + bHealth) * (hp.rate / 100) * half);
+    var care = isCare ? Math.floor((sm * 12 + bHealth) * (ins.care.rate / 100) * half) : 0;
+    var child = Math.floor((sm * 12 + bHealth) * (ins.childcare.rate / 100) * half);
+    var pension = Math.floor((sp * 12 + bPension) * (ins.pension.rate / 100) * half);
+    var employment = Math.floor(annual * (ins.employment.employeeRate / 100));
+    var social = health + care + child + pension + employment;
+
+    var salaryIncome = annual - salaryDeduction(S, annual);
+    var basic = bracketOf(S.incomeTax.basicDeduction.brackets, salaryIncome).amount;
+    var depIncome = deps * 380000, depResident = deps * 330000;
+    var taxable = Math.max(0, Math.floor((salaryIncome - social - basic - depIncome) / 1000) * 1000);
+    var rb = bracketOf(S.incomeTax.rates.brackets, taxable);
+    var baseTax = Math.max(0, Math.floor(taxable * rb.rate - rb.deduct));
+    var incomeTax = Math.floor(baseTax * (1 + S.incomeTax.reconstruction.rate));
+
+    var rTaxable = Math.max(0, Math.floor((salaryIncome - social - S.residentTax.basicDeduction - depResident) / 1000) * 1000);
+    var residentTax = rTaxable > 0 ? Math.floor(rTaxable * S.residentTax.incomeRate) + S.residentTax.perCapita : 0;
+
+    var net = annual - social - incomeTax - residentTax;
+    return {
+      gross: annual, bonus: bonus, prefSlug: pref, prefName: hp.name, age: age, dependents: deps,
+      standardMonthly: sm, standardPension: sp, careApplied: isCare,
+      insurance: { health: health, care: care, childcare: child, pension: pension, employment: employment, total: social },
+      rates: { health: hp.rate, care: isCare ? ins.care.rate : 0, childcare: ins.childcare.rate, pension: ins.pension.rate, employment: ins.employment.employeeRate },
+      salaryIncome: salaryIncome, basicDeduction: basic, taxableIncome: taxable,
+      incomeTax: incomeTax, residentTax: residentTax,
+      net: net, netMonthly: Math.floor(net / 12), netRate: annual > 0 ? net / annual : 0,
+      deductionTotal: social + incomeTax + residentTax,
+      assumptions: [
+        "健康保険は協会けんぽ（" + hp.name + "・" + hp.rate + "%）、厚生年金は" + ins.pension.rate + "%として、いずれも労使折半の本人負担分で計算しています。組合健保・共済にお勤めの方は率が異なります。",
+        "月給と賞与を分けて標準報酬月額の等級にあてはめています。賞与は年" + bonusCount + "回に均等に支給されるものとして計算しています。",
+        (isCare ? "40〜64歳のため介護保険料を含めています。" : "40歳未満のため介護保険料は含めていません（40歳から加わります）。"),
+        "扶養親族は1人あたり所得税38万円・住民税33万円の控除として計算しています。19〜22歳の特定扶養親族（63万円）や配偶者控除の所得制限、特定親族特別控除は反映していません。",
+        "住民税は前年の所得に対して課税されますが、ここでは同じ年収が続く前提で計算しています。均等割は" + S.residentTax.perCapita + "円、調整控除は考慮していません。",
+        "生命保険料控除・住宅ローン控除・iDeCo・医療費控除などは含めていません。実際の手取りは会社の制度や控除により変わります。"
+      ]
+    };
+  }
+
+  /* ---- ツール2: 失業給付（基本手当）シミュレーション ---- */
+  function benefitAgeBand(U, age) {
+    for (var i = 0; i < U.ageBands.length; i++) {
+      var b = U.ageBands[i], id = b.id;
+      if (id === "u30" && age < 30) return b;
+      if (id === "a30" && age >= 30 && age < 45) return b;
+      if (id === "a45" && age >= 45 && age < 60) return b;
+      if (id === "a60" && age >= 60 && age < 65) return b;
+    }
+    return null;
+  }
+  function dailyBenefit(U, band, w) {
+    if (w < U.wageDailyMin) w = U.wageDailyMin;
+    var y;
+    if (w < band.w1) y = 0.8 * w;
+    else if (w <= band.w2) {
+      y = 0.8 * w - band.drop * ((w - band.w1) / (band.w2 - band.w1)) * w;
+      if (band.alt) y = Math.min(y, 0.05 * w + band.w2 * 0.4);
+    } else if (w <= band.cap) y = band.rate2 * w;
+    else y = band.maxDaily;
+    return Math.floor(y);
+  }
+  function termIndex(years) {
+    if (years < 1) return 0;
+    if (years < 5) return 1;
+    if (years < 10) return 2;
+    if (years < 20) return 3;
+    return 4;
+  }
+  function daysRowFor(table, age) {
+    var rows = table.rows;
+    if (rows.length === 1) return rows[0];
+    for (var i = 0; i < rows.length; i++) {
+      var a = rows[i].age;
+      if (a === "u30" && age < 30) return rows[i];
+      if (a === "a30" && age >= 30 && age < 35) return rows[i];
+      if (a === "a35" && age >= 35 && age < 45) return rows[i];
+      if (a === "u45" && age < 45) return rows[i];
+      if (a === "a45" && age >= 45 && age < 60) return rows[i];
+      if (a === "a45" && age >= 45 && age < 65 && rows.length === 2) return rows[i];
+      if (a === "a60" && age >= 60 && age < 65) return rows[i];
+    }
+    return rows[rows.length - 1];
+  }
+  function unemploymentBenefit(S, inp) {
+    if (!S) return null;
+    inp = inp || {};
+    var U = S.unemployment;
+    var age = num(inp.age, 15, 74, 30);
+    var monthly = num(inp.monthlyWage, 0, 10000000, 0);
+    var years = num(inp.insuredYears, 0, 50, 0);
+    var reason = ({ self: 1, company: 1, difficult: 1 })[inp.reason] ? inp.reason : "self";
+    var repeat = !!inp.repeat;
+    var notes = [], warnings = [];
+
+    if (age >= 65) {
+      return { eligible: false, over65: true, age: age,
+        message: "65歳以上で離職した場合は基本手当ではなく「高年齢求職者給付金」の対象です。被保険者であった期間が1年以上なら基本手当日額の50日分、1年未満なら30日分が一時金として支給されます。",
+        sourceName: U.daysSource, sourceUrl: U.daysSourceUrl };
+    }
+    var band = benefitAgeBand(U, age);
+    var wageDaily = Math.floor(monthly / 30);
+    var daily = dailyBenefit(U, band, wageDaily);
+    var table = U.days[reason === "self" ? "general" : reason === "company" ? "company" : "difficult"];
+    var row = daysRowFor(table, age);
+    var ti = termIndex(years);
+    var days = row.d[ti];
+
+    if (reason === "self" && years < 1) {
+      warnings.push("被保険者期間が1年未満のため、自己都合退職では原則として受給資格がありません（離職前2年間に通算12か月以上の被保険者期間が必要）。倒産・解雇などの場合は離職前1年間に6か月以上で受給できます。");
+    }
+    if (days == null) {
+      warnings.push("この年齢と被保険者期間の組み合わせは表に定めがありません。ハローワークでご確認ください。");
+      days = 0;
+    }
+    var restrictionMonths = reason === "self" ? (repeat ? U.restriction.repeatMonths : U.restriction.selfMonths) : 0;
+    if (wageDaily < U.wageDailyMin) notes.push("賃金日額が下限額（" + U.wageDailyMin + "円）を下回るため、下限額で計算しています。");
+    if (wageDaily > band.cap) notes.push("賃金日額が上限額（" + band.cap + "円）を超えるため、基本手当日額は" + band.label + "の上限" + band.maxDaily + "円になります。");
+
+    return {
+      eligible: true, age: age, band: band.label, wageDaily: wageDaily, daily: daily,
+      rate: wageDaily > 0 ? daily / wageDaily : 0,
+      days: days, total: daily * days, reason: reason, reasonLabel: table.label,
+      insuredYears: years, termLabel: U.termLabels[ti],
+      waitingDays: U.waitingDays, restrictionMonths: restrictionMonths,
+      firstPayMonths: restrictionMonths, notes: notes, warnings: warnings,
+      restrictionNote: U.restriction.note, periodNote: U.periodNote, tableNote: table.note || "",
+      asOf: U.asOf, sourceName: U.source, sourceUrl: U.sourceUrl,
+      daysSource: U.daysSource, daysSourceUrl: U.daysSourceUrl,
+      disclaimer: "実際の支給額・日数は、離職理由の判定や被保険者期間の計算によってハローワークが決定します。ここでの計算は目安であり、受給を保証するものではありません。"
+    };
+  }
+
+  /* ---- ツール3: 年次有給休暇の付与日数 ---- */
+  function paidLeave(S, inp) {
+    if (!S) return null;
+    inp = inp || {};
+    var P = S.paidLeave;
+    var months = num(inp.months, 0, 600, 0);
+    var weekDays = num(inp.weekDays, 1, 7, 5);
+    var weekHours = num(inp.weekHours, 0, 80, 40);
+    var fullTime = weekHours >= 30 || weekDays >= 5;
+    var table = P.fullTime, pattern = null;
+    if (!fullTime) {
+      for (var i = 0; i < P.proportional.length; i++) if (P.proportional[i].days === Math.min(4, Math.round(weekDays))) pattern = P.proportional[i];
+      if (!pattern) pattern = P.proportional[P.proportional.length - 1];
+      table = pattern.grant;
+    }
+    var idx = months < 6 ? -1 : Math.min(P.monthsLabels.length - 1, Math.floor((months - 6) / 12));
+    var current = idx < 0 ? 0 : table[idx];
+    var nextIdx = Math.min(P.monthsLabels.length - 1, idx + 1);
+    var monthsToNext = idx < 0 ? 6 - months : (6 + (idx + 1) * 12) - months;
+    if (idx >= P.monthsLabels.length - 1) monthsToNext = 12 - ((months - 6) % 12);
+    return {
+      fullTime: fullTime, weekDays: weekDays, weekHours: weekHours,
+      months: months, stageLabel: idx < 0 ? "6か月未満（付与前）" : P.monthsLabels[idx],
+      current: current, table: table, labels: P.monthsLabels,
+      patternLabel: fullTime ? P.fullTimeCondition : "週" + pattern.days + "日勤務（年間" + pattern.annualFrom + "〜" + pattern.annualTo + "日）",
+      next: idx < 0 ? table[0] : table[nextIdx], monthsToNext: Math.max(0, Math.ceil(monthsToNext)),
+      maxCarry: current + (idx > 0 ? table[idx - 1] : 0),
+      obligationApplies: current >= 10, obligationDays: P.obligationDays, expiryYears: P.expiryYears,
+      notes: [
+        "付与には、その期間の全労働日の" + Math.round(P.attendanceRate * 100) + "%以上に出勤していることが必要です。",
+        "年10日以上付与される方には、会社が年" + P.obligationDays + "日を確実に取得させる義務があります（労働基準法第39条第7項）。",
+        "有給休暇の権利は" + P.expiryYears + "年で時効消滅します。前年の未消化分は翌年に繰り越せます。",
+        "退職日をもって有給休暇の権利は消滅します。退職前にまとめて取得する場合、会社は時季変更権を行使できません。"
+      ],
+      sourceName: P.source, sourceUrl: P.sourceUrl
+    };
+  }
+
+  /* ---- ツール4: 残業代の計算 ---- */
+  function overtimePay(S, inp) {
+    if (!S) return null;
+    inp = inp || {};
+    var O = S.overtime;
+    var monthly = num(inp.monthlySalary, 0, 100000000, 0);
+    var holidays = num(inp.annualHolidays, 0, 200, 120);
+    var dailyHours = num(inp.dailyHours, 1, 12, 8);
+    var over = num(inp.overtimeHours, 0, 400, 0);
+    var night = num(inp.nightHours, 0, 400, 0);
+    var hol = num(inp.holidayHours, 0, 400, 0);
+    var fixedMonthly = (365 - holidays) * dailyHours / 12;
+    if (fixedMonthly <= 0) return null;
+    var hourly = monthly / fixedMonthly;
+    var r = {};
+    for (var i = 0; i < O.rates.length; i++) r[O.rates[i].id] = O.rates[i].rate;
+    var base = Math.min(over, 60), extra = Math.max(0, over - 60);
+    night = Math.min(night, over + hol);
+    var pBase = hourly * (1 + r.over) * base;
+    var pExtra = hourly * (1 + r.over60) * extra;
+    var pNight = hourly * r.night * night;
+    var pHol = hourly * (1 + r.holiday) * hol;
+    var total = pBase + pExtra + pNight + pHol;
+    return {
+      hourly: Math.round(hourly), fixedMonthly: Math.round(fixedMonthly * 10) / 10,
+      lines: [
+        { label: "時間外労働（60時間まで・割増" + Math.round(r.over * 100) + "%）", hours: base, amount: Math.floor(pBase) },
+        { label: "時間外労働（60時間超・割増" + Math.round(r.over60 * 100) + "%）", hours: extra, amount: Math.floor(pExtra) },
+        { label: "深夜割増の加算分（割増" + Math.round(r.night * 100) + "%）", hours: night, amount: Math.floor(pNight) },
+        { label: "法定休日労働（割増" + Math.round(r.holiday * 100) + "%）", hours: hol, amount: Math.floor(pHol) }
+      ].filter(function (x) { return x.hours > 0; }),
+      total: Math.floor(total), overLimit: over > 45,
+      note: O.note, upperLimit: O.upperLimit, sourceName: O.source, sourceUrl: O.sourceUrl,
+      assumptions: [
+        "1時間あたりの賃金は「月給 ÷ 月平均所定労働時間（" + Math.round(fixedMonthly * 10) / 10 + "時間）」で計算しています。",
+        "月給には、家族手当・通勤手当・別居手当・子女教育手当・住宅手当・臨時の賃金・賞与を含めずに入力してください（労働基準法第37条第5項の除外賃金）。",
+        "管理監督者・裁量労働制・変形労働時間制・固定残業代（みなし残業）がある場合は計算方法が異なります。"
+      ]
+    };
+  }
+
+  /* ---- ツール5: 退職・転職スケジュールの逆算 ---- */
+  function ymd(d) {
+    var m = String(d.getMonth() + 1), day = String(d.getDate());
+    return d.getFullYear() + "-" + (m.length < 2 ? "0" + m : m) + "-" + (day.length < 2 ? "0" + day : day);
+  }
+  function addDays(d, n) { var x = new Date(d.getTime()); x.setDate(x.getDate() + n); return x; }
+  function backBusinessDays(d, n) {
+    var x = new Date(d.getTime()), left = n;
+    while (left > 0) { x = addDays(x, -1); var w = x.getDay(); if (w !== 0 && w !== 6) left--; }
+    return x;
+  }
+  function resignationPlan(S, inp) {
+    if (!S) return null;
+    inp = inp || {};
+    var R = S.resignation;
+    var last = new Date(String(inp.lastDay || "") + "T00:00:00");
+    if (isNaN(last.getTime())) return null;
+    var leave = num(inp.paidLeaveDays, 0, 60, 0);
+    var notice = num(inp.noticeDays, 14, 180, 30);
+    var handover = num(inp.handoverDays, 0, 90, 14);
+    var today = inp.today ? new Date(String(inp.today) + "T00:00:00") : new Date();
+
+    var lastWork = leave > 0 ? backBusinessDays(last, leave) : new Date(last.getTime());
+    var handoverStart = backBusinessDays(lastWork, handover);
+    /* 「伝える → 引き継ぎ開始」の順が崩れないよう、引き継ぎ開始の1週間前を上限とし、
+       就業規則の申出期限（退職日の notice 日前）のうち早い方を採用する。 */
+    var tellBy = addDays(handoverStart, -7);
+    var ruleLimit = addDays(last, -notice);
+    if (ruleLimit < tellBy) tellBy = ruleLimit;
+    var legalMin = addDays(today, R.civilCodeDays);
+    var offerBy = addDays(tellBy, -30);
+    var startBy = addDays(offerBy, -90);
+
+    var steps = [
+      { date: ymd(startBy), label: "転職活動の開始",     note: "書類作成・応募から内定まで3か月前後を見込んだ逆算です。在職中の活動は面接日程の調整に時間がかかります。" },
+      { date: ymd(offerBy), label: "内定・条件面の合意", note: "内定から退職交渉まで1か月ほどの余裕をとっています。入社日は退職日の確定後に最終合意するのが安全です。" },
+      { date: ymd(tellBy),  label: "退職の意思を伝える", note: "就業規則で「" + notice + "日前まで」と想定した期限です。まず直属の上司に口頭で伝え、そのあと退職届を出す順序が一般的です。" },
+      { date: ymd(handoverStart), label: "引き継ぎの開始", note: "引き継ぎ資料の作成・後任への説明に" + handover + "日を確保しています。" },
+      { date: ymd(lastWork), label: "最終出社日",       note: leave > 0 ? "この翌営業日から有給休暇" + leave + "日を消化する想定です（土日を除いた日数で計算）。" : "有給休暇の消化を入力すると、最終出社日が前倒しされます。" },
+      { date: ymd(last),    label: "退職日",             note: "退職日をもって有給休暇の権利は消滅します。残日数は退職日までに消化するか、会社の制度によっては買い上げとなる場合があります。" }
+    ];
+    var afterSteps = [
+      { within: "退職日の翌日から14日以内", label: "健康保険・年金の切り替え", note: "国民健康保険・国民年金への切り替え、または健康保険の任意継続（こちらは資格喪失日から20日以内）。次の会社にすぐ入社する場合は入社先で手続きします。" },
+      { within: "離職票が届き次第", label: "ハローワークで求職の申込み", note: "失業給付を受ける場合は、離職票を持ってハローワークで手続きします。待期7日と給付制限の起算はこの手続きの後です。" },
+      { within: "退職時", label: "住民税の徴収方法の確認", note: "退職月によって、一括徴収・普通徴収・転職先での継続徴収のいずれになるかが変わります。給与担当に確認しておくと安心です。" },
+      { within: "翌年の確定申告期間", label: "年末調整・確定申告", note: "年内に転職して新しい勤務先で年末調整を受ける場合は前職の源泉徴収票が必要です。年をまたぐ場合は自分で確定申告します。" }
+    ];
+    return {
+      lastDay: ymd(last), lastWorkDay: ymd(lastWork), tellBy: ymd(tellBy),
+      legalMinimum: ymd(legalMin), paidLeaveDays: leave, noticeDays: notice,
+      tooLate: tellBy < today, steps: steps, afterSteps: afterSteps,
+      civilCodeDays: R.civilCodeDays, note: R.note, sourceName: R.source, sourceUrl: R.sourceUrl
+    };
+  }
+
+  /* ---- ツール6: 面接想定質問の生成（ルールベース） ---- */
+  var IV_COMMON = [
+    { q: "自己紹介を1分でお願いします。", h: "職務要約と応募職種との接点を先に。細かい経歴の羅列は避け、続きを聞きたくさせる構成に。" },
+    { q: "転職を考えたきっかけを教えてください。", h: "現職への不満ではなく「これをやりたい」に言い換える。事実は変えず、視点を未来に置く。" },
+    { q: "なぜ当社なのですか。", h: "他社にも当てはまる理由（規模・待遇）だけだと弱い。事業内容・職務内容と自分の経験の接点を1つ具体的に。" },
+    { q: "あなたの強みは何ですか。", h: "結論→根拠となる実績（数字）→入社後どう活かすか、の3段で。" },
+    { q: "これまでの仕事で一番の成果は何ですか。", h: "状況・課題・自分の行動・結果の順。チームの成果と自分の担当範囲を分けて話す。" },
+    { q: "失敗した経験と、そこから学んだことは。", h: "取り繕わず、原因の分析と再発防止の行動までセットで。" },
+    { q: "5年後にどうなっていたいですか。", h: "応募ポジションの延長線上に置く。壮大な話より、次の1〜2歩を具体的に。" },
+    { q: "他社の選考状況を教えてください。", h: "軸が一貫していることが伝わればよい。無理に多く見せる必要はない。" }
+  ];
+  var IV_BY_SITUATION = {
+    inexperienced: [
+      { q: "未経験の分野ですが、なぜ挑戦しようと思ったのですか。", h: "思いつきでないことを示す。学習の実績（期間・内容・成果物）を添える。" },
+      { q: "これまでの経験のうち、この仕事に活かせるものは何ですか。", h: "職種は違っても、課題の見つけ方・段取り・折衝など持ち運べる力で接続する。" },
+      { q: "入社後、どのように早く戦力になりますか。", h: "自走できる部分と、教わりたい部分を分けて言えると信頼される。" }
+    ],
+    blank: [
+      { q: "離職期間について教えてください。", h: "事実を短く述べ、その間に何をしていたかと、現在は問題なく働ける状態であることを伝える。" },
+      { q: "ブランク中に取り組んだことはありますか。", h: "資格・学習・アルバイト・家庭の事情など、実際のことを具体的に。" }
+    ],
+    shortterm: [
+      { q: "前職の在籍期間が短いのはなぜですか。", h: "前職の批判にしない。認識の相違があった点と、次はどう確認して防ぐかを述べる。" },
+      { q: "当社でも同じことにならないと言えますか。", h: "選考中に自分から確認したい点を挙げると、繰り返さない姿勢が伝わる。" }
+    ],
+    manager: [
+      { q: "マネジメントされていた人数と役割を教えてください。", h: "人数だけでなく、評価・採用・目標設定のどこまで担ったかを明示。" },
+      { q: "成果が出ないメンバーにどう関わりましたか。", h: "具体的な1事例で。仕組みで解決した話は評価されやすい。" },
+      { q: "プレイヤーとマネージャーの比率はどのくらいでしたか。", h: "応募ポジションの期待値とすり合わせる質問。実態を正直に。" }
+    ],
+    highclass: [
+      { q: "事業課題をどう捉え、何から着手しますか。", h: "入社前提の仮説でよい。情報が足りない前提を置いたうえで筋道を示す。" },
+      { q: "これまでで最も大きな意思決定は何ですか。", h: "判断基準と、そのときに切り捨てた選択肢まで語れると深い。" }
+    ]
+  };
+  var IV_BY_CAT = {
+    occ_business: [{ q: "担当していた商材と、売上規模・目標達成率を教えてください。", h: "予算に対する達成率、担当顧客数、単価などの数字を用意しておく。" },
+                   { q: "新規開拓と既存深耕、どちらが得意ですか。", h: "得意な方の再現性のあるやり方を1つ具体的に説明できるように。" }],
+    occ_office:   [{ q: "業務の効率化で工夫したことはありますか。", h: "手順の見直し・ツール導入など。削減できた時間を数字で。" },
+                   { q: "複数の依頼が重なったとき、どう優先順位をつけますか。", h: "判断基準と、関係者への確認・共有の仕方まで。" }],
+    occ_it:       [{ q: "直近のプロジェクトの構成と、あなたの担当範囲を教えてください。", h: "使用技術・規模・チーム人数・自分の意思決定範囲を整理しておく。" },
+                   { q: "技術のキャッチアップはどうしていますか。", h: "習慣として続けていることを、直近の具体例つきで。" }],
+    occ_creative: [{ q: "ポートフォリオの中で、最も工夫した点はどこですか。", h: "見た目ではなく、課題と狙い、それをどう解いたかを語る。" },
+                   { q: "フィードバックを受けたときの進め方を教えてください。", h: "受け止め方と、要望の背景を確認する姿勢を示す。" }],
+    occ_medical:  [{ q: "これまでの勤務先の規模・診療科・夜勤の有無を教えてください。", h: "経験してきた患者層と対応範囲を具体的に。" },
+                   { q: "チーム内での連携で心がけていることは何ですか。", h: "申し送り・記録・他職種との連携の実例で。" }],
+    occ_service:  [{ q: "接客で心がけていることを教えてください。", h: "理念ではなく、実際にとっている行動で。クレーム対応の一例があるとよい。" },
+                   { q: "売上や指標の改善に関わった経験はありますか。", h: "店舗全体の数字と、自分の貢献部分を分けて話す。" }]
+  };
+  var IV_REVERSE = [
+    "入社後、最初の3か月で期待される成果はどのようなものですか。",
+    "このポジションの1日の流れを教えていただけますか。",
+    "チームの構成（人数・役割・年齢層）を教えてください。",
+    "評価はどのような基準・頻度で行われますか。",
+    "直近で組織が力を入れている課題は何ですか。",
+    "前任の方はどのような理由で異動・退職されたのですか。",
+    "入社前に勉強しておくとよいことはありますか。"
+  ];
+  function interviewQuestions(inp) {
+    inp = inp || {};
+    var out = [], flags = [];
+    out.push({ group: "ほぼ必ず聞かれる質問", items: IV_COMMON });
+    var cat = IV_BY_CAT[inp.occCat];
+    if (cat) out.push({ group: "職種に応じた質問", items: cat });
+    var sits = [];
+    if (inp.inexperienced) sits.push("inexperienced");
+    if (inp.blank) sits.push("blank");
+    if (inp.shortterm) sits.push("shortterm");
+    if (inp.manager) sits.push("manager");
+    if (inp.highclass) sits.push("highclass");
+    for (var i = 0; i < sits.length; i++) {
+      out.push({ group: ({ inexperienced: "未経験からの応募で聞かれやすい質問", blank: "離職期間について聞かれやすい質問",
+        shortterm: "在籍期間が短いときに聞かれやすい質問", manager: "マネジメント経験について聞かれる質問",
+        highclass: "管理職・専門職の選考で聞かれる質問" })[sits[i]], items: IV_BY_SITUATION[sits[i]] });
+      flags.push(sits[i]);
+    }
+    var n = 0;
+    for (var j = 0; j < out.length; j++) n += out[j].items.length;
+    return {
+      groups: out, count: n, reverse: IV_REVERSE, flags: flags,
+      prepare: [
+        "回答は暗記せず、伝えたい要素を3つだけ決めておくと、聞かれ方が変わっても崩れません。",
+        "実績はできる限り数字にします。売上・件数・期間・人数・改善率のいずれかを添えるだけで具体性が上がります。",
+        "逆質問は2〜3個用意します。調べればわかることではなく、働き方や期待値の確認に使うのが効果的です。",
+        "オンライン面接では、開始5分前に接続・カメラの高さ・逆光を確認します。"
+      ],
+      disclaimer: "実際の質問は企業・面接官によって異なります。ここに挙げたものは一般的な傾向であり、選考の通過を保証するものではありません。入力内容は端末の外に送信されません。"
+    };
+  }
+
+  /* ---- ツール7: 年収と統計の比較 ---- */
+  function salaryCompare(rec, myAnnualMan) {
+    if (!rec || rec.averageSalary == null) return null;
+    var mine = Number(myAnnualMan);
+    if (!isFinite(mine) || mine <= 0) return null;
+    var avg = rec.averageSalary, diff = mine - avg;
+    var ratio = mine / avg;
+    var band = ratio >= 1.2 ? "high" : ratio >= 1.05 ? "upper" : ratio >= 0.95 ? "mid" : ratio >= 0.8 ? "lower" : "low";
+    return {
+      label: rec.label, avg: avg, mine: Math.round(mine), diff: Math.round(diff),
+      ratio: ratio, percent: Math.round(ratio * 1000) / 10, band: band,
+      averageAge: rec.averageAge == null ? null : rec.averageAge,
+      comment: ({
+        high: "統計の平均を大きく上回っています。年収を軸に転職する場合は、現在の水準を維持できるかを早い段階で確認しておくのが安全です。",
+        upper: "統計の平均をやや上回っています。次は年収以外の条件（裁量・働き方・スキルの蓄積）も合わせて比較すると判断しやすくなります。",
+        mid: "統計の平均とほぼ同じ水準です。同じ職種でも業界・企業規模・地域で差が出るため、業界別・地域別のデータも見比べてみてください。",
+        lower: "統計の平均をやや下回っています。ただし平均は年齢構成や企業規模の影響を受けます。年齢が平均より若い場合は差が出やすい点にご留意ください。",
+        low: "統計の平均を下回っています。経験年数や勤務地の違いによる部分もあるため、同じ職種の業界別・地域別の水準と見比べることをおすすめします。"
+      })[band],
+      sourceName: rec.sourceName, sourceUrl: rec.sourceUrl, period: rec.period, note: rec.note,
+      disclaimer: "統計の平均は年齢・企業規模・地域の構成に影響されるため、個人の適正年収を示すものではありません。転職後の年収を保証・予測するものでもありません。"
+    };
+  }
+
   return { diagnose: diagnose, review: review, chat: chat,
     agentInit: agentInit, agentStep: agentStep, agentResult: agentResult,
+    takeHome: takeHome, unemploymentBenefit: unemploymentBenefit, paidLeave: paidLeave,
+    overtimePay: overtimePay, resignationPlan: resignationPlan,
+    interviewQuestions: interviewQuestions, salaryCompare: salaryCompare,
+    _standardMonthly: standardMonthly, _salaryDeduction: salaryDeduction, _dailyBenefit: dailyBenefit,
     _AGENT_Q: AGENT_Q, _AGENT_SLOTS: AGENT_SLOTS, _types: TYPES, _docDef: DOC_DEF };
 })();

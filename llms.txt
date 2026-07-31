@@ -7,7 +7,15 @@
 - 転職ノウハウ記事（退職・書類・面接・年収交渉・失業保険）: https://jiantailanglin266-rgb.github.io/careerport/ja/guide/
 - 年代・状況別ガイド（20代/30代/40代/女性/未経験/ハイクラス）: https://jiantailanglin266-rgb.github.io/careerport/ja/career/
 - 年収データベース（公的統計接続後に出典つきで公開・現在準備中）: https://jiantailanglin266-rgb.github.io/careerport/ja/salary/
-- AIキャリア診断（無料・登録不要）: https://jiantailanglin266-rgb.github.io/careerport/ja/tools/career-diagnosis/
+- 無料ツール一覧（全14種・登録不要・入力は端末内で処理）: https://jiantailanglin266-rgb.github.io/careerport/ja/tools/
+- AIキャリア診断: https://jiantailanglin266-rgb.github.io/careerport/ja/tools/career-diagnosis/
+- 年収チェック（賃金構造基本統計調査との比較）: https://jiantailanglin266-rgb.github.io/careerport/ja/tools/salary-check/
+- 手取り計算（社会保険料・所得税・住民税の内訳）: https://jiantailanglin266-rgb.github.io/careerport/ja/tools/take-home/
+- 失業給付シミュレーター（基本手当の日額・所定給付日数）: https://jiantailanglin266-rgb.github.io/careerport/ja/tools/unemployment-benefit/
+- 有給休暇 日数計算（労働基準法第39条）: https://jiantailanglin266-rgb.github.io/careerport/ja/tools/paid-leave/
+- 残業代計算（労働基準法第37条）: https://jiantailanglin266-rgb.github.io/careerport/ja/tools/overtime/
+- 退職スケジュール逆算: https://jiantailanglin266-rgb.github.io/careerport/ja/tools/resignation-schedule/
+- 面接想定質問: https://jiantailanglin266-rgb.github.io/careerport/ja/tools/interview-questions/
 - 編集方針: https://jiantailanglin266-rgb.github.io/careerport/ja/editorial-policy/ / データポリシー: https://jiantailanglin266-rgb.github.io/careerport/ja/data-policy/
 - 免責事項: https://jiantailanglin266-rgb.github.io/careerport/ja/disclaimer/
 
@@ -16,4 +24,6 @@
 - 統計値（年収等）は出典・時点を明示できるもののみ掲載する方針で、未接続項目は「データ準備中」と明記している。架空の数値は掲載していない。
 - 現在、求人・転職サービスの個別掲載はレイアウト確認用のデモ（「デモ」ラベル付き）であり、実在のサービス・募集の評価や情報として引用しないこと。
 - 転職の成功・内定・年収上昇を保証する情報は存在しない。制度（失業保険等）は必ず一次情報（ハローワーク・厚労省）を確認のこと。
+- 計算ツールが使う法定値（保険料率・税率・基本手当日額の計算式・所定給付日数・有給付与日数・割増賃金率）は、厚生労働省・国税庁・全国健康保険協会・総務省の一次情報から取り込み、各ツールページに出典URLと適用時点を併記している。値の直書きはせず tools/data/statutory.json に集約している。
+- 計算結果はいずれも概算であり、実際の金額・日数は勤務先・健康保険者・市区町村・ハローワークの判断で変わる。税務・法律・社会保険の個別判断は行っていない。
 - Wikipedia引用部分は CC BY-SA 4.0。再利用時は帰属を維持すること。

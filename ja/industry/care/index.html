@@ -136,7 +136,7 @@ nav.g a.on{color:var(--gold-400)}
 .form{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:26px;max-width:760px}
 .form .q{margin-bottom:18px}
 .form .q>label,.form .q>.ql{display:block;font-weight:600;font-size:14px;margin-bottom:7px}
-.form select,.form input[type=text],.form textarea{width:100%;padding:11px 13px;border:1px solid var(--border);border-radius:9px;font-size:14px;font-family:var(--sans);background:#fff;color:var(--text)}
+.form select,.form input[type=text],.form input[type=number],.form input[type=date],.form textarea{width:100%;padding:11px 13px;border:1px solid var(--border);border-radius:9px;font-size:14px;font-family:var(--sans);background:#fff;color:var(--text)}
 .form textarea{min-height:220px;line-height:1.8}
 .opts{display:flex;flex-wrap:wrap;gap:8px}
 .opts label{border:1px solid var(--border);border-radius:999px;padding:8px 15px;font-size:13px;cursor:pointer;background:#fff}
@@ -168,6 +168,37 @@ nav.g a.on{color:var(--gold-400)}
 .mq .it b{color:var(--gold-400);font-family:var(--en);font-weight:600;letter-spacing:.05em}
 @keyframes mqL{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media (prefers-reduced-motion:reduce){.mqtrack{animation:none}}
+/* ---------- 無料ツール（計算系） ---------- */
+.calc-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.calc-row .q{margin-bottom:0}
+.kv{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:9px 0;border-bottom:1px dashed var(--border);font-size:14px}
+.kv:last-child{border-bottom:0}
+.kv .k{color:var(--muted);font-size:13.5px}
+.kv .v{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
+.kv.total{border-top:2px solid var(--navy-950);border-bottom:0;margin-top:8px;padding-top:13px}
+.kv.total .k{color:var(--navy-950);font-weight:700;font-size:14.5px}
+.kv.total .v{font-size:20px;color:var(--navy-950)}
+.kv.sub .k{padding-left:14px;font-size:12.5px}
+.kv.sub .v{font-weight:400;font-size:13px}
+.bignum{font-family:var(--en);font-size:40px;font-weight:700;color:var(--navy-950);line-height:1.1;font-variant-numeric:tabular-nums}
+.bignum .u{font-family:var(--sans);font-size:15px;font-weight:600;margin-left:4px}
+.bar{height:12px;border-radius:999px;background:var(--blue-050);overflow:hidden;margin:8px 0 4px}
+.bar>i{display:block;height:100%;background:linear-gradient(90deg,var(--navy-900),var(--gold-500))}
+.srcbox{margin-top:16px;padding:12px 15px;border-left:3px solid var(--gold-400);background:#fbfaf6;border-radius:0 8px 8px 0;font-size:12px;color:var(--muted);line-height:1.75}
+.srcbox b{color:var(--navy-950)}
+.srcbox a{color:var(--muted);text-decoration:underline;word-break:break-all}
+.tl{position:relative;margin:18px 0 0;padding-left:26px}
+.tl:before{content:"";position:absolute;left:6px;top:8px;bottom:8px;width:2px;background:var(--border)}
+.tl li{list-style:none;position:relative;margin-bottom:18px}
+.tl li:before{content:"";position:absolute;left:-24px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--gold-500);border:2px solid #fff;box-shadow:0 0 0 2px var(--gold-400)}
+.tl .d{font-family:var(--en);font-size:13px;font-weight:700;color:var(--gold-600,#8a6d1f);letter-spacing:.04em}
+.tl .t{font-size:15px;font-weight:700;color:var(--navy-950);margin:2px 0 3px}
+.tl .n{font-size:13px;color:var(--muted);line-height:1.8}
+.qa{border:1px solid var(--border);border-radius:12px;background:var(--card);padding:15px 17px;margin-bottom:10px}
+.qa .qq{font-size:14.5px;font-weight:600;color:var(--navy-950);line-height:1.65}
+.qa .qh{font-size:12.5px;color:var(--muted);margin-top:6px;line-height:1.8;padding-left:15px;border-left:2px solid var(--blue-050)}
+@media(max-width:560px){.calc-row{grid-template-columns:1fr}.bignum{font-size:32px}}
+
 /* ---------- 動画ライブラリ ---------- */
 .vgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .vcard{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column}
@@ -369,8 +400,8 @@ footer .legal{border-top:1px solid rgba(210,168,70,.2);margin-top:34px;padding-t
   var p=location.pathname, mm=p.match(/^(.*?)\/(ja|en)(\/|$)/);
   var b=mm?mm[1]:p.replace(/\/index\.html$/,"").replace(/\/$/,"");
   window.CP_BASE=b;
-  try{var x=new XMLHttpRequest();x.open("GET",b+"/data.js?v=15",false);x.send();if(x.status===200||x.status===0){(0,eval)(x.responseText)}}catch(e){}
-  try{var y=new XMLHttpRequest();y.open("GET",b+"/logic.js?v=2",false);y.send();if(y.status===200||y.status===0){(0,eval)(y.responseText)}}catch(e){}
+  try{var x=new XMLHttpRequest();x.open("GET",b+"/data.js?v=16",false);x.send();if(x.status===200||x.status===0){(0,eval)(x.responseText)}}catch(e){}
+  try{var y=new XMLHttpRequest();y.open("GET",b+"/logic.js?v=3",false);y.send();if(y.status===200||y.status===0){(0,eval)(y.responseText)}}catch(e){}
 })();
 if(!window.DATA){document.getElementById("app").innerHTML='<div class="skel">データの読み込みに失敗しました。再読み込みしてください。</div>';}
 
@@ -1383,18 +1414,510 @@ function reviewSubmit(f,slug){
   return false;
 }
 
-/* ----- ツール: 年収チェック（準備中） / ツールHub ----- */
+/* ----- 無料ツールHub -----
+   全ツールを1か所に集約する。TOOL_INDEX がツール一覧の唯一の定義で、
+   Hub・関連ツール・SSG（build.mjs 側の CALC_SLUGS）はここを起点に増減させる。 */
+var TOOL_INDEX=[
+ {g:"キャリアを整理する",items:[
+   {icon:"⚓",title:"AIキャリア診断",  desc:"7つの質問と強みから、キャリアの方向性と向いている職種の候補を整理します。",go:{name:"tool-diagnosis"},img:["cat:occ_business"]},
+   {icon:"🤖",title:"AIキャリアエージェント",desc:"6つの質問に答えると、公的統計をもとにキャリアカルテと次のアクションを作ります。",go:{name:"home"},img:["cat:occ_office"]},
+   {icon:"🧭",title:"AIチャット相談",  desc:"退職・書類・面接・年収・サービス選びの一般的な疑問にルールベースで回答します。",go:{name:"ai-consultation"},img:["cat:occ_professional"]}]},
+ {g:"お金を計算する",items:[
+   {icon:"📊",title:"年収チェック",   desc:"厚生労働省の賃金構造基本統計調査（職種・業界・地域）と自分の年収を比べます。",go:{name:"tool-calc",slug:"salary-check"},img:["cat:occ_business"]},
+   {icon:"💰",title:"手取り計算",     desc:"額面年収から社会保険料・所得税・住民税を差し引いた手取りを、都道府県別の料率で計算します。",go:{name:"tool-calc",slug:"take-home"},img:["cat:occ_office"]},
+   {icon:"🛟",title:"失業給付シミュレーター",desc:"雇用保険の基本手当の日額・所定給付日数・受け取り開始時期を厚生労働省の計算式で試算します。",go:{name:"tool-calc",slug:"unemployment-benefit"},img:["cat:occ_public"]},
+   {icon:"⏱",title:"残業代計算",     desc:"労働基準法第37条の割増率で、時間外・深夜・法定休日の割増賃金を計算します。",go:{name:"tool-calc",slug:"overtime"},img:["cat:occ_technical"]}]},
+ {g:"時期と手続きを決める",items:[
+   {icon:"🗓",title:"有給休暇 日数計算",desc:"労働基準法第39条の付与日数を、勤続期間と勤務形態から計算します。比例付与にも対応。",go:{name:"tool-calc",slug:"paid-leave"},img:["cat:occ_service"]},
+   {icon:"📆",title:"退職スケジュール逆算",desc:"退職希望日から、伝える時期・引き継ぎ・有給消化・最終出社日を逆算します。",go:{name:"tool-calc",slug:"resignation-schedule"},img:["cat:occ_business"]}]},
+ {g:"書類と面接を準備する",items:[
+   {icon:"📝",title:"AI職務経歴書添削",desc:"構成・数値化・読みやすさをセルフチェックします。",go:{name:"tool-review",slug:"career-history-review"},img:["cat:occ_office"]},
+   {icon:"📄",title:"AI履歴書添削",   desc:"志望動機欄・自己紹介欄などの文章をチェックします。",go:{name:"tool-review",slug:"resume-review"},img:["cat:occ_office"]},
+   {icon:"💬",title:"AI志望動機添削", desc:"転職理由→なぜこの会社か→貢献、の3段構成が揃っているかを確認します。",go:{name:"tool-review",slug:"motivation-review"},img:["cat:occ_education"]},
+   {icon:"⭐",title:"AI自己PR添削",   desc:"結論→根拠→活かし方の構成と、実績の具体性をチェックします。",go:{name:"tool-review",slug:"self-promotion-review"},img:["cat:occ_education"]},
+   {icon:"🎤",title:"面接想定質問",   desc:"職種と状況から、聞かれやすい質問・答え方の着眼点・逆質問を組み立てます。",go:{name:"tool-calc",slug:"interview-questions"},img:["cat:occ_professional"]}]}
+];
+function toolGoAttr(g){
+  return "go({name:'"+g.name+"'"+(g.slug?",slug:'"+g.slug+"'":"")+(g.topic?",topic:'"+g.topic+"'":"")+"})";
+}
+function toolTile(it){
+  return '<div class="card thumb-card">'+cardThumb(it.img,it.title,150)+
+   '<div class="tc-body"><h3 style="font-size:16px"><a href="javascript:void(0)" onclick="'+toolGoAttr(it.go)+'">'+it.icon+' '+esc(it.title)+'</a></h3>'+
+   '<p class="desc" style="font-size:13px">'+esc(it.desc)+'</p></div></div>';
+}
+function toolCard(slug){
+  var found=null;
+  TOOL_INDEX.forEach(function(g){g.items.forEach(function(it){if(it.go.slug===slug)found=it})});
+  return found?toolTile(found):"";
+}
+function toolStrip(slugs,title){
+  var items=[];
+  TOOL_INDEX.forEach(function(g){g.items.forEach(function(it){
+    if(it.go.slug&&slugs.indexOf(it.go.slug)>=0)items.push(it);
+  })});
+  if(!items.length)return"";
+  return '<section class="sec" style="padding:22px 0"><div class="sec-h"><h2 style="font-size:20px">'+esc(title||"関連する無料ツール")+'</h2>'+
+    '<p class="small">無料・登録不要。入力内容は端末の外に送信されません。</p></div>'+
+    '<div class="grid g3">'+items.map(toolTile).join("")+'</div></section>';
+}
+var ARTICLE_TOOLS={
+  "unemployment":[["unemployment-benefit","take-home"],"失業給付の金額を自分で計算する"],
+  "resignation":[["resignation-schedule","paid-leave"],"退職の時期と有給を計算する"],
+  "salary-negotiation":[["salary-check","take-home"],"年収の相場と手取りを確認する"],
+  "interview":[["interview-questions"],"面接の準備に使えるツール"],
+  "resume":[["interview-questions"],"書類のあとに準備すること"],
+  "career-history":[["interview-questions"],"書類のあとに準備すること"],
+  "start":[["salary-check","resignation-schedule"],"転職活動を始める前に確認する"]
+};
+var VIDEO_TOOLS={
+  "unemployment":[["unemployment-benefit"],"動画で確認したあとに計算する"],
+  "interview":[["interview-questions"],"動画で学んだあとに準備する"],
+  "worklaw":[["overtime","paid-leave"],"働くルールを自分の条件で計算する"],
+  "jobposting":[["take-home","salary-check"],"求人票の条件を手取りに換算する"]
+};
 function vTools(){
-  var tools=[
-  ["tool-diagnosis",null,"⚓ AIキャリア診断","価値観と強みからキャリアの方向性を整理"],
-  ["tool-review","career-history-review","📝 AI職務経歴書添削","構成・数値化・読みやすさをセルフチェック"],
-  ["tool-review","resume-review","📄 AI履歴書添削","志望動機欄などの文章をチェック"],
-  ["tool-review","motivation-review","💬 AI志望動機添削","3段構成が揃っているかをチェック"],
-  ["tool-review","self-promotion-review","⭐ AI自己PR添削","結論→根拠→活かし方の構成チェック"],
-  ["ai-consultation",null,"🧭 AIチャット相談","転職活動の疑問にルールベースで回答"]];
+  var n=0;TOOL_INDEX.forEach(function(g){n+=g.items.length});
   return crumb([["ツール"]])+
-  '<div class="pagehead"><h1>無料ツール</h1><p class="lead">すべて無料・登録不要。入力内容は端末の外に送信されません。</p></div>'+
-  '<div class="grid g3" style="margin-top:14px">'+tools.map(function(t){return '<div class="card"><h3><a href="javascript:void(0)" onclick="go({name:\''+t[0]+'\''+(t[1]?",slug:'"+t[1]+"'":"")+'})">'+t[2]+'</a></h3><p class="desc">'+t[3]+"</p></div>"}).join("")+'</div>';
+  kvBanner(["cat:occ_office"],"無料ツール",true)+
+  '<div class="pagehead"><div class="eyebrow">Free Tools</div><h1>無料ツール<span style="font-family:var(--en);font-size:16px;color:var(--gold-500);margin-left:10px">'+n+' TOOLS</span></h1>'+
+  '<p class="lead">転職の判断に必要な計算と準備を、'+n+'つのツールにまとめました。すべて無料・登録不要です。<br>'+
+  '<b>入力内容はお使いの端末の外に送信されません。</b>計算はブラウザの中だけで完結します。</p></div>'+
+  '<div class="notice blue">保険料率・税率・給付日数などの法定値は、厚生労働省・国税庁・全国健康保険協会などの一次情報から取り込み、'+
+  '各ツールの結果に<b>出典URLと適用時点</b>を表示しています。改定があった場合はデータを差し替えて反映します。</div>'+
+  TOOL_INDEX.map(function(g){
+    return '<section class="sec" style="padding:22px 0"><div class="sec-h"><h2 style="font-size:20px">'+esc(g.g)+'</h2></div>'+
+      '<div class="grid g3">'+g.items.map(toolTile).join("")+'</div></section>';
+  }).join("")+
+  '<section class="sec"><div class="sec-h"><h2 style="font-size:20px">計算結果の扱いについて</h2></div>'+
+  '<ul class="rv-list note">'+
+   ['<li>いずれのツールも一般的な制度にもとづく<b>概算</b>です。実際の金額・日数は、勤務先の制度、加入している健康保険、お住まいの市区町村、ハローワークの判断により変わります。</li>',
+    '<li>税務・法律・社会保険の個別の判断はできません。税務署・労働基準監督署・ハローワーク・専門家にご確認ください。</li>',
+    '<li>内定・採用・年収の上昇を保証するものではありません。</li>',
+    '<li>入力内容の送信・保存は行いません。保存はご自身で選んだ場合のみ、端末内（localStorage）にだけ行われます。</li>'].join("")+
+  '</ul></section>'+
+  ctaBlock({},["agent"],"ツールを使ったあとの相談先");
+}
+
+/* ----- 無料ツール（計算系） -----
+   法定値は DATA.statutory（官公庁の一次情報＋出典URL）だけを参照し、
+   このファイルには率も金額も書かない。計算は CP_LOGIC の純関数に委ね、
+   ここは入力の受け渡しと表示だけを担当する。入力値は端末の外に出さない。 */
+var CALC_PAGES={
+  "salary-check":{title:"年収チェック",eyebrow:"Salary Check",icon:"📊",
+    lead:"あなたの年収を、厚生労働省の賃金構造基本統計調査（職種別・業界別・地域別）と比べます。",
+    img:["cat:occ_business"]},
+  "take-home":{title:"手取り計算",eyebrow:"Take-home Pay",icon:"💰",
+    lead:"額面の年収から、社会保険料・所得税・住民税を差し引いた手取りの目安を計算します。健康保険料率は都道府県別。",
+    img:["cat:occ_office"]},
+  "unemployment-benefit":{title:"失業給付シミュレーター",eyebrow:"Unemployment Benefit",icon:"🛟",
+    lead:"雇用保険の基本手当（失業保険）の日額・所定給付日数・受け取り開始の目安を、厚生労働省の計算式で試算します。",
+    img:["cat:occ_public"]},
+  "paid-leave":{title:"有給休暇 日数計算",eyebrow:"Paid Leave",icon:"🗓",
+    lead:"労働基準法第39条にもとづく年次有給休暇の付与日数を、勤続期間と勤務形態から計算します。パート・アルバイトの比例付与にも対応。",
+    img:["cat:occ_service"]},
+  "overtime":{title:"残業代計算",eyebrow:"Overtime Pay",icon:"⏱",
+    lead:"労働基準法第37条の割増率にもとづいて、1か月の残業代（時間外・深夜・法定休日）の目安を計算します。",
+    img:["cat:occ_technical"]},
+  "resignation-schedule":{title:"退職スケジュール逆算",eyebrow:"Resignation Plan",icon:"📆",
+    lead:"退職希望日から、退職を伝える時期・引き継ぎ・有給消化・最終出社日を逆算します。退職後の手続きの目安つき。",
+    img:["cat:occ_business"]},
+  "interview-questions":{title:"面接想定質問",eyebrow:"Interview Questions",icon:"🎤",
+    lead:"職種と状況から、面接で聞かれやすい質問と答え方の着眼点、逆質問の候補を組み立てます。",
+    img:["cat:occ_professional"]}
+};
+function stat(){return DATA.statutory||null}
+function nInp(f,name,def){var el=f[name];if(!el)return def;var v=Number(String(el.value).replace(/[^0-9.\-]/g,""));return isFinite(v)?v:def}
+function yenF(n){return Math.round(Number(n)||0).toLocaleString("ja-JP")+"円"}
+function manF(n){return (Math.round(Number(n)*10)/10).toLocaleString("ja-JP")+"万円"}
+function kvRow(k,v,cls){return '<div class="kv '+(cls||"")+'"><span class="k">'+k+'</span><span class="v">'+v+'</span></div>'}
+function srcBox(rows){
+  return '<div class="srcbox">'+rows.filter(Boolean).map(function(r){
+    return '<div><b>'+esc(r[0])+'</b>：'+esc(r[1])+(r[3]?'（'+esc(r[3])+'）':"")+
+      (r[2]?'<br><a href="'+esc(r[2])+'" target="_blank" rel="nofollow noopener">'+esc(r[2])+'</a>':"")+'</div>';
+  }).join("")+'</div>';
+}
+function notReady(){
+  return '<div class="empty">この計算に必要な法定値（保険料率・税率など）が未投入のため、計算を行いません。<br>'+
+    '<span class="small">推測値は表示しない方針です。データ投入後にご利用ください。</span></div>';
+}
+function calcChips(slug){
+  return '<div style="margin:12px 0;display:flex;flex-wrap:wrap;gap:8px">'+Object.keys(CALC_PAGES).map(function(k){
+    return '<a class="chip" style="'+(k===slug?"background:var(--navy-950);color:var(--gold-400)":"")+
+      '" href="javascript:void(0)" onclick="go({name:\'tool-calc\',slug:\''+k+'\'})">'+CALC_PAGES[k].icon+' '+esc(CALC_PAGES[k].title)+'</a>';
+  }).join("")+'</div>';
+}
+function calcHead(slug){
+  var pg=CALC_PAGES[slug];
+  return crumb([["ツール",{name:"tools"}],[pg.title]])+
+    kvBanner(pg.img,pg.title,true)+
+    '<div class="pagehead"><div class="eyebrow">'+esc(pg.eyebrow)+'</div><h1>'+pg.icon+' '+esc(pg.title)+'</h1>'+
+    '<p class="lead">'+esc(pg.lead)+'<br><b>無料・登録不要。入力内容はお使いの端末の外に送信されません。</b></p></div>'+
+    calcChips(slug);
+}
+function vToolCalc(slug){
+  var pg=CALC_PAGES[slug];if(!pg)return vNotFound();
+  var body=({
+    "salary-check":vcSalaryCheck,"take-home":vcTakeHome,"unemployment-benefit":vcUnemployment,
+    "paid-leave":vcPaidLeave,"overtime":vcOvertime,"resignation-schedule":vcResign,
+    "interview-questions":vcInterview
+  })[slug]();
+  return calcHead(slug)+body+'<div id="calc-result"></div>'+relatedTools(slug);
+}
+function relatedTools(slug){
+  var ks=Object.keys(CALC_PAGES).filter(function(k){return k!==slug}).slice(0,3);
+  return '<section class="sec"><div class="sec-h"><h2 style="font-size:20px">ほかの無料ツール</h2>'+
+    '<p class="small">すべて無料・登録不要、入力内容は端末内で処理されます。</p></div>'+
+    '<div class="grid g3">'+ks.map(function(k){return toolCard(k)}).join("")+'</div>'+
+    '<p style="margin-top:14px"><a class="btn line sm" href="javascript:void(0)" onclick="go({name:\'tools\'})">無料ツール一覧を見る</a></p></section>';
+}
+function showCalc(html){
+  var el=document.getElementById("calc-result");
+  el.innerHTML=html;el.scrollIntoView({behavior:"smooth"});
+  return false;
+}
+
+/* --- 年収チェック --- */
+function scRecords(group){
+  return DATA.salaryData.filter(function(r){return r.group===group&&r.averageSalary!=null});
+}
+function scOptions(group,pref){
+  var rs=scRecords(group);
+  if(group==="area"&&pref)rs=rs.filter(function(r){return (r.prefSlugs||[]).indexOf(pref)>=0});
+  return rs.map(function(r,i){
+    var lb=group==="area"?(r.occLabel||r.label):r.label;
+    return '<option value="'+esc(group+"|"+(r.label||"")+"|"+i)+'">'+esc(lb)+'（平均'+r.averageSalary+'万円）</option>';
+  }).join("");
+}
+function vcSalaryCheck(){
+  var prefs=DATA.prefectures.map(function(p){return '<option value="'+esc(p.slug)+'">'+esc(nm(p))+'</option>'}).join("");
+  return '<form class="form" onsubmit="return scSubmit(this)">'+
+  '<div class="calc-row">'+
+  '<div class="q"><label>あなたの年収（額面・万円）</label><input type="number" name="my" min="0" max="20000" step="1" placeholder="例：450" required></div>'+
+  '<div class="q"><label>比べる統計</label><select name="group" onchange="scGroupChange(this.form)"><option value="occupation">職種別（143区分）</option><option value="industry">業界別（産業中分類13区分）</option><option value="area">地域別（都道府県×職業大分類）</option></select></div>'+
+  '</div>'+
+  '<div class="q" id="sc-pref-wrap" style="display:none"><label>都道府県</label><select name="pref" onchange="scGroupChange(this.form)">'+prefs+'</select></div>'+
+  '<div class="q"><label>比較する区分</label><select name="rec" id="sc-rec">'+scOptions("occupation")+'</select></div>'+
+  '<button class="btn gold" type="submit">統計と比べる</button>'+
+  '<p class="small" style="margin-top:10px">※統計の平均は、年齢構成・企業規模・地域の影響を受けます。個人の適正年収を示すものではありません。</p></form>';
+}
+function scGroupChange(f){
+  var g=f.group.value;
+  document.getElementById("sc-pref-wrap").style.display=(g==="area"?"block":"none");
+  document.getElementById("sc-rec").innerHTML=scOptions(g,g==="area"?f.pref.value:null);
+}
+function scSubmit(f){
+  var g=f.group.value,idx=Number(String(f.rec.value).split("|")[2]);
+  var rs=scRecords(g);
+  if(g==="area"&&f.pref.value)rs=rs.filter(function(r){return (r.prefSlugs||[]).indexOf(f.pref.value)>=0});
+  var rec=rs[idx];
+  var r=CP_LOGIC.salaryCompare(rec,nInp(f,"my",0));
+  if(!r)return showCalc('<div class="empty">年収を入力してください。</div>');
+  evTrack("tool_salary_check",{group:g});
+  var w=Math.max(4,Math.min(100,Math.round(r.percent)));
+  var lb=rec.label;
+  return showCalc('<div class="result"><div class="eyebrow">Result</div>'+
+   '<h3>'+esc(lb)+'の平均と比べて</h3>'+
+   '<div class="bignum">'+r.percent+'<span class="u">%</span></div>'+
+   '<div class="bar"><i style="width:'+w+'%"></i></div>'+
+   '<p class="small">あなた '+manF(r.mine)+' ／ 統計の平均 '+manF(r.avg)+
+     (r.averageAge!=null?'（平均年齢'+r.averageAge+'歳）':"")+'　差 '+(r.diff>=0?"+":"")+manF(r.diff)+'</p>'+
+   '<p style="margin-top:14px;font-size:14.5px">'+esc(r.comment)+'</p>'+
+   '<div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap">'+
+     '<a class="btn navy sm" href="javascript:void(0)" onclick="go({name:\'salary\'})">年収データベースを見る</a>'+
+     '<a class="btn line sm" href="javascript:void(0)" onclick="go({name:\'tool-calc\',slug:\'take-home\'})">この年収の手取りを計算</a></div>'+
+   '<p class="small" style="margin-top:14px">'+esc(r.disclaimer)+'</p></div>'+
+   srcBox([["出典",r.sourceName,r.sourceUrl,r.period],r.note?["注記",r.note,"",""]:null]));
+}
+
+/* --- 手取り計算 --- */
+function vcTakeHome(){
+  var S=stat();if(!S)return notReady();
+  var prefs=DATA.prefectures.map(function(p){
+    var hp=S.insurance.health.byPref[p.slug];
+    return '<option value="'+esc(p.slug)+'"'+(p.slug==="tokyo"?" selected":"")+'>'+esc(nm(p))+(hp?'（'+hp.rate+'%）':"")+'</option>';
+  }).join("");
+  return '<form class="form" onsubmit="return thSubmit(this)">'+
+  '<div class="calc-row">'+
+  '<div class="q"><label>額面の年収（万円）</label><input type="number" name="annual" min="0" max="20000" step="1" value="500" required></div>'+
+  '<div class="q"><label>うち賞与の年間合計（万円）</label><input type="number" name="bonus" min="0" max="20000" step="1" value="100"></div>'+
+  '</div><div class="calc-row">'+
+  '<div class="q"><label>賞与の支給回数（年）</label><select name="bonusCount"><option value="1">1回</option><option value="2" selected>2回</option><option value="3">3回</option><option value="4">4回</option></select></div>'+
+  '<div class="q"><label>年齢</label><input type="number" name="age" min="15" max="74" step="1" value="30"></div>'+
+  '</div><div class="calc-row">'+
+  '<div class="q"><label>勤務先の都道府県（健康保険料率）</label><select name="pref">'+prefs+'</select></div>'+
+  '<div class="q"><label>扶養している家族の人数（16歳以上）</label><input type="number" name="deps" min="0" max="10" step="1" value="0"></div>'+
+  '</div>'+
+  '<button class="btn gold" type="submit">手取りを計算する</button>'+
+  '<p class="small" style="margin-top:10px">※協会けんぽ（'+esc(S.insurance.asOf)+'）の料率と、令和8年分の所得税・住民税の制度による概算です。実際の控除額は勤務先の健康保険組合・各種控除により異なります。</p></form>';
+}
+function thSubmit(f){
+  var S=stat();if(!S)return showCalc(notReady());
+  var r=CP_LOGIC.takeHome(S,{
+    annual:nInp(f,"annual",0)*10000, bonus:nInp(f,"bonus",0)*10000,
+    bonusCount:nInp(f,"bonusCount",2), age:nInp(f,"age",30),
+    prefSlug:f.pref.value, dependents:nInp(f,"deps",0)});
+  if(!r)return showCalc(notReady());
+  evTrack("tool_take_home",{});
+  var ins=r.insurance;
+  return showCalc('<div class="result"><div class="eyebrow">Result</div>'+
+   '<h3>手取りの目安</h3>'+
+   '<div class="calc-row" style="margin-top:10px">'+
+     '<div><div class="small">年間の手取り</div><div class="bignum">'+Math.round(r.net/10000).toLocaleString("ja-JP")+'<span class="u">万円</span></div></div>'+
+     '<div><div class="small">月あたりの手取り（12等分）</div><div class="bignum">'+Math.round(r.netMonthly/1000).toLocaleString("ja-JP")+'<span class="u">千円</span></div></div>'+
+   '</div>'+
+   '<div class="bar"><i style="width:'+Math.round(r.netRate*100)+'%"></i></div>'+
+   '<p class="small">額面 '+yenF(r.gross)+' のうち手取りは '+Math.round(r.netRate*1000)/10+'%。控除の合計は '+yenF(r.deductionTotal)+' です。</p>'+
+   '<h3 style="font-size:16px;margin-top:20px">内訳（年額）</h3>'+
+   kvRow("社会保険料の合計",yenF(ins.total))+
+   kvRow("健康保険（"+r.prefName+"・"+r.rates.health+"%の半額）",yenF(ins.health),"sub")+
+   (ins.care>0?kvRow("介護保険（"+r.rates.care+"%の半額・40〜64歳）",yenF(ins.care),"sub"):"")+
+   kvRow("子ども・子育て支援金（"+r.rates.childcare+"%の半額）",yenF(ins.childcare),"sub")+
+   kvRow("厚生年金（"+r.rates.pension+"%の半額）",yenF(ins.pension),"sub")+
+   kvRow("雇用保険（"+r.rates.employment+"%）",yenF(ins.employment),"sub")+
+   kvRow("所得税（復興特別所得税を含む）",yenF(r.incomeTax))+
+   kvRow("住民税（所得割＋均等割）",yenF(r.residentTax))+
+   kvRow("手取り（額面−控除）",yenF(r.net),"total")+
+   '<p class="small" style="margin-top:14px">標準報酬月額 '+yenF(r.standardMonthly)+'（厚生年金は '+yenF(r.standardPension)+'）として計算しています。</p>'+
+   '<h3 style="font-size:15px;margin-top:18px">計算の前提</h3><ul class="rv-list note">'+
+     r.assumptions.map(function(x){return "<li>"+esc(x)+"</li>"}).join("")+'</ul>'+
+   '<div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap">'+
+     '<a class="btn navy sm" href="javascript:void(0)" onclick="go({name:\'tool-calc\',slug:\'salary-check\'})">この年収を統計と比べる</a>'+
+     '<a class="btn line sm" href="javascript:void(0)" onclick="go({name:\'salary\'})">職種別の年収データを見る</a></div>'+
+   '<p class="small" style="margin-top:12px">※概算です。実際の税額・保険料は勤務先および市区町村が計算します。税務の個別判断は税務署・税理士にご確認ください。</p></div>'+
+   srcBox([
+     ["健康保険料率",S.insurance.health.source,S.insurance.health.sourceUrl,S.insurance.health.asOf],
+     ["介護保険料率",S.insurance.care.source,S.insurance.care.sourceUrl,S.insurance.care.asOf],
+     ["子ども・子育て支援金率",S.insurance.childcare.source,S.insurance.childcare.sourceUrl,S.insurance.childcare.asOf],
+     ["厚生年金保険料率",S.insurance.pension.source,S.insurance.pension.sourceUrl,""],
+     ["標準報酬月額",S.insurance.standardRemuneration.source,S.insurance.standardRemuneration.sourceUrl,""],
+     ["雇用保険料率",S.insurance.employment.source,S.insurance.employment.sourceUrl,S.insurance.employment.asOf],
+     ["給与所得控除",S.incomeTax.salaryDeduction.source,S.incomeTax.salaryDeduction.sourceUrl,""],
+     ["基礎控除",S.incomeTax.basicDeduction.source,S.incomeTax.basicDeduction.sourceUrl,S.incomeTax.asOf],
+     ["所得税率",S.incomeTax.rates.source,S.incomeTax.rates.sourceUrl,""],
+     ["住民税",S.residentTax.source,S.residentTax.sourceUrl,""]
+   ]));
+}
+
+/* --- 失業給付 --- */
+function vcUnemployment(){
+  var S=stat();if(!S)return notReady();
+  return '<form class="form" onsubmit="return ubSubmit(this)">'+
+  '<div class="calc-row">'+
+  '<div class="q"><label>離職時の年齢</label><input type="number" name="age" min="15" max="74" step="1" value="35" required></div>'+
+  '<div class="q"><label>離職前6か月の平均月給（万円・賞与を除く）</label><input type="number" name="wage" min="0" max="500" step="0.1" value="30" required></div>'+
+  '</div><div class="calc-row">'+
+  '<div class="q"><label>雇用保険の被保険者だった期間（年）</label><input type="number" name="years" min="0" max="50" step="0.5" value="8"></div>'+
+  '<div class="q"><label>離職の理由</label><select name="reason">'+
+    '<option value="self">自己都合・定年など</option><option value="company">倒産・解雇など（会社都合）</option>'+
+    '<option value="difficult">就職困難者に該当する</option></select></div>'+
+  '</div>'+
+  '<div class="q"><span class="ql">あてはまるもの</span><div class="opts"><label><input type="checkbox" name="repeat">離職日から5年間に2回以上、自己都合で離職している</label></div></div>'+
+  '<button class="btn gold" type="submit">給付の目安を計算する</button>'+
+  '<p class="small" style="margin-top:10px">※基本手当日額は厚生労働省が公表する計算式（'+esc(S.unemployment.asOf)+'）、所定給付日数はハローワークの公表表にもとづきます。実際の支給はハローワークが決定します。</p></form>';
+}
+function ubSubmit(f){
+  var S=stat();if(!S)return showCalc(notReady());
+  var r=CP_LOGIC.unemploymentBenefit(S,{
+    age:nInp(f,"age",30), monthlyWage:nInp(f,"wage",0)*10000,
+    insuredYears:nInp(f,"years",0), reason:f.reason.value, repeat:f.repeat.checked});
+  if(!r)return showCalc(notReady());
+  evTrack("tool_unemployment",{reason:f.reason.value});
+  if(r.eligible===false){
+    return showCalc('<div class="result"><div class="eyebrow">Result</div><h3>65歳以上で離職した場合</h3>'+
+      '<p style="margin-top:10px;font-size:14.5px">'+esc(r.message)+'</p></div>'+
+      srcBox([["出典",r.sourceName,r.sourceUrl,""]]));
+  }
+  var tl=[];
+  tl.push({t:"ハローワークで求職の申込み",n:"離職票を持って手続きします。この日が受給資格決定日になります。"});
+  tl.push({t:"待期 "+r.waitingDays+"日間",n:"離職理由にかかわらず、最初の"+r.waitingDays+"日間は支給されません。"});
+  if(r.restrictionMonths>0)tl.push({t:"給付制限 "+r.restrictionMonths+"か月",n:r.restrictionNote});
+  tl.push({t:"基本手当の支給開始",n:"以後、原則4週間に1回の失業認定を受けながら、最大"+r.days+"日分が支給されます。"});
+  return showCalc('<div class="result"><div class="eyebrow">Result</div>'+
+   '<h3>基本手当の目安</h3>'+
+   '<div class="calc-row" style="margin-top:10px">'+
+     '<div><div class="small">1日あたり（基本手当日額）</div><div class="bignum">'+r.daily.toLocaleString("ja-JP")+'<span class="u">円</span></div></div>'+
+     '<div><div class="small">受け取れる総額の目安</div><div class="bignum">'+Math.round(r.total/10000).toLocaleString("ja-JP")+'<span class="u">万円</span></div></div>'+
+   '</div>'+
+   (r.warnings.length?'<div class="notice" style="margin-top:14px">'+r.warnings.map(esc).join("<br>")+'</div>':"")+
+   kvRow("賃金日額（平均月給÷30）",yenF(r.wageDaily))+
+   kvRow("給付率",Math.round(r.rate*1000)/10+"%")+
+   kvRow("離職理由の区分",esc(r.reasonLabel))+
+   kvRow("被保険者だった期間",esc(r.termLabel))+
+   kvRow("所定給付日数",r.days+"日")+
+   kvRow("総額の目安（日額×日数）",yenF(r.total),"total")+
+   '<h3 style="font-size:16px;margin-top:20px">受け取りまでの流れ</h3><ul class="tl">'+
+     tl.map(function(x){return '<li><div class="t">'+esc(x.t)+'</div><div class="n">'+esc(x.n)+'</div></li>'}).join("")+'</ul>'+
+   (r.tableNote?'<p class="small">'+esc(r.tableNote)+'</p>':"")+
+   '<p class="small" style="margin-top:8px">'+esc(r.periodNote)+'</p>'+
+   (r.notes.length?'<ul class="rv-list note" style="margin-top:8px">'+r.notes.map(function(x){return "<li>"+esc(x)+"</li>"}).join("")+'</ul>':"")+
+   '<div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap">'+
+     '<a class="btn navy sm" href="javascript:void(0)" onclick="go({name:\'videos\',topic:\'unemployment\'})">公式動画で手続きを確認する</a>'+
+     '<a class="btn line sm" href="javascript:void(0)" onclick="go({name:\'articles\',cat:\'unemployment\'})">失業給付の記事を読む</a></div>'+
+   '<p class="small" style="margin-top:12px">'+esc(r.disclaimer)+'</p></div>'+
+   srcBox([
+     ["基本手当日額の計算式",r.sourceName,r.sourceUrl,r.asOf],
+     ["所定給付日数",r.daysSource,r.daysSourceUrl,""],
+     ["給付制限",S.unemployment.restriction.source,S.unemployment.restriction.sourceUrl,""]
+   ]));
+}
+
+/* --- 有給休暇 --- */
+function vcPaidLeave(){
+  var S=stat();if(!S)return notReady();
+  return '<form class="form" onsubmit="return plSubmit(this)">'+
+  '<div class="calc-row">'+
+  '<div class="q"><label>入社日</label><input type="date" name="joined" required></div>'+
+  '<div class="q"><label>基準にする日</label><input type="date" name="asof"></div>'+
+  '</div><div class="calc-row">'+
+  '<div class="q"><label>週の所定労働日数</label><select name="weekDays"><option value="5" selected>5日以上</option><option value="4">4日</option><option value="3">3日</option><option value="2">2日</option><option value="1">1日</option></select></div>'+
+  '<div class="q"><label>週の所定労働時間</label><input type="number" name="weekHours" min="0" max="80" step="0.5" value="40"></div>'+
+  '</div>'+
+  '<button class="btn gold" type="submit">付与日数を計算する</button>'+
+  '<p class="small" style="margin-top:10px">※週の所定労働時間が30時間以上、または週の所定労働日数が5日以上の方は、勤務日数にかかわらず通常の付与日数になります。</p></form>';
+}
+function plSubmit(f){
+  var S=stat();if(!S)return showCalc(notReady());
+  var j=new Date(f.joined.value+"T00:00:00");
+  if(isNaN(j.getTime()))return showCalc('<div class="empty">入社日を入力してください。</div>');
+  var a=f.asof.value?new Date(f.asof.value+"T00:00:00"):new Date();
+  if(isNaN(a.getTime())||a<j)return showCalc('<div class="empty">基準日は入社日より後の日付を入力してください。</div>');
+  var months=(a.getFullYear()-j.getFullYear())*12+(a.getMonth()-j.getMonth())-(a.getDate()<j.getDate()?1:0);
+  var r=CP_LOGIC.paidLeave(S,{months:months,weekDays:nInp(f,"weekDays",5),weekHours:nInp(f,"weekHours",40)});
+  if(!r)return showCalc(notReady());
+  evTrack("tool_paid_leave",{});
+  var rows=r.labels.map(function(l,i){
+    return kvRow(l,r.table[i]+"日",(l===r.stageLabel?"":"sub"));
+  }).join("");
+  return showCalc('<div class="result"><div class="eyebrow">Result</div>'+
+   '<h3>現在の付与日数</h3>'+
+   '<div class="bignum">'+r.current+'<span class="u">日</span></div>'+
+   '<p class="small">勤続'+months+'か月（'+esc(r.stageLabel)+'の区分）／'+esc(r.patternLabel)+'</p>'+
+   (r.current===0?'<div class="notice blue" style="margin-top:12px">入社から6か月が経過すると最初の付与があります（あと約'+r.monthsToNext+'か月）。</div>'
+     :'<p style="margin-top:12px;font-size:14.5px">次回の付与は約'+r.monthsToNext+'か月後、'+r.next+'日です。前年の未消化分を繰り越せる場合、最大'+r.maxCarry+'日を保有できます。</p>')+
+   '<h3 style="font-size:16px;margin-top:20px">この勤務形態の付与日数表</h3>'+rows+
+   (r.obligationApplies?'<div class="notice blue" style="margin-top:14px">年10日以上付与されているため、会社には年'+r.obligationDays+'日を確実に取得させる義務があります。</div>':"")+
+   '<h3 style="font-size:15px;margin-top:18px">知っておきたいこと</h3><ul class="rv-list note">'+
+     r.notes.map(function(x){return "<li>"+esc(x)+"</li>"}).join("")+'</ul>'+
+   '<div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap">'+
+     '<a class="btn navy sm" href="javascript:void(0)" onclick="go({name:\'tool-calc\',slug:\'resignation-schedule\'})">有給を消化する退職日を逆算する</a></div>'+
+   '<p class="small" style="margin-top:12px">※就業規則で法定を上回る日数や、全社一斉の付与日（斉一的取扱い）を定めている場合は会社の規定が優先されます。個別の判断は勤務先または労働基準監督署にご確認ください。</p></div>'+
+   srcBox([["出典",r.sourceName,r.sourceUrl,""]]));
+}
+
+/* --- 残業代 --- */
+function vcOvertime(){
+  var S=stat();if(!S)return notReady();
+  return '<form class="form" onsubmit="return otSubmit(this)">'+
+  '<div class="calc-row">'+
+  '<div class="q"><label>月給（万円・除外手当を除く）</label><input type="number" name="salary" min="0" max="500" step="0.1" value="30" required></div>'+
+  '<div class="q"><label>年間休日日数</label><input type="number" name="holidays" min="0" max="200" step="1" value="120"></div>'+
+  '</div><div class="calc-row">'+
+  '<div class="q"><label>1日の所定労働時間</label><input type="number" name="dailyHours" min="1" max="12" step="0.25" value="8"></div>'+
+  '<div class="q"><label>1か月の時間外労働（時間）</label><input type="number" name="over" min="0" max="400" step="0.5" value="20"></div>'+
+  '</div><div class="calc-row">'+
+  '<div class="q"><label>うち深夜（22時〜翌5時）の時間</label><input type="number" name="night" min="0" max="400" step="0.5" value="0"></div>'+
+  '<div class="q"><label>法定休日に働いた時間</label><input type="number" name="hol" min="0" max="400" step="0.5" value="0"></div>'+
+  '</div>'+
+  '<button class="btn gold" type="submit">残業代を計算する</button>'+
+  '<p class="small" style="margin-top:10px">※月給には家族手当・通勤手当・住宅手当・賞与などを含めずに入力してください（労働基準法第37条第5項の除外賃金）。</p></form>';
+}
+function otSubmit(f){
+  var S=stat();if(!S)return showCalc(notReady());
+  var r=CP_LOGIC.overtimePay(S,{
+    monthlySalary:nInp(f,"salary",0)*10000, annualHolidays:nInp(f,"holidays",120),
+    dailyHours:nInp(f,"dailyHours",8), overtimeHours:nInp(f,"over",0),
+    nightHours:nInp(f,"night",0), holidayHours:nInp(f,"hol",0)});
+  if(!r)return showCalc(notReady());
+  evTrack("tool_overtime",{});
+  return showCalc('<div class="result"><div class="eyebrow">Result</div>'+
+   '<h3>1か月の割増賃金の目安</h3>'+
+   '<div class="bignum">'+r.total.toLocaleString("ja-JP")+'<span class="u">円</span></div>'+
+   '<p class="small">1時間あたりの賃金 '+yenF(r.hourly)+'（月平均所定労働時間 '+r.fixedMonthly+'時間）</p>'+
+   (r.lines.length?'<h3 style="font-size:16px;margin-top:20px">内訳</h3>'+
+     r.lines.map(function(x){return kvRow(x.label+"　"+x.hours+"時間",yenF(x.amount))}).join("")+
+     kvRow("合計",yenF(r.total),"total")
+     :'<div class="notice blue" style="margin-top:14px">時間外・深夜・休日労働の時間を入力すると計算されます。</div>')+
+   (r.overLimit?'<div class="notice" style="margin-top:14px">'+esc(r.upperLimit)+'</div>':"")+
+   '<p class="small" style="margin-top:14px">'+esc(r.note)+'</p>'+
+   '<h3 style="font-size:15px;margin-top:18px">計算の前提</h3><ul class="rv-list note">'+
+     r.assumptions.map(function(x){return "<li>"+esc(x)+"</li>"}).join("")+'</ul>'+
+   '<p class="small" style="margin-top:12px">※未払いの残業代がある場合の請求可否など個別の判断は、労働基準監督署や弁護士にご相談ください。当サイトは法律相談を行いません。</p></div>'+
+   srcBox([["出典",r.sourceName,r.sourceUrl,""]]));
+}
+
+/* --- 退職スケジュール --- */
+function vcResign(){
+  var S=stat();if(!S)return notReady();
+  return '<form class="form" onsubmit="return rpSubmit(this)">'+
+  '<div class="calc-row">'+
+  '<div class="q"><label>退職希望日</label><input type="date" name="lastDay" required></div>'+
+  '<div class="q"><label>残っている有給休暇（日）</label><input type="number" name="leave" min="0" max="60" step="1" value="10"></div>'+
+  '</div><div class="calc-row">'+
+  '<div class="q"><label>就業規則の申し出期限（退職日の何日前まで）</label><input type="number" name="notice" min="14" max="180" step="1" value="30"></div>'+
+  '<div class="q"><label>引き継ぎに必要な日数（営業日）</label><input type="number" name="handover" min="0" max="90" step="1" value="14"></div>'+
+  '</div>'+
+  '<button class="btn gold" type="submit">スケジュールを逆算する</button>'+
+  '<p class="small" style="margin-top:10px">※有給消化日数は土日を除いた営業日で計算します（祝日・会社独自の休日は考慮していません）。</p></form>';
+}
+function rpSubmit(f){
+  var S=stat();if(!S)return showCalc(notReady());
+  var r=CP_LOGIC.resignationPlan(S,{
+    lastDay:f.lastDay.value, paidLeaveDays:nInp(f,"leave",0),
+    noticeDays:nInp(f,"notice",30), handoverDays:nInp(f,"handover",14)});
+  if(!r)return showCalc('<div class="empty">退職希望日を入力してください。</div>');
+  evTrack("tool_resignation",{});
+  return showCalc('<div class="result"><div class="eyebrow">Result</div>'+
+   '<h3>退職日から逆算したスケジュール</h3>'+
+   (r.tooLate?'<div class="notice" style="margin-top:12px">この退職希望日から逆算すると、退職を伝える期限がすでに過ぎています。退職日を後ろにずらすか、就業規則の申し出期限を確認してください（民法第627条では、期間の定めのない雇用は申し入れから'+r.civilCodeDays+'日で終了します）。</div>':"")+
+   '<ul class="tl">'+r.steps.map(function(x){
+     return '<li><div class="d">'+esc(x.date)+'</div><div class="t">'+esc(x.label)+'</div><div class="n">'+esc(x.note)+'</div></li>';
+   }).join("")+'</ul>'+
+   '<h3 style="font-size:16px;margin-top:20px">退職後に必要な手続き</h3>'+
+   r.afterSteps.map(function(x){
+     return '<div class="qa"><div class="qq">'+esc(x.label)+'　<span class="small">'+esc(x.within)+'</span></div><div class="qh">'+esc(x.note)+'</div></div>';
+   }).join("")+
+   '<p class="small" style="margin-top:14px">'+esc(r.note)+'</p>'+
+   '<div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap">'+
+     '<a class="btn navy sm" href="javascript:void(0)" onclick="go({name:\'tool-calc\',slug:\'unemployment-benefit\'})">失業給付の目安を計算する</a>'+
+     '<a class="btn line sm" href="javascript:void(0)" onclick="go({name:\'articles\',cat:\'resignation\'})">退職の進め方を読む</a></div>'+
+   '<p class="small" style="margin-top:12px">※会社の就業規則・雇用契約の内容が優先されます。退職をめぐるトラブルの個別判断は、労働基準監督署や弁護士にご相談ください。</p></div>'+
+   srcBox([["根拠",r.sourceName,r.sourceUrl,""]]));
+}
+
+/* --- 面接想定質問 --- */
+function vcInterview(){
+  var cats=DATA.occCategories.map(function(c){return '<option value="'+esc(c.id)+'">'+esc(nm(c))+'</option>'}).join("");
+  return '<form class="form" onsubmit="return iqSubmit(this)">'+
+  '<div class="q"><label>応募する職種の分野</label><select name="cat"><option value="">選択しない</option>'+cats+'</select></div>'+
+  '<div class="q"><span class="ql">あてはまる状況（複数選択可）</span><div class="opts">'+
+    '<label><input type="checkbox" name="sit" value="inexperienced">未経験の職種に応募する</label>'+
+    '<label><input type="checkbox" name="sit" value="blank">離職期間がある</label>'+
+    '<label><input type="checkbox" name="sit" value="shortterm">前職の在籍期間が短い</label>'+
+    '<label><input type="checkbox" name="sit" value="manager">マネジメント経験がある</label>'+
+    '<label><input type="checkbox" name="sit" value="highclass">管理職・専門職として応募する</label>'+
+  '</div></div>'+
+  '<button class="btn gold" type="submit">想定質問をつくる</button>'+
+  '<p class="small" style="margin-top:10px">※一般的な傾向にもとづく参考情報です。実際の質問は企業・面接官により異なります。</p></form>';
+}
+function iqSubmit(f){
+  var inp={occCat:f.cat.value};
+  f.querySelectorAll('input[name="sit"]:checked').forEach(function(el){inp[el.value]=true});
+  var r=CP_LOGIC.interviewQuestions(inp);
+  evTrack("tool_interview",{count:r.count});
+  return showCalc('<div class="result"><div class="eyebrow">Result</div>'+
+   '<h3>想定質問 '+r.count+'問</h3>'+
+   r.groups.map(function(g){
+     return '<h3 style="font-size:16px;margin-top:20px">'+esc(g.group)+'</h3>'+
+       g.items.map(function(it){return '<div class="qa"><div class="qq">'+esc(it.q)+'</div><div class="qh">'+esc(it.h)+'</div></div>'}).join("");
+   }).join("")+
+   '<h3 style="font-size:16px;margin-top:20px">逆質問の候補</h3><ul class="rv-list note">'+
+     r.reverse.map(function(x){return "<li>"+esc(x)+"</li>"}).join("")+'</ul>'+
+   '<h3 style="font-size:16px;margin-top:20px">準備のコツ</h3><ul class="rv-list good">'+
+     r.prepare.map(function(x){return "<li>"+esc(x)+"</li>"}).join("")+'</ul>'+
+   '<div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap">'+
+     '<a class="btn navy sm" href="javascript:void(0)" onclick="go({name:\'tool-review\',slug:\'motivation-review\'})">志望動機を添削する</a>'+
+     '<a class="btn line sm" href="javascript:void(0)" onclick="go({name:\'videos\',topic:\'interview\'})">面接の公式動画を見る</a></div>'+
+   '<p class="small" style="margin-top:12px">'+esc(r.disclaimer)+'</p></div>');
 }
 
 /* ----- AIチャット相談 ----- */
@@ -1489,8 +2012,8 @@ var FIXED={
     '<p class="small" style="margin-top:12px">企業の採用情報・求人との紐付けは、正規の求人データ提携後に行います。</p>';
   },
   sitemap:function(){
-    var links=[["home","トップ"],["jobs","求人を探す"],["services","転職サービス比較"],["careers","年代・状況から探す"],["occupations","職種から探す"],["industries","業界から探す"],["areas","地域から探す"],["salary","年収データベース"],["articles","転職ノウハウ"],["stories","体験談・ストーリー"],["learning","リスキリング・スクール"],["tools","無料ツール"],["tool-diagnosis","AIキャリア診断"],["ai-consultation","AIチャット相談"],["mypage","マイページ"],["about","CAREERPORTについて"],["company","運営会社"],["editorial-policy","編集方針"],["expert-supervision","監修方針"],["data-policy","データポリシー"],["advertising-policy","広告掲載方針"],["privacy","プライバシーポリシー"],["terms","利用規約"],["disclaimer","免責事項"],["faq","よくある質問"],["contact","お問い合わせ"],["correction-request","訂正依頼窓口"]];
-    return docPage("サイトマップ","","<ul>"+links.map(function(l){return "<li><a href='javascript:void(0)' onclick=\"go({name:'"+l[0]+"'})\" style='text-decoration:underline'>"+l[1]+"</a></li>"}).join("")+"</ul>")},
+    var links=[["home","トップ"],["jobs","求人を探す"],["services","転職サービス比較"],["careers","年代・状況から探す"],["occupations","職種から探す"],["industries","業界から探す"],["areas","地域から探す"],["salary","年収データベース"],["articles","転職ノウハウ"],["stories","体験談・ストーリー"],["learning","リスキリング・スクール"],["tools","無料ツール"],["tool-diagnosis","AIキャリア診断"],["tool-calc:salary-check","年収チェック"],["tool-calc:take-home","手取り計算"],["tool-calc:unemployment-benefit","失業給付シミュレーター"],["tool-calc:paid-leave","有給休暇 日数計算"],["tool-calc:overtime","残業代計算"],["tool-calc:resignation-schedule","退職スケジュール逆算"],["tool-calc:interview-questions","面接想定質問"],["ai-consultation","AIチャット相談"],["mypage","マイページ"],["about","CAREERPORTについて"],["company","運営会社"],["editorial-policy","編集方針"],["expert-supervision","監修方針"],["data-policy","データポリシー"],["advertising-policy","広告掲載方針"],["privacy","プライバシーポリシー"],["terms","利用規約"],["disclaimer","免責事項"],["faq","よくある質問"],["contact","お問い合わせ"],["correction-request","訂正依頼窓口"]];
+    return docPage("サイトマップ","","<ul>"+links.map(function(l){var pt=String(l[0]).split(":");var g="go({name:'"+pt[0]+"'"+(pt[1]?",slug:'"+pt[1]+"'":"")+"})";return "<li><a href='javascript:void(0)' onclick=\""+g+"\" style='text-decoration:underline'>"+l[1]+"</a></li>"}).join("")+"</ul>")},
 };
 function vNotFound(){
   return '<div class="empty" style="margin:60px 0"><h2 style="font-size:22px;margin-bottom:10px">ページが見つかりません</h2><p>URLが変更されたか、ページが存在しません。</p><p style="margin-top:14px"><button class="btn navy sm" onclick="go({name:\'home\'})">トップへ戻る</button></p></div>';
@@ -1524,6 +2047,7 @@ function pathFor(v){
   if(v.name==="articles"&&v.cat)return b+"guide/category/"+v.cat+"/";
   if(v.name==="videos"&&v.topic)return b+"videos/"+v.topic+"/";
   if(v.name==="tool-review")return b+"tools/"+v.slug+"/";
+  if(v.name==="tool-calc")return b+"tools/"+v.slug+"/";
   var p=VIEW_PATH[v.name];if(p==null)return b;
   return b+(p?p+"/":"");
 }
@@ -1554,6 +2078,7 @@ function parsePath(){
   if(a==="tools"){
     if(b2==="career-diagnosis")return{name:"tool-diagnosis"};
     if(b2&&REVIEW_PAGES[b2])return{name:"tool-review",slug:b2};
+    if(b2&&CALC_PAGES[b2])return{name:"tool-calc",slug:b2};
     return{name:"tools"};
   }
   if(a==="ai-consultation")return{name:"ai-consultation"};
@@ -1620,15 +2145,16 @@ function render(){
       case"industry":h=vIndustry(v.slug);break;
       case"areas":h=vAreas();break;
       case"area":h=vArea(v.slug);break;
-      case"salary":h=vSalary();break;
-      case"articles":h=vArticles(v.cat);break;
+      case"salary":h=vSalary()+toolStrip(["salary-check","take-home"],"年収データを自分の数字にあてはめる");break;
+      case"articles":h=vArticles(v.cat)+(ARTICLE_TOOLS[v.cat]?toolStrip(ARTICLE_TOOLS[v.cat][0],ARTICLE_TOOLS[v.cat][1]):"");break;
       case"article":h=vArticle(v.slug);break;
-      case"videos":h=vVideos(v.topic);break;
+      case"videos":h=vVideos(v.topic)+(VIDEO_TOOLS[v.topic]?toolStrip(VIDEO_TOOLS[v.topic][0],VIDEO_TOOLS[v.topic][1]):"");break;
       case"stories":h=vStories();break;
       case"learning":h=vLearning();break;
       case"tools":h=vTools();break;
       case"tool-diagnosis":h=vToolDiagnosis();break;
       case"tool-review":h=vToolReview(v.slug);break;
+      case"tool-calc":h=vToolCalc(v.slug);break;
       case"ai-consultation":h=vConsult();break;
       case"mypage":h=vMypage();break;
       case"notfound":h=vNotFound();break;
@@ -1653,6 +2179,7 @@ function render(){
   });
 }
 window.render=render;window.favToggle=favToggle;window.homeSearch=homeSearch;window.jobsSearch=jobsSearch;
+window.scGroupChange=scGroupChange;window.scSubmit=scSubmit;window.thSubmit=thSubmit;window.ubSubmit=ubSubmit;window.plSubmit=plSubmit;window.otSubmit=otSubmit;window.rpSubmit=rpSubmit;window.iqSubmit=iqSubmit;
 window.diagSubmit=diagSubmit;window.diagSave=diagSave;window.reviewSubmit=reviewSubmit;window.chatSend=chatSend;
 window.mypageClear=mypageClear;window.afTrack=afTrack;
 

@@ -1,0 +1,783 @@
+{
+ "updatedAt": "2026-08-01",
+ "note": "全ての率・金額は官公庁の一次情報から取得し、出典URLと適用時点を併記している。改定時は本ファイルのみを更新する。",
+ "insurance": {
+  "asOf": "令和8年度（2026年4月〜2027年3月）",
+  "pension": {
+   "rate": 18.3,
+   "employeeShare": 0.5,
+   "label": "厚生年金保険料率",
+   "source": "日本年金機構「厚生年金保険の保険料」（平成29年9月分以降18.300%で固定）",
+   "sourceUrl": "https://www.nenkin.go.jp/service/kounen/hokenryo/hoshu/20120326-01.html"
+  },
+  "health": {
+   "averageRate": 9.9,
+   "employeeShare": 0.5,
+   "label": "健康保険料率（協会けんぽ・都道府県単位）",
+   "asOf": "令和8年3月分（4月納付分）〜",
+   "source": "全国健康保険協会「令和8年度都道府県単位保険料率」",
+   "sourceUrl": "https://www.kyoukaikenpo.or.jp/about/business/insurance_rate/rate_prefectures/r08/index.html",
+   "byPref": {
+    "hokkaido": {
+     "name": "北海道",
+     "rate": 10.28
+    },
+    "aomori": {
+     "name": "青森県",
+     "rate": 9.85
+    },
+    "iwate": {
+     "name": "岩手県",
+     "rate": 9.51
+    },
+    "miyagi": {
+     "name": "宮城県",
+     "rate": 10.1
+    },
+    "akita": {
+     "name": "秋田県",
+     "rate": 10.01
+    },
+    "yamagata": {
+     "name": "山形県",
+     "rate": 9.75
+    },
+    "fukushima": {
+     "name": "福島県",
+     "rate": 9.5
+    },
+    "ibaraki": {
+     "name": "茨城県",
+     "rate": 9.52
+    },
+    "tochigi": {
+     "name": "栃木県",
+     "rate": 9.82
+    },
+    "gunma": {
+     "name": "群馬県",
+     "rate": 9.68
+    },
+    "saitama": {
+     "name": "埼玉県",
+     "rate": 9.67
+    },
+    "chiba": {
+     "name": "千葉県",
+     "rate": 9.73
+    },
+    "tokyo": {
+     "name": "東京都",
+     "rate": 9.85
+    },
+    "kanagawa": {
+     "name": "神奈川県",
+     "rate": 9.92
+    },
+    "niigata": {
+     "name": "新潟県",
+     "rate": 9.21
+    },
+    "toyama": {
+     "name": "富山県",
+     "rate": 9.59
+    },
+    "ishikawa": {
+     "name": "石川県",
+     "rate": 9.7
+    },
+    "fukui": {
+     "name": "福井県",
+     "rate": 9.71
+    },
+    "yamanashi": {
+     "name": "山梨県",
+     "rate": 9.55
+    },
+    "nagano": {
+     "name": "長野県",
+     "rate": 9.63
+    },
+    "gifu": {
+     "name": "岐阜県",
+     "rate": 9.8
+    },
+    "shizuoka": {
+     "name": "静岡県",
+     "rate": 9.61
+    },
+    "aichi": {
+     "name": "愛知県",
+     "rate": 9.93
+    },
+    "mie": {
+     "name": "三重県",
+     "rate": 9.77
+    },
+    "shiga": {
+     "name": "滋賀県",
+     "rate": 9.88
+    },
+    "kyoto": {
+     "name": "京都府",
+     "rate": 9.89
+    },
+    "osaka": {
+     "name": "大阪府",
+     "rate": 10.13
+    },
+    "hyogo": {
+     "name": "兵庫県",
+     "rate": 10.12
+    },
+    "nara": {
+     "name": "奈良県",
+     "rate": 9.91
+    },
+    "wakayama": {
+     "name": "和歌山県",
+     "rate": 10.06
+    },
+    "tottori": {
+     "name": "鳥取県",
+     "rate": 9.86
+    },
+    "shimane": {
+     "name": "島根県",
+     "rate": 9.94
+    },
+    "okayama": {
+     "name": "岡山県",
+     "rate": 10.05
+    },
+    "hiroshima": {
+     "name": "広島県",
+     "rate": 9.78
+    },
+    "yamaguchi": {
+     "name": "山口県",
+     "rate": 10.15
+    },
+    "tokushima": {
+     "name": "徳島県",
+     "rate": 10.24
+    },
+    "kagawa": {
+     "name": "香川県",
+     "rate": 10.02
+    },
+    "ehime": {
+     "name": "愛媛県",
+     "rate": 9.98
+    },
+    "kochi": {
+     "name": "高知県",
+     "rate": 10.05
+    },
+    "fukuoka": {
+     "name": "福岡県",
+     "rate": 10.11
+    },
+    "saga": {
+     "name": "佐賀県",
+     "rate": 10.55
+    },
+    "nagasaki": {
+     "name": "長崎県",
+     "rate": 10.06
+    },
+    "kumamoto": {
+     "name": "熊本県",
+     "rate": 10.08
+    },
+    "oita": {
+     "name": "大分県",
+     "rate": 10.08
+    },
+    "miyazaki": {
+     "name": "宮崎県",
+     "rate": 9.77
+    },
+    "kagoshima": {
+     "name": "鹿児島県",
+     "rate": 10.13
+    },
+    "okinawa": {
+     "name": "沖縄県",
+     "rate": 9.44
+    }
+   }
+  },
+  "care": {
+   "rate": 1.62,
+   "employeeShare": 0.5,
+   "fromAge": 40,
+   "toAge": 64,
+   "label": "介護保険料率（全国一律・40〜64歳）",
+   "asOf": "令和8年3月分（4月納付分）〜",
+   "source": "全国健康保険協会「協会けんぽの介護保険料率について」",
+   "sourceUrl": "https://www.kyoukaikenpo.or.jp/about/business/insurance_rate/002/index.html"
+  },
+  "childcare": {
+   "rate": 0.23,
+   "employeeShare": 0.5,
+   "label": "子ども・子育て支援金率",
+   "asOf": "令和8年度",
+   "source": "全国健康保険協会「令和8年度保険料率のお知らせ」",
+   "sourceUrl": "https://www.kyoukaikenpo.or.jp/lp/2026hokenryou/"
+  },
+  "employment": {
+   "employeeRate": 0.5,
+   "label": "雇用保険料率（労働者負担・一般の事業）",
+   "asOf": "令和8年4月1日〜令和9年3月31日",
+   "source": "厚生労働省「令和8（2026）年度 雇用保険料率のご案内」（一般の事業 労働者負担 5/1,000）",
+   "sourceUrl": "https://www.mhlw.go.jp/content/001692566.pdf"
+  },
+  "standardRemuneration": {
+   "label": "標準報酬月額の等級（健康保険1〜50等級／厚生年金1〜32等級）",
+   "source": "全国健康保険協会「令和8年3月分（4月納付分）からの健康保険・厚生年金保険の保険料額表」",
+   "sourceUrl": "https://www.kyoukaikenpo.or.jp/about/business/insurance_rate/premium_prefectures/r08/index.html",
+   "grades": [
+    58000,
+    68000,
+    78000,
+    88000,
+    98000,
+    104000,
+    110000,
+    118000,
+    126000,
+    134000,
+    142000,
+    150000,
+    160000,
+    170000,
+    180000,
+    190000,
+    200000,
+    220000,
+    240000,
+    260000,
+    280000,
+    300000,
+    320000,
+    340000,
+    360000,
+    380000,
+    410000,
+    440000,
+    470000,
+    500000,
+    530000,
+    560000,
+    590000,
+    620000,
+    650000,
+    680000,
+    710000,
+    750000,
+    790000,
+    830000,
+    880000,
+    930000,
+    980000,
+    1030000,
+    1090000,
+    1150000,
+    1210000,
+    1270000,
+    1330000,
+    1390000
+   ],
+   "lowerBounds": [
+    0,
+    63000,
+    73000,
+    83000,
+    93000,
+    101000,
+    107000,
+    114000,
+    122000,
+    130000,
+    138000,
+    146000,
+    155000,
+    165000,
+    175000,
+    185000,
+    195000,
+    210000,
+    230000,
+    250000,
+    270000,
+    290000,
+    310000,
+    330000,
+    350000,
+    370000,
+    395000,
+    425000,
+    455000,
+    485000,
+    515000,
+    545000,
+    575000,
+    605000,
+    635000,
+    665000,
+    695000,
+    730000,
+    770000,
+    810000,
+    855000,
+    905000,
+    955000,
+    1005000,
+    1055000,
+    1115000,
+    1175000,
+    1235000,
+    1295000,
+    1355000
+   ],
+   "pensionMin": 88000,
+   "pensionMax": 650000,
+   "bonusRoundDown": 1000,
+   "bonusHealthAnnualCap": 5730000,
+   "bonusPensionPerTimeCap": 1500000,
+   "note": "賞与の標準賞与額は1,000円未満切捨て。上限は健康保険・介護保険・子ども・子育て支援金が年間573万円、厚生年金保険が1回あたり150万円。"
+  }
+ },
+ "incomeTax": {
+  "asOf": "令和8年分",
+  "salaryDeduction": {
+   "label": "給与所得控除（令和7年分以降）",
+   "source": "国税庁 タックスアンサー No.1410 給与所得控除",
+   "sourceUrl": "https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1410.htm",
+   "brackets": [
+    {
+     "upTo": 1900000,
+     "flat": 650000
+    },
+    {
+     "upTo": 3600000,
+     "rate": 0.3,
+     "add": 80000
+    },
+    {
+     "upTo": 6600000,
+     "rate": 0.2,
+     "add": 440000
+    },
+    {
+     "upTo": 8500000,
+     "rate": 0.1,
+     "add": 1100000
+    },
+    {
+     "upTo": null,
+     "flat": 1950000
+    }
+   ]
+  },
+  "basicDeduction": {
+   "label": "基礎控除（令和7年分・令和8年分）",
+   "source": "国税庁 タックスアンサー No.1199 基礎控除",
+   "sourceUrl": "https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1199.htm",
+   "brackets": [
+    {
+     "upTo": 1320000,
+     "amount": 950000
+    },
+    {
+     "upTo": 3360000,
+     "amount": 880000
+    },
+    {
+     "upTo": 4890000,
+     "amount": 680000
+    },
+    {
+     "upTo": 6550000,
+     "amount": 630000
+    },
+    {
+     "upTo": 23500000,
+     "amount": 580000
+    },
+    {
+     "upTo": 24000000,
+     "amount": 480000
+    },
+    {
+     "upTo": 24500000,
+     "amount": 320000
+    },
+    {
+     "upTo": 25000000,
+     "amount": 160000
+    },
+    {
+     "upTo": null,
+     "amount": 0
+    }
+   ]
+  },
+  "rates": {
+   "label": "所得税の速算表",
+   "source": "国税庁 タックスアンサー No.2260 所得税の税率",
+   "sourceUrl": "https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/2260.htm",
+   "brackets": [
+    {
+     "upTo": 1949000,
+     "rate": 0.05,
+     "deduct": 0
+    },
+    {
+     "upTo": 3299000,
+     "rate": 0.1,
+     "deduct": 97500
+    },
+    {
+     "upTo": 6949000,
+     "rate": 0.2,
+     "deduct": 427500
+    },
+    {
+     "upTo": 8999000,
+     "rate": 0.23,
+     "deduct": 636000
+    },
+    {
+     "upTo": 17999000,
+     "rate": 0.33,
+     "deduct": 1536000
+    },
+    {
+     "upTo": 39999000,
+     "rate": 0.4,
+     "deduct": 2796000
+    },
+    {
+     "upTo": null,
+     "rate": 0.45,
+     "deduct": 4796000
+    }
+   ]
+  },
+  "reconstruction": {
+   "rate": 0.021,
+   "label": "復興特別所得税（基準所得税額の2.1%）",
+   "source": "国税庁 タックスアンサー No.2260（平成25年〜令和19年分）",
+   "sourceUrl": "https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/2260.htm"
+  }
+ },
+ "residentTax": {
+  "incomeRate": 0.1,
+  "perCapita": 5000,
+  "basicDeduction": 430000,
+  "label": "住民税（所得割10%＋均等割5,000円）",
+  "note": "均等割5,000円は市町村3,000円＋道府県1,000円＋森林環境税1,000円。自治体の超過課税で異なる場合があります。調整控除は簡便計算のため考慮していません。",
+  "source": "総務省「個人住民税」",
+  "sourceUrl": "https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/150790_02.html"
+ },
+ "unemployment": {
+  "asOf": "令和7年8月1日〜",
+  "source": "厚生労働省「基本手当日額の計算式及び金額（令和7年8月1日〜）」",
+  "sourceUrl": "https://www.mhlw.go.jp/content/001520033.pdf",
+  "wageDailyMin": 3014,
+  "ageBands": [
+   {
+    "id": "u30",
+    "label": "30歳未満",
+    "w1": 5340,
+    "w2": 13140,
+    "cap": 14510,
+    "maxDaily": 7255,
+    "drop": 0.3,
+    "rate2": 0.5
+   },
+   {
+    "id": "a30",
+    "label": "30歳以上45歳未満",
+    "w1": 5340,
+    "w2": 13140,
+    "cap": 16110,
+    "maxDaily": 8055,
+    "drop": 0.3,
+    "rate2": 0.5
+   },
+   {
+    "id": "a45",
+    "label": "45歳以上60歳未満",
+    "w1": 5340,
+    "w2": 13140,
+    "cap": 17740,
+    "maxDaily": 8870,
+    "drop": 0.3,
+    "rate2": 0.5
+   },
+   {
+    "id": "a60",
+    "label": "60歳以上65歳未満",
+    "w1": 5340,
+    "w2": 11800,
+    "cap": 16940,
+    "maxDaily": 7623,
+    "drop": 0.35,
+    "rate2": 0.45,
+    "alt": true
+   }
+  ],
+  "daysSource": "ハローワークインターネットサービス「基本手当の所定給付日数」",
+  "daysSourceUrl": "https://www.hellowork.mhlw.go.jp/insurance/insurance_benefitdays.html",
+  "termLabels": [
+   "1年未満",
+   "1年以上5年未満",
+   "5年以上10年未満",
+   "10年以上20年未満",
+   "20年以上"
+  ],
+  "days": {
+   "general": {
+    "label": "自己都合・定年など（一般の離職者）",
+    "rows": [
+     {
+      "age": "all",
+      "label": "全年齢",
+      "d": [
+       90,
+       90,
+       90,
+       120,
+       150
+      ]
+     }
+    ],
+    "note": "被保険者期間が1年未満の場合、一般の離職者は原則として受給資格がありません（離職前2年間に通算12か月以上が必要）。表の90日は特定理由離職者に適用される日数です。"
+   },
+   "company": {
+    "label": "倒産・解雇など（特定受給資格者・一部の特定理由離職者）",
+    "rows": [
+     {
+      "age": "u30",
+      "label": "30歳未満",
+      "d": [
+       90,
+       90,
+       120,
+       180,
+       null
+      ]
+     },
+     {
+      "age": "a30",
+      "label": "30歳以上35歳未満",
+      "d": [
+       90,
+       120,
+       180,
+       210,
+       240
+      ]
+     },
+     {
+      "age": "a35",
+      "label": "35歳以上45歳未満",
+      "d": [
+       90,
+       150,
+       180,
+       240,
+       270
+      ]
+     },
+     {
+      "age": "a45",
+      "label": "45歳以上60歳未満",
+      "d": [
+       90,
+       180,
+       240,
+       270,
+       330
+      ]
+     },
+     {
+      "age": "a60",
+      "label": "60歳以上65歳未満",
+      "d": [
+       90,
+       150,
+       180,
+       210,
+       240
+      ]
+     }
+    ]
+   },
+   "difficult": {
+    "label": "就職困難者",
+    "rows": [
+     {
+      "age": "u45",
+      "label": "45歳未満",
+      "d": [
+       150,
+       300,
+       300,
+       300,
+       300
+      ]
+     },
+     {
+      "age": "a45",
+      "label": "45歳以上65歳未満",
+      "d": [
+       150,
+       360,
+       360,
+       360,
+       360
+      ]
+     }
+    ]
+   }
+  },
+  "waitingDays": 7,
+  "restriction": {
+   "selfMonths": 1,
+   "repeatMonths": 3,
+   "label": "給付制限（正当な理由のない自己都合退職）",
+   "note": "令和7年4月1日以降に離職した場合は原則1か月。離職日から遡って5年間に2回以上の自己都合離職がある場合や重責解雇の場合は3か月。教育訓練を自ら受けた場合は給付制限が解除されます。",
+   "source": "厚生労働省「令和6年雇用保険制度改正（令和7年4月1日施行分）について」",
+   "sourceUrl": "https://www.mhlw.go.jp/content/11601000/001293213.pdf"
+  },
+  "periodNote": "受給期間は原則として離職日の翌日から1年間（所定給付日数330日は1年と30日、360日は1年と60日）です。"
+ },
+ "paidLeave": {
+  "label": "年次有給休暇の付与日数（労働基準法第39条）",
+  "source": "厚生労働省「確かめよう労働条件」年次有給休暇（労働基準法第39条・同施行規則第24条の3）",
+  "sourceUrl": "https://www.check-roudou.mhlw.go.jp/study/roudousya_yukyu.html",
+  "monthsLabels": [
+   "6か月",
+   "1年6か月",
+   "2年6か月",
+   "3年6か月",
+   "4年6か月",
+   "5年6か月",
+   "6年6か月以上"
+  ],
+  "fullTime": [
+   10,
+   11,
+   12,
+   14,
+   16,
+   18,
+   20
+  ],
+  "proportionalDivisor": 5.2,
+  "proportional": [
+   {
+    "days": 4,
+    "annualFrom": 169,
+    "annualTo": 216,
+    "grant": [
+     7,
+     8,
+     9,
+     10,
+     12,
+     13,
+     15
+    ]
+   },
+   {
+    "days": 3,
+    "annualFrom": 121,
+    "annualTo": 168,
+    "grant": [
+     5,
+     6,
+     6,
+     8,
+     9,
+     10,
+     11
+    ]
+   },
+   {
+    "days": 2,
+    "annualFrom": 73,
+    "annualTo": 120,
+    "grant": [
+     3,
+     4,
+     4,
+     5,
+     6,
+     6,
+     7
+    ]
+   },
+   {
+    "days": 1,
+    "annualFrom": 48,
+    "annualTo": 72,
+    "grant": [
+     1,
+     2,
+     2,
+     2,
+     3,
+     3,
+     3
+    ]
+   }
+  ],
+  "fullTimeCondition": "週の所定労働時間が30時間以上、または週の所定労働日数が5日以上",
+  "attendanceRate": 0.8,
+  "obligationDays": 5,
+  "expiryYears": 2
+ },
+ "overtime": {
+  "label": "割増賃金率（労働基準法第37条）",
+  "source": "厚生労働省「しっかりマスター労働基準法 割増賃金編」（労働基準法第37条）",
+  "sourceUrl": "https://www.check-roudou.mhlw.go.jp/hourei/houritsu/roudoukijun_honbun.html",
+  "legalWeeklyHours": 40,
+  "legalDailyHours": 8,
+  "rates": [
+   {
+    "id": "over",
+    "label": "時間外労働（法定労働時間を超えた分）",
+    "rate": 0.25
+   },
+   {
+    "id": "over60",
+    "label": "時間外労働のうち1か月60時間を超えた分",
+    "rate": 0.5
+   },
+   {
+    "id": "night",
+    "label": "深夜労働（22時〜翌5時）",
+    "rate": 0.25
+   },
+   {
+    "id": "holiday",
+    "label": "法定休日の労働",
+    "rate": 0.35
+   }
+  ],
+  "note": "時間外かつ深夜は加算されます（25%＋25%＝50%以上、60時間超の深夜は50%＋25%＝75%以上）。法定休日の労働には時間外の割増は加算されません。管理監督者・裁量労働制など適用が異なる働き方があります。",
+  "upperLimit": "時間外労働の上限は原則として月45時間・年360時間です（特別条項付き協定でも年720時間、複数月平均80時間以内、月100時間未満）。"
+ },
+ "resignation": {
+  "label": "退職の申し出時期",
+  "civilCodeDays": 14,
+  "source": "民法第627条第1項（期間の定めのない雇用は、解約の申入れの日から2週間を経過することによって終了する）",
+  "sourceUrl": "https://elaws.e-gov.go.jp/document?lawid=129AC0000000089",
+  "note": "就業規則で「1か月前まで」と定めている会社が多く、実務上は就業規則に従って余裕をもって申し出るのが円満です。有期雇用契約など別のルールが適用される場合があります。"
+ }
+}

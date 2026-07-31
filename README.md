@@ -12,12 +12,13 @@
 |---|---|
 | `index.html` | SPA本体（デザイン・全ビュー・ルーター・AIツールUI）|
 | `data.js` | 唯一のデータ源（`var DATA={...};` 1行）。**手編集禁止** |
-| `logic.js` | AI診断・書類添削・チャット相談のルールベースエンジン（入力は外部送信されない）|
-| `build.mjs` | SSG。静的ページ151枚 + sitemap/robots/llms.txt/404/sw を生成 |
+| `logic.js` | 診断・書類添削・チャット・キャリアエージェント＋無料ツールの計算エンジン（すべて純関数・入力は外部送信されない。率や金額は直書きせず `DATA.statutory` から受け取る）|
+| `build.mjs` | SSG。静的ページ660枚 + sitemap/robots/llms.txt/404/sw を生成 |
 | `tools/seed.mjs` | シードデータ生成（data.js を書き出す）。`tools/data/*.json` があればマージ |
-| `tools/test-logic.mjs` | ロジック単体テスト（31件）|
+| `tools/test-logic.mjs` | ロジック単体テスト（179件）。法定値が公表値と一致するかも検証する |
 | `tools/import-wikidata-companies.mjs` | Wikidata → 上場企業カタログ取得（→ tools/data/companies.json）|
 | `tools/import-salary-csv.mjs` | 年収CSV取り込み（出典必須・検証つき → tools/data/salary.json）|
+| `tools/data/statutory.json` | **無料ツールが使う法定値の唯一の置き場**（保険料率・税率・基本手当・有給・割増賃金）。全項目に出典URLと適用時点つき |
 | `tools/register-articles.mjs` | 記事一括登録（必ず draft で登録 → 人間確認後に published へ）|
 | `tools/fetch-commons-images.mjs` | Commons 画像の検索・DL・クレジット取得（DL後は必ず目視検証）|
 
@@ -129,6 +130,29 @@ node tools/seed.mjs && node build.mjs                          # 反映（?v= �
 `tools/seed.mjs` の `ARTICLE_HERO`（記事slug → images.json のキー）で割り当てる。
 新しい画像は image-plan.mjs に `art:<名前>` キーを追加 → fetch → **目視検証** → ARTICLE_HERO に登録。
 未割り当ての記事はヒーローなしで表示される。OGP画像も自動で追随する。
+
+### 無料ツールの法定値を更新する（毎年の改定作業）
+計算ツール（手取り・失業給付・有給・残業代・退職スケジュール）が使う率と金額は
+**すべて `tools/data/statutory.json` の1ファイルに集約**されている。`logic.js` にも `index.html` にも
+数値は書かれていないので、**このJSONを直せば全ツールとページ本文の出典表示が同時に更新される**。
+
+各値は `source`（出典名）/ `sourceUrl` / `asOf`（適用時点）を必ず持つ。更新時は一次情報を確認し、
+出典URLと適用時点も一緒に書き換えること。書き換えたら必ず
+`node tools/test-logic.mjs`（公表値との一致・表の内部整合を検証）→ seed → v バンプ → build。
+
+| 項目 | 改定時期 | 確認先 |
+| --- | --- | --- |
+| 健康保険料率（都道府県別）・介護保険料率・子ども・子育て支援金率・標準報酬月額の等級 | 毎年3月分〜 | 全国健康保険協会「都道府県毎の保険料額表」 |
+| 雇用保険料率 | 毎年4月1日〜 | 厚生労働省「雇用保険料率のご案内」 |
+| 基本手当日額の計算式・上限額 | **毎年8月1日〜** | 厚生労働省「基本手当日額の計算式及び金額」PDF |
+| 所定給付日数・給付制限 | 法改正時 | ハローワークインターネットサービス |
+| 給与所得控除・基礎控除・所得税率 | 税制改正時 | 国税庁タックスアンサー No.1410 / No.1199 / No.2260 |
+| 厚生年金保険料率 | 平成29年9月以降18.3%で固定 | 日本年金機構 |
+
+`statutory.json` が無い（または壊れている）場合、seed が検証で落ちるか、ツールが
+「データ準備中」を表示して**計算を行わない**。推測値は絶対に出さない設計。
+ツールを増やすときは `index.html` の `TOOL_INDEX`（一覧の唯一の定義）と
+`CALC_PAGES`、`build.mjs` の `CALCS` の3か所に追加する。
 
 ### 企業カタログを更新する
 `node tools/import-wikidata-companies.mjs` → seed→v バンプ→build。
