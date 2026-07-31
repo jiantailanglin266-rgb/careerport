@@ -202,5 +202,11 @@
   "file": "File:Aomi container terminal.jpg",
   "credit": "Photo: Christophe95 / Wikimedia Commons, CC BY-SA 4.0",
   "page": "https://commons.wikimedia.org/wiki/File:Aomi_container_terminal.jpg"
+ },
+ "jp:hellowork": {
+  "src": "images/kv/jp-hellowork.jpg",
+  "file": "File:Hello work Mishima.jpg",
+  "credit": "Photo: Drivephotographer / Wikimedia Commons, CC0",
+  "page": "https://commons.wikimedia.org/wiki/File:Hello_work_Mishima.jpg"
  }
 }

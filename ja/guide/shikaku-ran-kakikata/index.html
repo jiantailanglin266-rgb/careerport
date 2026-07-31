@@ -404,7 +404,7 @@ footer .legal{border-top:1px solid rgba(210,168,70,.2);margin-top:34px;padding-t
   var p=location.pathname, mm=p.match(/^(.*?)\/(ja|en)(\/|$)/);
   var b=mm?mm[1]:p.replace(/\/index\.html$/,"").replace(/\/$/,"");
   window.CP_BASE=b;
-  try{var x=new XMLHttpRequest();x.open("GET",b+"/data.js?v=17",false);x.send();if(x.status===200||x.status===0){(0,eval)(x.responseText)}}catch(e){}
+  try{var x=new XMLHttpRequest();x.open("GET",b+"/data.js?v=18",false);x.send();if(x.status===200||x.status===0){(0,eval)(x.responseText)}}catch(e){}
   try{var y=new XMLHttpRequest();y.open("GET",b+"/logic.js?v=3",false);y.send();if(y.status===200||y.status===0){(0,eval)(y.responseText)}}catch(e){}
 })();
 if(!window.DATA){document.getElementById("app").innerHTML='<div class="skel">データの読み込みに失敗しました。再読み込みしてください。</div>';}
@@ -986,24 +986,24 @@ function extCond(oc,pf,q){
   };
 }
 var EXT_JOB_SITES=[
-  { name:"ハローワークインターネットサービス", by:"厚生労働省（公的・無料・全国）", official:true, howto:true,
+  { name:"ハローワークインターネットサービス", by:"厚生労働省（公的・無料・全国）", official:true, howto:true, img:"jp:hellowork",
     note:"全国のハローワークが受理した求人を検索できます。求職申込みをしていなくても検索・閲覧でき、手数料もかかりません。",
     btn:"求人情報検索を開く",
     url:function(){return "https://www.hellowork.mhlw.go.jp/kensaku/GECA110010.do?action=initDisp&screenId=GECA110010"} },
-  { name:"Indeed（インディード）", by:"求人検索エンジン（各社の求人を横断）",
+  { name:"Indeed（インディード）", by:"求人検索エンジン（各社の求人を横断）", img:"jp:otemachi",
     note:"企業の採用ページや求人サイトの掲載を横断して検索できます。",
     url:function(c){
       var q=[c.kw,c.et].filter(Boolean).join(" ");
       return "https://jp.indeed.com/jobs?q="+extEnc(q)+"&l="+extEnc(c.pref);
     } },
-  { name:"求人ボックス", by:"求人検索エンジン（カカクコム）",
+  { name:"求人ボックス", by:"求人検索エンジン（カカクコム）", img:"jp:umeda",
     note:"職種と勤務地から横断検索できます。給与相場の情報も併せて確認できます。",
     url:function(c){
       var b="https://xn--pckua2a7gp15o89zb.com/";
       if(!c.kw)return c.pref?b+extEnc(c.pref+"の仕事"):b;
       return b+extEnc(c.kw+"の仕事"+(c.pref?"-"+c.pref:""));
     } },
-  { name:"スタンバイ", by:"求人検索エンジン（ビズリーチ）",
+  { name:"スタンバイ", by:"求人検索エンジン（ビズリーチ）", img:"jp:bigsight",
     note:"正社員からアルバイトまで、幅広い雇用形態の求人を横断して検索できます。",
     url:function(c){
       var q=[c.kw,c.et].filter(Boolean).join(" ");
@@ -1046,15 +1046,15 @@ function jobsWhereToSearch(oc,pf,q){
   '　いずれも当サイトが報酬を受け取っていない参考リンクです。</p></div>'+
   '<div class="grid g2">'+EXT_JOB_SITES.map(function(x){
     var href=x.url(c);
-    return '<div class="card"><div>'+(x.official?'<span class="badge ok">公的サービス</span>':(x.affiliate?badgePR():'<span class="badge cat">外部サイト</span>'))+'</div>'+
+    return '<div class="card thumb-card">'+cardThumb([x.img],x.name,150)+'<div class="tc-body"><div>'+(x.official?'<span class="badge ok">公的サービス</span>':(x.affiliate?badgePR():'<span class="badge cat">外部サイト</span>'))+'</div>'+
     '<h3 style="margin-top:6px">'+esc(x.name)+'</h3><p class="small">'+esc(x.by)+'</p>'+
     '<p class="desc" style="font-size:13px;margin-top:6px">'+esc(x.note)+'</p>'+
     '<a class="btn '+(x.official?"navy":"line")+' sm" style="margin-top:10px" target="_blank" rel="'+(x.affiliate?"sponsored ":"")+'nofollow noopener" href="'+esc(href)+'" onclick="evTrack(\'ext_jobsite_click\',{site:\''+esc(x.name)+'\'})">'+
-    esc(x.btn||(hasCond&&!x.howto?"この条件の求人を見る（外部）":"サイトを開く（外部）"))+'</a></div>';
+    esc(x.btn||(hasCond&&!x.howto?"この条件の求人を見る（外部）":"サイトを開く（外部）"))+'</a></div></div>';
   }).join("")+
-  '<div class="card"><div><span class="badge cat">比較</span></div><h3 style="margin-top:6px">転職エージェントに探してもらう</h3>'+
+  '<div class="card thumb-card">'+cardThumb(["cat:occ_business"],"転職エージェントに相談する",150)+'<div class="tc-body"><div><span class="badge cat">比較</span></div><h3 style="margin-top:6px">転職エージェントに探してもらう</h3>'+'<p class="small">人材紹介サービス</p>'+
   '<p class="desc" style="font-size:13px;margin-top:6px">条件を伝えると、公開されていない求人も含めて紹介を受けられます。タイプ別の違いは比較ページで整理しています。</p>'+
-  '<a class="btn line sm" style="margin-top:10px" href="javascript:void(0)" onclick="go({name:\'services\'})">転職サービスを比較する</a></div>'+
+  '<a class="btn line sm" style="margin-top:10px;align-self:flex-start" href="javascript:void(0)" onclick="go({name:\'services\'})">転職サービスを比較する</a></div></div>'+
   '</div>'+jobsHowTo(oc,pf,q)+'</section>';
 }
 function jobsSearch(f){go({name:"jobs",q:{kw:f.kw.value,oc:f.oc.value,pf:f.pf.value,et:f.et.value}});return false}

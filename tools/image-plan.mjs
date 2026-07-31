@@ -78,4 +78,6 @@ export default {
   "jp:akihabara": { file: "File:Akihabara, electronics district.jpg" },
   "jp:bigsight":  { file: "File:Tokyo Big Sight at Night.jpg" },
   "jp:aomi":      { file: "File:Aomi container terminal.jpg" },
+  // 求人を探せる場所カード用（ハローワーク＝公共職業安定所の庁舎。国内撮影・CC0）
+  "jp:hellowork":  { file: "File:Hello work Mishima.jpg" },
 };
