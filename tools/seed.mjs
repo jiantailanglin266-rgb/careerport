@@ -875,6 +875,24 @@ const siteSettings = {
    tools/data/*.json は各インポータ（import-wikidata-companies / import-salary-csv /
    register-articles）が生成する。存在しなければ空のまま（=「データ準備中」表示）。 */
 const companies = loadJson("tools/data/companies.json") || [];      // Wikidata 上場企業カタログ（cat:1）
+/* 公式YouTube動画（tools/fetch-youtube.mjs が oEmbed で実在確認済み・公的機関のみ）
+   タイトル・チャンネル名は YouTube 公式APIの値をそのまま使う（改変・捏造をしない） */
+const videos = loadJson("tools/data/videos.json") || [];
+const VIDEO_TOPICS = {
+  hellowork:  { name: "ハローワークの使い方",       desc: "求職登録・利用方法・各種窓口の案内。全国の労働局・ハローワークの公式チャンネルから。" },
+  unemployment:{ name: "雇用保険・給付金",          desc: "基本手当（失業保険）や教育訓練給付など、退職後のお金に関わる制度の公式解説。" },
+  training:   { name: "職業訓練（ハロートレーニング）", desc: "無料または低額で受けられる公的職業訓練の内容と申込み方法。" },
+  interview:  { name: "面接・応募書類",             desc: "履歴書・職務経歴書の書き方、面接マナー、オンライン面接の進め方。" },
+  jobposting: { name: "求人票の見方・労働条件",     desc: "求人票のどこを見るか、労働条件明示のルール。入社後のミスマッチを防ぐ知識。" },
+  jobcard:    { name: "ジョブ・カード（キャリアの棚卸し）", desc: "職務経歴やスキルを整理する国の様式。応募書類づくりの土台になります。" },
+  career:     { name: "キャリア相談・スキルの見える化", desc: "キャリアコンサルティングの進め方、ポータブルスキルの整理。" },
+  balance:    { name: "仕事と育児・治療の両立",     desc: "マザーズハローワーク、長期療養者支援など、事情を抱えながら働くための支援。" },
+  women:      { name: "女性の活躍・両立支援",       desc: "女性活躍推進法と企業情報の公表制度。応募先を選ぶときの判断材料になります。" },
+  telework:   { name: "テレワーク・在宅ワーク",     desc: "テレワークの導入指針と、自営型テレワーク（在宅ワーク）の始め方。" },
+  worklaw:    { name: "働くルール・ハラスメント",   desc: "副業・兼業のルール、職場のハラスメント対策、労働基準監督署の役割。" },
+  pension:    { name: "退職後の年金・社会保険",     desc: "退職に伴う年金・健康保険の手続き（日本年金機構の公式解説）。" },
+  support:    { name: "就労支援（障害のある方など）", desc: "障害者雇用や就労支援機関の取り組みの紹介。" },
+};
 const salaryIndustry = loadJson("tools/data/salary-industry.json") || []; // 産業中分類（賃金構造基本統計調査）
 const salaryArea = loadJson("tools/data/salary-area.json") || [];         // 都道府県×職業大分類（同上）
 /* Commons キービジュアル（全点目視検証済み・クレジット付き・すべて日本国内で撮影）
@@ -957,6 +975,7 @@ const DATA = {
   }),
   stories, faqs, ctaRules,
   companies, salaryData: salaryData.concat(salaryIndustry, salaryArea), images,
+  videos, videoTopics: VIDEO_TOPICS,
 };
 writeFileSync(join(ROOT, "data.js"), "var DATA=" + JSON.stringify(DATA) + ";", "utf-8");
 console.log("OK: data.js written —",

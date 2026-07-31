@@ -63,6 +63,10 @@ const STATIC_PAGES = {
        "職種別・業界別・地域別・年代別の年収統計を出典と時点を明示して掲載するデータベース。現在は公的統計との接続準備中です。"],
   articles: ["/guide/", "転職ノウハウ — 退職・書類・面接・年収交渉の実用ガイド" + S,
     "転職活動の始め方から退職、履歴書・職務経歴書、面接、年収交渉、失業保険まで。各段階の疑問に答える実用ガイド。"],
+  videos: (DATA.videos || []).length
+    ? ["/videos/", `動画で学ぶ 転職・求人【公的機関の公式動画${DATA.videos.length}本】` + S,
+       `厚生労働省・各都道府県労働局・ハローワーク・自治体の公式YouTubeチャンネルが公開する動画${DATA.videos.length}本を、雇用保険・職業訓練・面接・求人票の見方などのテーマ別にまとめました。`]
+    : ["/videos/", "動画で学ぶ 転職・求人" + S, "公的機関の公式動画を準備中です。"],
   stories: ["/stories/", "体験談・ストーリー — 転職経験と日本の仕事の歴史" + S,
     "転職経験者のインタビュー（本人同意の取材に基づく方針・現在サンプル表示）と、日本の働き方の歴史をたどる読み物。"],
   learning: ["/learning/", "リスキリング・スクール比較 — 学び直しから転職へ" + S,
@@ -134,6 +138,13 @@ for (const a of DATA.articles) {
 for (const r of DATA.rankings) {
   push(`/${L}/services/ranking/${r.slug}/`, `${nm(r)}【デモ表示】` + S,
     String(r.descriptions.ja).slice(0, 155), { kind: "ranking", r });
+}
+// 動画のテーマ別ページ
+for (const [key, tp] of Object.entries(DATA.videoTopics || {})) {
+  const vs = (DATA.videos || []).filter((v) => v.topic === key);
+  if (!vs.length) continue;
+  push(`/${L}/videos/${key}/`, `${tp.name}｜公的機関の公式動画${vs.length}本` + S,
+    String(tp.desc).slice(0, 155), { kind: "videoTopic", key, tp, vs });
 }
 // 実求人: 個別ページを生成する（デモ求人は生成しない）
 // 生成対象は「掲載期限内 かつ 応募先URL・掲載元URLあり」のものだけ
@@ -364,6 +375,18 @@ function prerender(p) {
     const list = DATA.companies.slice().sort((a, b) => (b.employees || 0) - (a.employees || 0));
     body += `<p>出典: Wikidata（CC0）。従業員数はWikidataの登録値で、時点は各出典を参照。名称・従業員数・設立年のみの基本情報カタログであり、評価・年収等の判断情報は含まない。</p><ul>` +
       list.map((c) => `<li>${esc(tr(c).name)} — 従業員数 ${c.employees ? c.employees.toLocaleString() + "人" : "—"}${c.founded ? `（${c.founded}年設立）` : ""}</li>`).join("") + `</ul>`;
+  } else if (p.kind === "videos" || p.kind === "videoTopic") {
+    const vs = p.kind === "videoTopic" ? p.vs : (DATA.videos || []);
+    const chans = [...new Set(vs.map((v) => v.channel))];
+    body += `<p>厚生労働省・各都道府県労働局・ハローワーク・自治体の公式YouTubeチャンネルが公開している動画です（${chans.length}チャンネル・${vs.length}本）。` +
+      `動画はYouTubeの公式埋め込みプレーヤーで再生され、著作権は各チャンネルに帰属します。制度の詳細は各公的機関の公式サイトでご確認ください。</p>` +
+      (p.kind === "videos"
+        ? `<h2>テーマ</h2><ul>` + Object.entries(DATA.videoTopics || {})
+            .filter(([k]) => vs.some((v) => v.topic === k))
+            .map(([k, tp]) => `<li><a href="${u(`/${L}/videos/${k}/`)}">${esc(tp.name)}</a> — ${esc(tp.desc)}</li>`).join("") + `</ul>`
+        : "") +
+      `<h2>収録動画</h2><ul>` +
+      vs.slice(0, 160).map((v) => `<li>${esc(v.title)} — ${esc(v.channel)}</li>`).join("") + `</ul>`;
   } else if (p.kind === "stories") {
     body += `<p>実話の体験談は本人同意の取材に基づいて掲載する方針です。現在はサンプルストーリー（明示）のみ表示しています。</p><h2>日本の仕事の歴史</h2><ul>` +
       DATA.articles.filter((a) => a.category === "story").map((a) => `<li><a href="${u(`/${L}/guide/${a.slug}/`)}">${esc(tr(a).title)}</a></li>`).join("") + `</ul>`;

@@ -168,6 +168,24 @@ nav.g a.on{color:var(--gold-400)}
 .mq .it b{color:var(--gold-400);font-family:var(--en);font-weight:600;letter-spacing:.05em}
 @keyframes mqL{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media (prefers-reduced-motion:reduce){.mqtrack{animation:none}}
+/* ---------- 動画ライブラリ ---------- */
+.vgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.vcard{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column}
+.vthumb{position:relative;aspect-ratio:16/9;background:#0b1626;cursor:pointer;overflow:hidden}
+.vthumb img{width:100%;height:100%;object-fit:cover;display:block}
+.vthumb .pl{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(8,20,38,.28);transition:background .2s}
+.vthumb:hover .pl{background:rgba(8,20,38,.12)}
+.vthumb .pl i{width:54px;height:38px;border-radius:10px;background:rgba(197,26,26,.92);display:flex;align-items:center;justify-content:center}
+.vthumb .pl i:after{content:"";border-style:solid;border-width:9px 0 9px 15px;border-color:transparent transparent transparent #fff}
+.vthumb iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.vcard .vb{padding:13px 15px 15px;display:flex;flex-direction:column;gap:5px;flex:1}
+.vcard .vt{font-size:14px;font-weight:600;line-height:1.6;color:var(--navy-950)}
+.vcard .vch{font-size:11.5px;color:var(--muted);display:flex;align-items:center;gap:5px;margin-top:auto;padding-top:6px}
+.vcard .vch a{color:var(--muted);text-decoration:underline}
+.vfilter{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}
+@media(max-width:960px){.vgrid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.vgrid{grid-template-columns:1fr}}
+
 /* ---------- AIキャリアエージェント（トップページのメイン機能） ---------- */
 .agent{background:linear-gradient(160deg,var(--navy-950) 0%,var(--navy-900) 60%,var(--navy-800) 100%);
   border-radius:18px;padding:0;overflow:hidden;box-shadow:0 14px 40px rgba(8,20,38,.22);border:1px solid rgba(210,168,70,.32)}
@@ -356,7 +374,7 @@ footer .legal{border-top:1px solid rgba(210,168,70,.2);margin-top:34px;padding-t
   var p=location.pathname, mm=p.match(/^(.*?)\/(ja|en)(\/|$)/);
   var b=mm?mm[1]:p.replace(/\/index\.html$/,"").replace(/\/$/,"");
   window.CP_BASE=b;
-  try{var x=new XMLHttpRequest();x.open("GET",b+"/data.js?v=14",false);x.send();if(x.status===200||x.status===0){(0,eval)(x.responseText)}}catch(e){}
+  try{var x=new XMLHttpRequest();x.open("GET",b+"/data.js?v=15",false);x.send();if(x.status===200||x.status===0){(0,eval)(x.responseText)}}catch(e){}
   try{var y=new XMLHttpRequest();y.open("GET",b+"/logic.js?v=2",false);y.send();if(y.status===200||y.status===0){(0,eval)(y.responseText)}}catch(e){}
 })();
 if(!window.DATA){document.getElementById("app").innerHTML='<div class="skel">データの読み込みに失敗しました。再読み込みしてください。</div>';}
@@ -1198,6 +1216,68 @@ function vArticle(slug){
   (rel.length?'<section class="sec" style="padding-top:0"><div class="sec-h"><h2 style="font-size:20px">関連記事</h2></div>'+rel.map(artLi).join("")+"</section>":"");
 }
 
+/* ----- 動画ライブラリ（公的機関の公式YouTube） -----
+   YouTube公式の埋め込みプレーヤーのみを使用し、動画の再ホストは行わない。
+   タイトル・チャンネル名は YouTube の oEmbed API から取得した値をそのまま表示する。
+   サムネイルをクリックするまで iframe を作らない（無用な外部通信とCookieを避ける）。 */
+function videoCard(v){
+  return '<div class="vcard"><div class="vthumb" data-vid="'+esc(v.id)+'" onclick="videoPlay(this)">'+
+    '<img loading="lazy" src="https://i.ytimg.com/vi/'+esc(v.id)+'/hqdefault.jpg" alt="'+esc(v.title)+'">'+
+    '<span class="pl"><i></i></span></div>'+
+    '<div class="vb"><div class="vt">'+esc(v.title)+'</div>'+
+    '<div class="vch">▶ <a href="'+esc(v.channelUrl)+'" target="_blank" rel="nofollow noopener">'+esc(v.channel)+'</a></div>'+
+    '</div></div>';
+}
+function videoPlay(el){
+  var id=el.getAttribute("data-vid");
+  el.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+encodeURIComponent(id)+'?autoplay=1&rel=0" '+
+    'title="YouTube video player" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" '+
+    'referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';
+  el.removeAttribute("onclick");
+  evTrack("video_play",{video:id});
+}
+window.videoPlay=videoPlay;
+function vVideos(topic){
+  var all=(DATA.videos||[]);
+  if(!all.length)return crumb([["動画で学ぶ"]])+
+    '<div class="pagehead"><h1>動画で学ぶ</h1></div><div class="empty">動画は準備中です。</div>';
+  var TP=DATA.videoTopics||{};
+  var keys=Object.keys(TP).filter(function(k){return all.some(function(v){return v.topic===k})});
+  var list=topic?all.filter(function(v){return v.topic===topic}):all;
+  var chans=[];all.forEach(function(v){if(chans.indexOf(v.channel)<0)chans.push(v.channel)});
+  return crumb([["動画で学ぶ"]])+
+  '<div class="pagehead"><div class="eyebrow">Official Videos</div>'+
+  '<h1>動画で学ぶ 転職・求人<span style="font-family:var(--en);font-size:16px;color:var(--gold-500);margin-left:10px">'+all.length+' VIDEOS</span></h1>'+
+  '<p class="lead">厚生労働省・各都道府県労働局・ハローワーク・自治体など、<b>公的機関の公式YouTubeチャンネル</b>が公開している動画を'+
+  all.length+'本まとめました（'+chans.length+'チャンネル）。制度や手続きは一次情報が最も確実です。</p></div>'+
+  '<div class="notice blue">動画はすべてYouTubeの公式埋め込みプレーヤーで再生されます。当サイトは動画を保存・再配布しておらず、'+
+  '著作権は各チャンネルに帰属します。タイトル・チャンネル名はYouTubeの公開情報をそのまま表示しています。'+
+  '<b>制度の詳細や最新情報は、必ず各公的機関の公式サイトでご確認ください。</b></div>'+
+  '<div class="vfilter"><a class="chip" style="'+(!topic?"background:var(--navy-950);color:var(--gold-400)":"")+'" href="javascript:void(0)" onclick="go({name:\'videos\'})">すべて（'+all.length+'）</a>'+
+  keys.map(function(k){
+    var n=all.filter(function(v){return v.topic===k}).length;
+    return '<a class="chip" style="'+(topic===k?"background:var(--navy-950);color:var(--gold-400)":"")+'" href="javascript:void(0)" onclick="go({name:\'videos\',topic:\''+k+'\'})">'+esc(TP[k].name)+'（'+n+'）</a>';
+  }).join("")+'</div>'+
+  (topic&&TP[topic]?'<p class="desc" style="margin-bottom:14px">'+esc(TP[topic].desc)+'</p>':"")+
+  (topic
+    ?'<div class="vgrid">'+list.map(videoCard).join("")+'</div>'
+    :keys.map(function(k){
+       var vs=all.filter(function(v){return v.topic===k});
+       return '<section class="sec" style="padding:20px 0"><div class="sec-h"><h2 style="font-size:20px">'+esc(TP[k].name)+
+         ' <span class="small">'+vs.length+'本</span></h2><p class="small" style="margin-top:4px">'+esc(TP[k].desc)+'</p></div>'+
+         '<div class="vgrid">'+vs.slice(0,6).map(videoCard).join("")+'</div>'+
+         (vs.length>6?'<p style="margin-top:12px"><a class="btn line sm" href="javascript:void(0)" onclick="go({name:\'videos\',topic:\''+k+'\'})">'+esc(TP[k].name)+'をすべて見る（'+vs.length+'本）</a></p>':"")+
+         '</section>';
+     }).join(""))+
+  '<section class="sec"><div class="sec-h"><h2 style="font-size:20px">掲載チャンネル</h2>'+
+  '<p class="small">いずれも公的機関の公式チャンネルです。最新の動画は各チャンネルでご覧いただけます。</p></div>'+
+  '<div>'+chans.map(function(c){
+    var one=all.filter(function(v){return v.channel===c})[0];
+    return '<a class="chip" href="'+esc(one.channelUrl)+'" target="_blank" rel="nofollow noopener">'+esc(c)+'</a>';
+  }).join("")+'</div></section>'+
+  ctaBlock({},["agent"],"動画で学んだあとの相談先");
+}
+
 /* ----- 体験談 / スクール ----- */
 function vStories(){
   return crumb([["体験談・ストーリー"]])+
@@ -1429,7 +1509,7 @@ function crumb(items){
 /* ---------- router ---------- */
 var state={view:{name:"home"},locale:"ja"};
 var VIEW_PATH={home:"",jobs:"jobs",services:"services",careers:"career",occupations:"occupation",industries:"industry",
-  areas:"area",salary:"salary",articles:"guide",stories:"stories",learning:"learning",tools:"tools",
+  areas:"area",salary:"salary",articles:"guide",stories:"stories",videos:"videos",learning:"learning",tools:"tools",
   "tool-diagnosis":"tools/career-diagnosis","ai-consultation":"ai-consultation",mypage:"mypage",
   about:"about",company:"company","editorial-policy":"editorial-policy","expert-supervision":"expert-supervision",
   "data-policy":"data-policy","advertising-policy":"advertising-policy",privacy:"privacy",terms:"terms",
@@ -1447,6 +1527,7 @@ function pathFor(v){
   if(v.name==="area")return b+"area/"+v.slug+"/";
   if(v.name==="article")return b+"guide/"+v.slug+"/";
   if(v.name==="articles"&&v.cat)return b+"guide/category/"+v.cat+"/";
+  if(v.name==="videos"&&v.topic)return b+"videos/"+v.topic+"/";
   if(v.name==="tool-review")return b+"tools/"+v.slug+"/";
   var p=VIEW_PATH[v.name];if(p==null)return b;
   return b+(p?p+"/":"");
@@ -1472,6 +1553,7 @@ function parsePath(){
     if(b2==="category"&&c)return{name:"articles",cat:c};
     return b2?{name:"article",slug:b2}:{name:"articles"};
   }
+  if(a==="videos")return b2?{name:"videos",topic:b2}:{name:"videos"};
   if(a==="stories")return{name:"stories"};
   if(a==="learning")return{name:"learning"};
   if(a==="tools"){
@@ -1504,7 +1586,7 @@ function go(v){
 window.go=go;
 
 /* ---------- nav / footer ---------- */
-var NAV=[["jobs","求人を探す"],["services","サービス比較"],["occupations","職種"],["industries","業界"],["salary","年収"],["articles","転職ノウハウ"],["tools","ツール"]];
+var NAV=[["jobs","求人を探す"],["services","サービス比較"],["occupations","職種"],["industries","業界"],["salary","年収"],["articles","転職ノウハウ"],["videos","動画"],["tools","ツール"]];
 function renderNav(){
   var cur=state.view.name;
   document.getElementById("gnav").innerHTML=NAV.map(function(n){return '<a class="'+(cur===n[0]?"on":"")+'" href="javascript:void(0)" onclick="go({name:\''+n[0]+'\'})">'+n[1]+"</a>"}).join("");
@@ -1519,7 +1601,7 @@ function renderFoot(){
   document.getElementById("sitefoot").innerHTML='<div class="cols">'+
   '<div><div class="logo" style="font-size:17px">CAREERPORT</div><p style="margin-top:10px;font-size:12.5px">'+esc(DATA.siteSettings.tagline)+'</p><p style="margin-top:8px;font-size:11.5px;color:#6c7f9e">'+esc(DATA.siteSettings.legalNote)+'</p></div>'+
   col("探す",[["求人を探す",{name:"jobs"}],["転職サービス比較",{name:"services"}],["職種から探す",{name:"occupations"}],["業界から探す",{name:"industries"}],["地域から探す",{name:"areas"}],["年収データベース",{name:"salary"}],["企業情報",{name:"companies"}]])+
-  col("学ぶ・使う",[["転職ノウハウ",{name:"articles"}],["体験談・ストーリー",{name:"stories"}],["リスキリング・スクール",{name:"learning"}],["AIキャリア診断",{name:"tool-diagnosis"}],["AI書類添削",{name:"tool-review",slug:"career-history-review"}],["AIチャット相談",{name:"ai-consultation"}]])+
+  col("学ぶ・使う",[["転職ノウハウ",{name:"articles"}],["動画で学ぶ",{name:"videos"}],["体験談・ストーリー",{name:"stories"}],["リスキリング・スクール",{name:"learning"}],["AIキャリア診断",{name:"tool-diagnosis"}],["AI書類添削",{name:"tool-review",slug:"career-history-review"}],["AIチャット相談",{name:"ai-consultation"}]])+
   col("サイト情報",[["CAREERPORTについて",{name:"about"}],["運営会社",{name:"company"}],["編集方針",{name:"editorial-policy"}],["監修方針",{name:"expert-supervision"}],["データポリシー",{name:"data-policy"}],["広告掲載方針",{name:"advertising-policy"}],["プライバシーポリシー",{name:"privacy"}],["利用規約",{name:"terms"}],["免責事項",{name:"disclaimer"}],["訂正依頼窓口",{name:"correction-request"}],["サイトマップ",{name:"sitemap"}]])+
   '</div><div class="legal">'+esc(DATA.siteSettings.disclosure)+'<br>© '+new Date().getFullYear()+' CAREERPORT. 掲載コンテンツの無断転載を禁じます。Wikipedia引用部分は CC BY-SA 4.0 に従います。</div>';
 }
@@ -1546,6 +1628,7 @@ function render(){
       case"salary":h=vSalary();break;
       case"articles":h=vArticles(v.cat);break;
       case"article":h=vArticle(v.slug);break;
+      case"videos":h=vVideos(v.topic);break;
       case"stories":h=vStories();break;
       case"learning":h=vLearning();break;
       case"tools":h=vTools();break;
