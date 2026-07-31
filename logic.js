@@ -201,5 +201,260 @@ var CP_LOGIC = (function () {
     return CHAT_FALLBACK;
   }
 
-  return { diagnose: diagnose, review: review, chat: chat, _types: TYPES, _docDef: DOC_DEF };
+
+/* ============ AIキャリアエージェント（対話型・ルールベース） ============
+   転職エージェントの初回面談を模した対話で状況を聞き取り、
+   サイトが持つ実データ（賃金構造基本統計調査・477職種の解説）を根拠に助言する。
+
+   設計:
+   - スロットフィリング方式。1問1答で埋め、埋まるたびに実データで即座に返す
+   - 選択肢（チップ）でも自由入力でも進められる。自由入力は意図解釈にフォールバック
+   - 断定・保証はしない。統計は「参考値」であること、平均年齢の影響を必ず添える
+   - 外部送信なし。結果は利用者が選んだ場合のみ端末内に保存
+
+   ホスト側（index.html）から渡すもの:
+     ctx = { salaryFor(slug) -> {label,averageSalary,averageAge,period}|null,
+             occupations: [{slug,name,categoryId,summary,inexperienced,featured}],
+             hasArticle(slug) -> bool }
+*/
+var AGENT_SLOTS = ["intent", "occupation", "age", "salary", "priority", "timeline"];
+
+var AGENT_Q = {
+  intent: {
+    q: "はじめまして。CAREERPORTのキャリアエージェントです。まず、いま一番気になっていることを教えてください。",
+    hint: "選んでも、自由に書いてもかまいません。",
+    opts: [
+      ["undecided", "転職するか迷っている"],
+      ["income", "年収を上げたい"],
+      ["change", "未経験の仕事に挑戦したい"],
+      ["quit", "今の職場を辞めたい"],
+      ["howto", "進め方を知りたい"]
+    ]
+  },
+  occupation: {
+    q: "ありがとうございます。いま（直近）のお仕事に近いものはどれですか？",
+    hint: "一覧にない場合は職種名を入力してください。",
+    opts: null // ホスト側が主要職種から生成
+  },
+  age: {
+    q: "年代を教えてください。求人の傾向や評価のされ方が変わります。",
+    opts: [["20s", "20代"], ["30s", "30代"], ["40s", "40代"], ["50s", "50代以上"]]
+  },
+  salary: {
+    q: "現在の年収帯はどのあたりでしょうか。統計と比べてお伝えします。",
+    hint: "だいたいで構いません。答えたくない場合は「スキップ」と入力してください。",
+    opts: [["-300", "300万円未満"], ["300-400", "300〜400万円"], ["400-500", "400〜500万円"],
+           ["500-600", "500〜600万円"], ["600-800", "600〜800万円"], ["800-", "800万円以上"]]
+  },
+  priority: {
+    q: "次の仕事で最も大事にしたいことは何ですか。",
+    opts: [["income", "収入・待遇"], ["stability", "安定して長く働ける"], ["growth", "成長・挑戦"],
+           ["balance", "生活との両立"], ["expertise", "専門性を高める"]]
+  },
+  timeline: {
+    q: "最後に、転職の希望時期を教えてください。",
+    opts: [["now", "3か月以内"], ["half", "半年以内"], ["year", "1年以内"], ["undecided", "まだ決めていない"]]
+  }
+};
+
+var SALARY_MID = { "-300": 250, "300-400": 350, "400-500": 450, "500-600": 550, "600-800": 700, "800-": 900 };
+var INTENT_LABEL = {
+  undecided: "転職するか迷っている", income: "年収を上げたい",
+  change: "未経験の仕事に挑戦したい", quit: "今の職場を辞めたい", howto: "進め方を知りたい"
+};
+
+function agentInit() {
+  return { slots: {}, log: [], done: false };
+}
+function nextSlot(st) {
+  for (var i = 0; i < AGENT_SLOTS.length; i++) if (st.slots[AGENT_SLOTS[i]] == null) return AGENT_SLOTS[i];
+  return null;
+}
+
+/* 自由入力を現在のスロットの値に解釈する。解釈できなければ null */
+function parseFree(slot, text, ctx) {
+  var t = String(text || "").trim();
+  if (!t) return null;
+  if (/スキップ|skip|答えたくない|わからない|不明/.test(t)) return "__skip__";
+  var o = AGENT_Q[slot];
+  if (o && o.opts) {
+    for (var i = 0; i < o.opts.length; i++) {
+      if (t.indexOf(o.opts[i][1]) >= 0 || o.opts[i][1].indexOf(t) >= 0) return o.opts[i][0];
+    }
+  }
+  if (slot === "age") {
+    var band = function (y) { y = Math.floor(y / 10) * 10; return (y < 20 ? 20 : y > 50 ? 50 : y) + "s"; };
+    var md = t.match(/(\d{2})\s*代/);            // 「30代」
+    if (md) return band(Number(md[1]));
+    var my = t.match(/(\d{2})\s*(?:歳|才)/);      // 「35歳」
+    if (my) return band(Number(my[1]));
+    var mn = t.match(/^\D*(\d{2})\D*$/);          // 「35」だけ
+    if (mn) return band(Number(mn[1]));
+  }
+  if (slot === "salary") {
+    var n = t.match(/(\d{3,4})\s*万/);
+    if (n) { var v = Number(n[1]);
+      return v < 300 ? "-300" : v < 400 ? "300-400" : v < 500 ? "400-500" : v < 600 ? "500-600" : v < 800 ? "600-800" : "800-"; }
+  }
+  if (slot === "occupation" && ctx && ctx.occupations) {
+    var hit = ctx.occupations.filter(function (o) { return o.name.indexOf(t) >= 0 || t.indexOf(o.name) >= 0; })
+      .sort(function (a, b) { return (b.featured ? 1 : 0) - (a.featured ? 1 : 0) || a.name.length - b.name.length; })[0];
+    if (hit) return hit.slug;
+  }
+  return null;
+}
+
+/* スロットが埋まった直後の、実データにもとづくエージェントの反応 */
+function reactTo(slot, value, st, ctx) {
+  if (value === "__skip__") return "承知しました。差し支えない範囲で進めます。";
+  if (slot === "intent") {
+    return {
+      undecided: "迷っている段階でご相談いただくのが一番いいタイミングです。情報を整理すれば、動かない選択も納得して選べます。",
+      income: "年収は「交渉で上げる」より「評価される場所を選ぶ」ほうが動きます。まず現在地を統計で確認しましょう。",
+      change: "未経験転職は、年齢よりも「これまでの経験をどう translate するか」で決まります。順に整理していきます。",
+      quit: "まずは状況の整理からで大丈夫です。辞め方より先に、次の方向が決まると気持ちが軽くなります。",
+      howto: "進め方は型があります。棚卸し→軸決め→書類→応募の順です。あなたの状況に合わせて具体化します。"
+    }[value] || "承知しました。";
+  }
+  if (slot === "occupation") {
+    var occ = ctx.occupationBySlug(value);
+    if (!occ) return "承知しました。";
+    var sr = ctx.salaryFor(value);
+    var s = "「" + occ.name + "」ですね。";
+    if (sr) {
+      s += "賃金構造基本統計調査（" + sr.period + "）では、統計区分「" + sr.label + "」の平均年収は約"
+         + sr.averageSalary + "万円（平均年齢" + sr.averageAge + "歳）です。";
+      st.slots._benchmark = { slug: value, label: sr.label, avg: sr.averageSalary, age: sr.averageAge, period: sr.period };
+    } else {
+      s += "この職種に対応する統計区分は当サイトでは準備中です。";
+    }
+    return s;
+  }
+  if (slot === "salary") {
+    var b = st.slots._benchmark, mid = SALARY_MID[value];
+    if (!b || !mid) return "ありがとうございます。";
+    var diff = mid - b.avg;
+    var pct = Math.round((mid / b.avg) * 100);
+    if (Math.abs(diff) <= 50) {
+      return "統計区分「" + b.label + "」の平均（約" + b.avg + "万円）とおおむね同水準です。ただし平均は平均年齢"
+           + b.age + "歳の値なので、年代が離れているほど単純比較はできません。";
+    }
+    if (diff < 0) {
+      return "統計区分「" + b.label + "」の平均（約" + b.avg + "万円）に対して、およそ" + pct
+           + "%の水準です。年齢や企業規模で差が出るため断定はできませんが、"
+           + "同職種で条件の良い環境に移ることで改善の余地があるかもしれません。";
+    }
+    return "統計区分「" + b.label + "」の平均（約" + b.avg + "万円）を上回る水準です（およそ" + pct
+         + "%）。転職で年収を維持・向上させるには、実績の数値化と、評価制度の確認が重要になります。";
+  }
+  if (slot === "age") {
+    return { "20s": "20代はポテンシャル採用の求人が多く、未経験職種への転換もしやすい時期とされます。",
+             "30s": "30代は即戦力性が評価の中心です。実績の数値化が効いてきます。",
+             "40s": "40代はマネジメント経験や専門性が評価軸になります。求人は絞られますが、責任あるポジションの募集もあります。",
+             "50s": "50代は経験・人脈・専門性を活かす転職が中心です。情報収集の期間を長めに取るのが現実的です。" }[value] || "";
+  }
+  if (slot === "priority") {
+    return { income: "収入軸ですね。仕事内容・評価制度もあわせて確認しないと、入社後のミスマッチにつながります。",
+             stability: "安定軸ですね。企業の安定性に加えて、自分のスキルの汎用性も長期的な安定材料になります。",
+             growth: "成長軸ですね。負荷も高くなりがちなので、耐えられる変化のスピードかを面接で確認しましょう。",
+             balance: "両立軸ですね。制度の有無より「実際に使われているか」の確認が決め手になります。",
+             expertise: "専門性軸ですね。スキルが積み上がる仕事内容かどうかで職場を選ぶとぶれません。" }[value] || "";
+  }
+  if (slot === "timeline") {
+    return { now: "3か月以内なら、今週から書類の準備を始めるのが現実的なスケジュールです。",
+             half: "半年あれば、情報収集と書類を整えたうえで、納得のいく比較ができます。",
+             year: "1年の余裕があるなら、資格取得や実績づくりも選択肢に入ります。",
+             undecided: "時期は決まっていなくて大丈夫です。準備だけ先に進めておくと、良い求人が出たときに動けます。" }[value] || "";
+  }
+  return "";
+}
+
+/* 最終カルテ */
+function agentResult(st, ctx) {
+  var s = st.slots, b = s._benchmark;
+  var TYPE = { income: "航路開拓タイプ", stability: "安定航行タイプ", growth: "追い風成長タイプ",
+               balance: "バランス操舵タイプ", expertise: "専門深化タイプ" };
+  var type = TYPE[s.priority] || "バランス操舵タイプ";
+
+  var salaryLine = null;
+  if (b && s.salary && s.salary !== "__skip__" && SALARY_MID[s.salary]) {
+    var mid = SALARY_MID[s.salary];
+    salaryLine = { label: b.label, avg: b.avg, avgAge: b.age, period: b.period, mine: mid,
+      ratio: Math.round((mid / b.avg) * 100),
+      note: "統計は平均年齢" + b.age + "歳の値です。年齢・企業規模・地域で差が出るため、順位づけではなく現在地の目安としてご覧ください。" };
+  }
+
+  // 次のアクション（サイト内の実コンテンツへ）
+  var actions = [];
+  if (s.intent === "income" || s.priority === "income") {
+    actions.push({ label: "年収交渉の進め方を読む", go: { name: "article", slug: "nenshu-koushou" } });
+    actions.push({ label: "職種別の平均年収を比べる", go: { name: "salary" } });
+  }
+  if (s.intent === "change") {
+    actions.push({ label: "未経験転職の考え方を読む", go: { name: "article", slug: "mikeiken-tenshoku" } });
+    actions.push({ label: "全477職種から探す", go: { name: "occupations" } });
+  }
+  if (s.intent === "quit") {
+    actions.push({ label: "退職の切り出し方を読む", go: { name: "article", slug: "taishoku-kirikata" } });
+  }
+  if (s.intent === "howto" || s.intent === "undecided") {
+    actions.push({ label: "転職活動の始め方（最初の2週間）", go: { name: "article", slug: "tenshoku-hajimekata" } });
+  }
+  actions.push({ label: "職務経歴書をAIで添削する", go: { name: "tool-review", slug: "career-history-review" } });
+  if (s.age === "20s") actions.push({ label: "20代の転職の進め方", go: { name: "career", slug: "20s" } });
+  if (s.age === "40s" || s.age === "50s") actions.push({ label: "ハイクラス転職の考え方", go: { name: "career", slug: "high-class" } });
+
+  // 相性のよい職種（現職カテゴリ＋意向）
+  var occCats = [];
+  var cur = s.occupation ? ctx.occupationBySlug(s.occupation) : null;
+  if (cur) occCats.push(cur.categoryId);
+
+  // サービス出し分け用フラグ
+  var flags = [];
+  if (s.age === "20s") flags.push("second-career");
+  if (s.intent === "change") flags.push("inexperienced");
+  if (s.salary === "600-800" || s.salary === "800-") flags.push("high-class");
+  var kinds = ["agent"];
+  if (flags.indexOf("high-class") >= 0) kinds.push("scout");
+  if (s.intent === "change") kinds.push("school");
+
+  return {
+    typeName: type,
+    summary: [
+      s.intent ? "ご相談内容: " + (INTENT_LABEL[s.intent] || "") : "",
+      cur ? "現在の職種: " + cur.name : "",
+      s.age ? "年代: " + ({ "20s": "20代", "30s": "30代", "40s": "40代", "50s": "50代以上" }[s.age] || "") : "",
+      s.timeline ? "希望時期: " + ({ now: "3か月以内", half: "半年以内", year: "1年以内", undecided: "未定" }[s.timeline] || "") : ""
+    ].filter(Boolean),
+    salaryLine: salaryLine,
+    occCats: occCats,
+    serviceKinds: kinds,
+    flags: flags,
+    actions: actions.slice(0, 5),
+    disclaimer: "この面談はご入力内容にもとづくルールベースの整理であり、適職の断定や、転職の成功・年収の上昇を保証するものではありません。統計値は出典（賃金構造基本統計調査）の公表値からの算出参考値です。入力内容が外部に送信されることはありません。"
+  };
+}
+
+/* 1ターン進める。value は選択肢のキー、または自由入力文字列 */
+function agentStep(st, input, ctx) {
+  var slot = nextSlot(st);
+  if (!slot) { st.done = true; return { done: true, result: agentResult(st, ctx) }; }
+
+  // 自由入力が、いまの質問への答えでない「質問」なら、相談として答えて同じ質問を続ける
+  var val = (input && input.__key) ? input.__key : parseFree(slot, input, ctx);
+  if (val == null) {
+    var ans = chat(String(input || ""));
+    return { done: false, aside: ans, slot: slot, question: AGENT_Q[slot], reask: true };
+  }
+  st.slots[slot] = val;
+  st.log.push({ slot: slot, value: val });
+  var react = reactTo(slot, val, st, ctx);
+  var next = nextSlot(st);
+  if (!next) { st.done = true; return { done: true, react: react, result: agentResult(st, ctx) }; }
+  return { done: false, react: react, slot: next, question: AGENT_Q[next] };
+}
+
+  return { diagnose: diagnose, review: review, chat: chat,
+    agentInit: agentInit, agentStep: agentStep, agentResult: agentResult,
+    _AGENT_Q: AGENT_Q, _AGENT_SLOTS: AGENT_SLOTS, _types: TYPES, _docDef: DOC_DEF };
 })();

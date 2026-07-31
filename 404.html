@@ -168,6 +168,46 @@ nav.g a.on{color:var(--gold-400)}
 .mq .it b{color:var(--gold-400);font-family:var(--en);font-weight:600;letter-spacing:.05em}
 @keyframes mqL{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media (prefers-reduced-motion:reduce){.mqtrack{animation:none}}
+/* ---------- AIキャリアエージェント（トップページのメイン機能） ---------- */
+.agent{background:linear-gradient(160deg,var(--navy-950) 0%,var(--navy-900) 60%,var(--navy-800) 100%);
+  border-radius:18px;padding:0;overflow:hidden;box-shadow:0 14px 40px rgba(8,20,38,.22);border:1px solid rgba(210,168,70,.32)}
+.agent .ah{display:flex;align-items:center;gap:12px;padding:18px 22px;border-bottom:1px solid rgba(210,168,70,.22)}
+.agent .av{width:42px;height:42px;border-radius:50%;flex:none;background:linear-gradient(135deg,var(--gold-500),var(--gold-400));
+  display:flex;align-items:center;justify-content:center;font-size:20px}
+.agent .ah b{color:#fff;font-size:15.5px;display:block;font-family:var(--serif)}
+.agent .ah span{color:#93a5c4;font-size:11.5px}
+.agent .ah .st{margin-left:auto;font-family:var(--en);font-size:11px;color:var(--gold-400);letter-spacing:.08em;white-space:nowrap}
+.agent .abody{padding:20px 22px 22px;max-height:none}
+.agent .msgs{display:flex;flex-direction:column;gap:12px;margin-bottom:16px}
+.agent .m{max-width:88%;padding:12px 16px;border-radius:14px;font-size:14.2px;line-height:1.8}
+.agent .m.bot{background:rgba(255,255,255,.94);color:var(--text);align-self:flex-start;border-bottom-left-radius:4px}
+.agent .m.me{background:var(--gold-400);color:var(--navy-950);align-self:flex-end;border-bottom-right-radius:4px;font-weight:600}
+.agent .m.data{background:rgba(210,168,70,.14);border:1px solid rgba(210,168,70,.4);color:#f4ead2;align-self:flex-start}
+.agent .opts{display:flex;flex-wrap:wrap;gap:8px}
+.agent .opts button{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.34);color:#fff;
+  border-radius:999px;padding:9px 17px;font-size:13.5px;cursor:pointer;font-family:var(--sans)}
+.agent .opts button:hover{background:var(--gold-400);border-color:var(--gold-400);color:var(--navy-950)}
+.agent .ainp{display:flex;gap:8px;margin-top:14px}
+.agent .ainp input{flex:1;padding:12px 16px;border-radius:999px;border:1px solid rgba(255,255,255,.28);
+  background:rgba(8,20,38,.5);color:#fff;font-size:14px;font-family:var(--sans)}
+.agent .ainp input::placeholder{color:#7d90b0}
+.agent .prog{height:4px;background:rgba(255,255,255,.12);border-radius:99px;overflow:hidden;margin-bottom:16px}
+.agent .prog i{display:block;height:100%;background:linear-gradient(90deg,var(--gold-500),var(--gold-400));transition:width .45s ease}
+.agent .karte{background:#fff;border-radius:14px;padding:22px;color:var(--text)}
+.agent .karte h3{font-size:20px;margin-bottom:4px}
+.agent .bench{display:flex;align-items:flex-end;gap:16px;background:var(--blue-050);border-radius:12px;padding:16px;margin:14px 0;flex-wrap:wrap}
+.agent .bench .n{font-family:var(--en);font-size:30px;font-weight:700;color:var(--navy-950);line-height:1}
+.agent .bench .n small{font-size:13px;font-weight:600}
+.agent .bar{flex:1;min-width:180px}
+.agent .bar .t{height:10px;background:#dde8f5;border-radius:99px;position:relative;overflow:hidden}
+.agent .bar .t i{position:absolute;left:0;top:0;height:100%;background:var(--gold-400);border-radius:99px}
+.agent .bar .t u{position:absolute;top:-3px;width:2px;height:16px;background:var(--navy-800)}
+@media(max-width:560px){
+  .agent .abody{padding:16px 14px 18px}
+  .agent .m{max-width:94%;font-size:13.6px}
+  .agent .ah{padding:14px 16px}
+}
+
 /* 背景テキストマーキー（右上→左下の斜めライン・青・装飾のみ）
    固定レイヤーで本文の背後に敷く。クリック透過・スクリーンリーダー非対象。
    ホバーで停止しない（プロジェクト共通規約）／reduced-motion では静止 */
@@ -307,8 +347,8 @@ footer .legal{border-top:1px solid rgba(210,168,70,.2);margin-top:34px;padding-t
   var p=location.pathname, mm=p.match(/^(.*?)\/(ja|en)(\/|$)/);
   var b=mm?mm[1]:p.replace(/\/index\.html$/,"").replace(/\/$/,"");
   window.CP_BASE=b;
-  try{var x=new XMLHttpRequest();x.open("GET",b+"/data.js?v=13",false);x.send();if(x.status===200||x.status===0){(0,eval)(x.responseText)}}catch(e){}
-  try{var y=new XMLHttpRequest();y.open("GET",b+"/logic.js?v=1",false);y.send();if(y.status===200||y.status===0){(0,eval)(y.responseText)}}catch(e){}
+  try{var x=new XMLHttpRequest();x.open("GET",b+"/data.js?v=14",false);x.send();if(x.status===200||x.status===0){(0,eval)(x.responseText)}}catch(e){}
+  try{var y=new XMLHttpRequest();y.open("GET",b+"/logic.js?v=2",false);y.send();if(y.status===200||y.status===0){(0,eval)(y.responseText)}}catch(e){}
 })();
 if(!window.DATA){document.getElementById("app").innerHTML='<div class="skel">データの読み込みに失敗しました。再読み込みしてください。</div>';}
 
@@ -490,6 +530,117 @@ function kvBanner(keys,alt,small){
   var im=imgFor.apply(null,keys);if(!im)return"";
   return '<div class="kv'+(small?" sm":"")+'"><img loading="lazy" src="'+window.CP_BASE+"/"+esc(im.src)+'" alt="'+esc(alt||"")+'"><span class="cr">'+esc(im.credit)+"</span></div>";
 }
+/* ===== AIキャリアエージェント（トップページのメイン機能） =====
+   CP_LOGIC.agentStep でスロットを埋めながら、サイトの実データ（公的統計・職種解説）で応答する。
+   外部送信なし。結果は利用者が選んだ場合のみ端末内（localStorage）に保存。 */
+var AG = null;                     // 対話状態
+function agentCtx(){
+  return {
+    occupations: DATA.occupations.map(function(o){var t=tr(o);
+      return {slug:o.slug,name:t.name,categoryId:o.categoryId,featured:!!o.featured}}),
+    occupationBySlug: function(sl){var o=bySlug(DATA.occupations,sl);
+      return o?{slug:o.slug,name:tr(o).name,categoryId:o.categoryId}:null},
+    salaryFor: function(sl){var r=salaryRows({occupationSlug:sl});return r.length?r[0]:null}
+  };
+}
+function agentStart(reset){
+  if(AG&&!reset)return;
+  AG={st:CP_LOGIC.agentInit(),msgs:[],cur:null,result:null};
+  var q=CP_LOGIC._AGENT_Q.intent;
+  AG.cur={slot:"intent",question:q};
+  AG.msgs.push({who:"bot",text:q.q});
+  if(q.hint)AG.msgs.push({who:"bot",text:q.hint});
+}
+function agentOpts(){
+  if(!AG||!AG.cur)return[];
+  if(AG.cur.slot==="occupation"){
+    return DATA.occupations.filter(function(o){return o.featured})
+      .slice(0,12).map(function(o){return[o.slug,tr(o).name]});
+  }
+  return (AG.cur.question&&AG.cur.question.opts)||[];
+}
+function agentProgress(){
+  if(!AG)return 0;
+  var filled=CP_LOGIC._AGENT_SLOTS.filter(function(k){return AG.st.slots[k]!=null}).length;
+  return Math.round(filled/CP_LOGIC._AGENT_SLOTS.length*100);
+}
+function vAgentBlock(){
+  agentStart();
+  var done=!!AG.result;
+  return '<div class="agent" id="agent">'+
+    '<div class="ah"><div class="av">⚓</div><div><b>AIキャリアエージェント</b>'+
+      '<span>無料・登録不要・入力内容は外部に送信されません</span></div>'+
+      '<div class="st">'+(done?"面談完了":"STEP "+Math.min(AG.st.log.length+1,6)+" / 6")+'</div></div>'+
+    '<div class="abody">'+
+      '<div class="prog"><i style="width:'+agentProgress()+'%"></i></div>'+
+      '<div class="msgs" id="agmsgs">'+AG.msgs.map(function(m){
+        return '<div class="m '+esc(m.who)+'">'+esc(m.text).replace(/\n/g,"<br>")+'</div>';
+      }).join("")+'</div>'+
+      (done?agentKarte(AG.result):
+        '<div class="opts">'+agentOpts().map(function(o){
+          return '<button type="button" onclick="agentPick(\''+esc(o[0])+'\',\''+esc(o[1]).replace(/'/g,"\\'")+'\')">'+esc(o[1])+'</button>';
+        }).join("")+'</div>'+
+        '<form class="ainp" onsubmit="return agentSay(this)"><input name="t" type="text" placeholder="自由に入力して相談することもできます" autocomplete="off"><button class="btn gold sm" type="submit">送る</button></form>')+
+    '</div></div>';
+}
+function agentKarte(r){
+  var occs=[];
+  r.occCats.forEach(function(c){DATA.occupations.filter(function(o){return o.categoryId===c&&o.featured})
+    .slice(0,4).forEach(function(o){if(occs.indexOf(o)<0)occs.push(o)})});
+  var svcs=ctaServices({flags:r.flags,occCats:r.occCats},r.serviceKinds,3);
+  var b=r.salaryLine;
+  return '<div class="karte">'+
+   '<div class="eyebrow">Your Career Karte</div><h3>あなたのキャリアカルテ：'+esc(r.typeName)+'</h3>'+
+   '<ul class="list-plain" style="font-size:13.5px;margin-top:8px">'+r.summary.map(function(x){return "<li>"+esc(x)+"</li>"}).join("")+'</ul>'+
+   (b?'<div class="bench"><div><div class="n">'+b.mine+'<small>万円</small></div>'+
+      '<div class="small">あなたの年収帯</div></div>'+
+      '<div class="bar"><div class="t"><i style="width:'+Math.min(100,Math.round(b.mine/Math.max(b.avg,b.mine)*100))+'%"></i>'+
+      '<u style="left:'+Math.min(98,Math.round(b.avg/Math.max(b.avg,b.mine)*100))+'%"></u></div>'+
+      '<p class="small" style="margin-top:6px">縦線＝統計区分「'+esc(b.label)+'」の平均 約'+b.avg+'万円（'+esc(b.period)+'／平均年齢'+b.avgAge+'歳）</p></div>'+
+      '<p class="small" style="flex-basis:100%;margin:0">'+esc(b.note)+'</p></div>':"")+
+   (occs.length?'<h3 style="font-size:16px;margin-top:16px">見ておきたい職種</h3><div style="margin-top:6px">'+
+      occs.slice(0,6).map(function(o){return '<a class="chip" href="javascript:void(0)" onclick="go({name:\'occupation\',slug:\''+o.slug+'\'})">'+esc(tr(o).name)+'</a>'}).join("")+'</div>':"")+
+   '<h3 style="font-size:16px;margin-top:16px">次にやること</h3><ol style="padding-left:20px;font-size:14px;margin-top:6px">'+
+     r.actions.map(function(a){return '<li style="margin:6px 0"><a href="javascript:void(0)" onclick=\'go('+JSON.stringify(a.go)+')\' style="text-decoration:underline">'+esc(a.label)+'</a></li>'}).join("")+'</ol>'+
+   '<div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap">'+
+     '<button class="btn navy sm" onclick="agentSave()">カルテを端末に保存</button>'+
+     '<button class="btn line sm" onclick="agentRestart()">やり直す</button></div>'+
+   '<p class="small" style="margin-top:14px">'+esc(r.disclaimer)+'</p>'+
+   (svcs.length?'<div style="margin-top:18px"><h3 style="font-size:16px">相談先の候補</h3>'+
+     '<p class="small">'+esc(DATA.siteSettings.disclosure)+'　現在の掲載はデモです。</p>'+
+     '<div class="grid g3" style="margin-top:10px">'+svcs.map(svcCard).join("")+'</div></div>':"")+
+   '</div>';
+}
+function agentAdvance(key,label){
+  AG.msgs.push({who:"me",text:label});
+  var res=CP_LOGIC.agentStep(AG.st,key?{__key:key}:label,agentCtx());
+  if(res.aside){
+    AG.msgs.push({who:"bot",text:res.aside.reply});
+    AG.msgs.push({who:"bot",text:"——では、先ほどの質問に戻ります。"+AG.cur.question.q});
+  }else{
+    if(res.react)AG.msgs.push({who:"data",text:res.react});
+    if(res.done){AG.result=res.result;AG.msgs.push({who:"bot",text:"ありがとうございました。伺った内容をカルテにまとめました。"});}
+    else AG.cur={slot:res.slot,question:res.question};
+    if(!res.done&&res.question)AG.msgs.push({who:"bot",text:res.question.q});
+  }
+  evTrack("agent_step",{slot:AG.cur?AG.cur.slot:"done"});
+  if(AG.result)evTrack("agent_complete",{type:AG.result.typeName});
+  render();
+  var el=document.getElementById("agent");if(el)el.scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+function agentPick(key,label){agentAdvance(key,label)}
+function agentSay(f){var t=f.t.value.trim();if(!t)return false;f.t.value="";agentAdvance(null,t);return false}
+function agentRestart(){agentStart(true);render()}
+function agentSave(){
+  if(!AG||!AG.result)return;
+  var h=lsGet("agent-karte",[]);
+  h.unshift({at:new Date().toISOString(),slots:AG.st.slots,type:AG.result.typeName,summary:AG.result.summary});
+  lsSet("agent-karte",h.slice(0,10));
+  alert("カルテを端末に保存しました。マイページから確認できます。");
+}
+function agentScroll(){var e=document.getElementById('agent');if(e){e.scrollIntoView({behavior:'smooth',block:'center'})}else{go({name:'tool-diagnosis'})}}
+window.agentScroll=agentScroll;window.agentPick=agentPick;window.agentSay=agentSay;window.agentRestart=agentRestart;window.agentSave=agentSave;
+
 /* 背景テキストマーキー（装飾）— 転職・求人に関する英語ワードを斜めに流す */
 var BGMQ_ROWS=[
  ["CAREER","JOB SEARCH","RECRUITMENT","HIRING","RESUME","INTERVIEW","NEXT STEP"],
@@ -591,7 +742,7 @@ function vHome(){
   '<div class="in"><div class="eyebrow">CAREER PORT — YOUR DEPARTURE POINT</div>'+
   '<h1>キャリアの<span class="gold">出港地</span>。<br>迷いを、進路に変える。</h1>'+
   '<p class="sub">求人・転職エージェント・スカウト・年収・転職ノウハウを横断して比較。はじめての転職からキャリアアップまで、次の進路を見つけるための情報とツールを無料で。</p>'+
-  '<div class="ctas"><button class="btn gold" onclick="go({name:\'tool-diagnosis\'})">⚓ AIキャリア診断を始める（無料）</button>'+
+  '<div class="ctas"><button class="btn gold" onclick="agentScroll()">⚓ AIエージェントに相談する（無料）</button>'+
   '<button class="btn ghost" onclick="go({name:\'jobs\'})">求人を探す</button>'+
   '<button class="btn ghost" onclick="go({name:\'services\'})">転職サービスを比較する</button></div>'+
   '<div class="searchbox"><form onsubmit="return homeSearch(this)"><div class="row">'+
@@ -602,6 +753,12 @@ function vHome(){
   '<div style="align-self:end"><button class="btn gold" style="width:100%;padding:11px 20px" type="submit">検索</button></div>'+
   '</div></form></div></div>'+
   '<div class="mq"><div class="mqtrack">'+mqItems()+mqItems()+'</div></div></div>'+
+
+  '<section class="sec rv" style="padding:40px 0 30px"><div class="sec-h" style="text-align:center;margin-bottom:20px">'+
+  '<div class="eyebrow">AI Career Agent</div><h2 style="font-size:27px">AIエージェントに相談する</h2>'+
+  '<p class="lead" style="margin:8px auto 0;max-width:620px">6つの質問に答えるだけ。公的統計（賃金構造基本統計調査）をもとに、'+
+  'いまの年収の位置・向いている職種・次にやることを整理してお返しします。</p></div>'+
+  vAgentBlock()+'</section>'+
 
   '<section class="sec rv"><div class="sec-h"><div class="eyebrow">Your Compass</div><h2>いまの悩みから探す</h2></div>'+
   '<div class="grid g4">'+nayami.map(function(n){return '<a class="tile" href="javascript:void(0)" onclick="go({name:\''+n[1]+'\''+(n[2]?",slug:'"+n[2]+"'":"")+'})"><span class="ic">🧭</span>'+n[0]+"</a>"}).join("")+'</div></section>'+
@@ -1186,6 +1343,11 @@ function vMypage(){
   '<div class="pagehead"><h1>マイページ</h1><p class="lead">お気に入り・診断履歴・閲覧履歴は、お使いのブラウザ内（localStorage）にのみ保存されます。サーバーへの登録は不要で、いつでも削除できます。</p></div>'+
   '<section class="sec" style="padding:22px 0"><h2 style="font-size:19px;margin-bottom:10px">お気に入り求人（'+favJ.length+'）</h2>'+(favJ.length?'<div class="grid g2">'+favJ.map(jobCard).join("")+"</div>":'<div class="empty">お気に入りの求人はまだありません。</div>')+'</section>'+
   '<section class="sec" style="padding:22px 0"><h2 style="font-size:19px;margin-bottom:10px">お気に入りサービス（'+favS.length+'）</h2>'+(favS.length?'<div class="grid g3">'+favS.map(svcCard).join("")+"</div>":'<div class="empty">お気に入りのサービスはまだありません。</div>')+'</section>'+
+  (function(){var k=lsGet("agent-karte",[]);
+    return '<section class="sec" style="padding:22px 0"><h2 style="font-size:19px;margin-bottom:10px">エージェント面談カルテ（'+k.length+'）</h2>'+
+    (k.length?'<ul class="list-plain">'+k.map(function(x){return "<li>"+fmtDate(x.at)+"　<b>"+esc(x.type)+"</b>　<span class='small'>"+esc((x.summary||[]).join(" / "))+"</span></li>"}).join("")+"</ul>"
+      :'<div class="empty">保存されたカルテはありません。<a href="javascript:void(0)" onclick="go({name:\'home\'})" style="text-decoration:underline">トップのAIエージェント</a>から面談できます。</div>')+'</section>';
+  })()+
   '<section class="sec" style="padding:22px 0"><h2 style="font-size:19px;margin-bottom:10px">診断履歴（'+diag.length+'）</h2>'+
   (diag.length?'<ul class="list-plain">'+diag.map(function(d){return "<li>"+fmtDate(d.at)+"　<b>"+esc(d.result.typeName)+"</b></li>"}).join("")+"</ul>":'<div class="empty">保存された診断結果はありません。<a href="javascript:void(0)" onclick="go({name:\'tool-diagnosis\'})" style="text-decoration:underline">診断を試す</a></div>')+'</section>'+
   '<section class="sec" style="padding:22px 0"><h2 style="font-size:19px;margin-bottom:10px">最近見たページ</h2>'+
@@ -1198,7 +1360,7 @@ function vMypage(){
 }
 function mypageClear(){
   if(!confirm("お気に入り・診断履歴・閲覧履歴をすべて削除します。よろしいですか？"))return;
-  ["fav-jobs","fav-services","diag-history","history","review-history"].forEach(function(k){try{localStorage.removeItem("cp-"+k)}catch(e){}});
+  ["fav-jobs","fav-services","diag-history","history","review-history","agent-karte"].forEach(function(k){try{localStorage.removeItem("cp-"+k)}catch(e){}});
   render();
 }
 

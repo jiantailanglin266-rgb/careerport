@@ -76,5 +76,60 @@ t("チャット: 面接インテント", c4.reply.includes("面接") || c4.reply
 const c5 = L.chat("年収を上げたい");
 t("チャット: 年収は保証否定つき", c5.reply.includes("保証"));
 
+
+/* ---- AIキャリアエージェント ---- */
+const OCCS=[{slug:"sales",name:"営業",categoryId:"occ_business",featured:true},
+            {slug:"nurse",name:"看護師",categoryId:"occ_medical",featured:true}];
+const CTX={
+  occupations:OCCS,
+  occupationBySlug:(sl)=>OCCS.find(o=>o.slug===sl)||null,
+  salaryFor:(sl)=>sl==="sales"?{label:"その他の営業職業従事者",averageSalary:661,averageAge:42.4,period:"令和7年（2025年）調査"}:null
+};
+let st=L.agentInit();
+t("エージェント: 初期状態は未完了", !st.done && Object.keys(st.slots).length===0);
+let ag1=L.agentStep(st,{__key:"income"},CTX);
+t("エージェント: 1問目でintentが埋まる", st.slots.intent==="income" && !ag1.done);
+t("エージェント: 次は職種を聞く", ag1.slot==="occupation");
+t("エージェント: 意図に応じた反応を返す", /年収/.test(ag1.react));
+let ag2=L.agentStep(st,{__key:"sales"},CTX);
+t("エージェント: 職種で統計を提示", /661万円/.test(ag2.react) && /その他の営業職業従事者/.test(ag2.react));
+t("エージェント: 統計の平均年齢を明示", /平均年齢42.4歳/.test(ag2.react));
+L.agentStep(st,{__key:"30s"},CTX);
+let ag4=L.agentStep(st,{__key:"400-500"},CTX);
+t("エージェント: 年収を統計と比較", /平均/.test(ag4.react) && /%/.test(ag4.react));
+t("エージェント: 単純比較できない旨を添える", /断定はできません|単純比較/.test(ag4.react));
+L.agentStep(st,{__key:"income"},CTX);
+let last=L.agentStep(st,{__key:"half"},CTX);
+t("エージェント: 6問で完了", last.done===true && !!last.result);
+const R=last.result;
+t("カルテ: タイプ名", R.typeName==="航路開拓タイプ");
+t("カルテ: 年収ベンチマークを持つ", !!R.salaryLine && R.salaryLine.avg===661 && R.salaryLine.mine===450);
+t("カルテ: 次のアクションが具体的リンク", R.actions.length>=3 && R.actions.every(a=>a.go && a.label));
+t("カルテ: 現職カテゴリを引き継ぐ", R.occCats.includes("occ_business"));
+t("カルテ: 免責が必ず付く", /保証するものではありません/.test(R.disclaimer) && /外部に送信されることはありません/.test(R.disclaimer));
+
+let st2=L.agentInit();
+L.agentStep(st2,"年収を上げたい",CTX);
+t("エージェント: 自由入力から選択肢を解釈", st2.slots.intent==="income");
+L.agentStep(st2,"営業をやっています",CTX);
+t("エージェント: 自由入力から職種を推測", st2.slots.occupation==="sales");
+L.agentStep(st2,"35歳です",CTX);
+t("エージェント: 年齢の自由入力を解釈", st2.slots.age==="30s");
+L.agentStep(st2,"だいたい420万円くらい",CTX);
+t("エージェント: 金額の自由入力を解釈", st2.slots.salary==="400-500");
+
+let st3=L.agentInit();
+let q=L.agentStep(st3,"職務経歴書の書き方を教えて",CTX);
+t("エージェント: 無関係な質問には相談で応答", q.reask===true && /職務要約/.test(q.aside.reply));
+t("エージェント: 質問中はスロットを埋めない", st3.slots.intent===undefined);
+
+let st4=L.agentInit();
+L.agentStep(st4,{__key:"undecided"},CTX);
+L.agentStep(st4,{__key:"nurse"},CTX);
+L.agentStep(st4,{__key:"20s"},CTX);
+let sk=L.agentStep(st4,"スキップ",CTX);
+t("エージェント: スキップを受け付ける", st4.slots.salary==="__skip__");
+t("エージェント: スキップ時は年収比較を出さない", !/万円/.test(sk.react||""));
+
 console.log(`\n${pass} passed, ${fail} failed`);
 if (fail) process.exit(1);
