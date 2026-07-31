@@ -911,7 +911,7 @@ function vJobs(q){
   }
   var notice=pool.real
     ?'<div class="notice blue">掲載中の求人は、提携先から提供を受けた実求人です。応募は各求人の募集主体または掲載元サイトで行っていただきます（<b>当サイトは職業紹介・仲介を行いません</b>）。</div>'
-    :'<div class="notice">当サイトは<b>まだ求人そのものを掲載していません</b>（正規の提携を準備中です）。検索すると、条件に合う<b>仕事の情報・公的統計による平均年収・実際に求人を探せる場所と探し方</b>をご案内します。表示されている求人はレイアウト確認用のデモで、実在の募集ではありません。<br><span class="small">提携先から求人の提供を受けた時点で、この検索は実際の募集要項（賃金・就業時間・休日・加入保険・受動喫煙対策）付きの求人一覧に切り替わります。</span></div>';
+    :'<div class="notice blue">当サイトは求人を<b>掲載も仲介もしていません</b>（職業紹介事業者ではありません）。検索すると、条件に合う<b>仕事の情報と公的統計による平均年収</b>を表示したうえで、<b>同じ条件で求人を検索した結果</b>をハローワークや求人検索エンジンで開けます。<br><span class="small">ページ内に表示されている求人カードはレイアウト確認用のデモで、実在の募集ではありません。</span></div>';
   return crumb([["求人を探す"]])+
   '<div class="pagehead"><h1>求人を探す</h1><p class="lead">職種・勤務地・雇用形態から、その仕事の実態（仕事内容・平均年収・未経験の入りやすさ）と、実際に求人を探せる場所をまとめてご案内します。</p></div>'+notice+
   '<form class="card" style="margin:14px 0" onsubmit="return jobsSearch(this)"><div class="grid g4">'+
@@ -924,10 +924,10 @@ function vJobs(q){
   (list.length
     ?'<section class="sec" style="padding:14px 0"><div class="sec-h"><h2 style="font-size:19px">該当する求人 '+list.length+'件'+(pool.real?"":"（デモ）")+'</h2></div><div class="grid g2">'+list.map(jobCard).join("")+'</div></section>'
     :(searched?'<div class="notice gray">この条件に一致する求人は、当サイトにはまだありません。代わりに、下の情報と探せる場所をご覧ください。</div>':""))+
-  // ② この条件について調べる（サイト内の実データ）
-  jobsInsight(oc,pf,q)+
-  // ③ 実際に求人を探せる場所
-  jobsWhereToSearch(oc,pf,q)+
+  // ② 検索したときは「実際に求人を見に行く導線」を先に、そのあと条件の判断材料
+  (searched
+    ? jobsWhereToSearch(oc,pf,q)+jobsInsight(oc,pf,q)
+    : jobsInsight(oc,pf,q)+jobsWhereToSearch(oc,pf,q))+
   ctaBlock(oc?{occCats:[oc.categoryId]}:{},["agent","job-site"],"条件に近い求人を紹介してもらえるサービス");
 }
 
@@ -969,51 +969,96 @@ function jobsInsight(oc,pf,q){
     '<div style="margin-top:16px">'+arts.map(artLi).join("")+'</div></section>';
 }
 
-/* 実際に求人を探せる場所（公的サービス＋提携先）。提携先は承認後に EXT_JOB_SITES へ追加する。
-   ハローワークインターネットサービスの求人検索は POST ベースで、検索条件を URL に載せて
-   渡すことができない（実測で確認）。そのため条件は引き渡さず、
-   「リンク先のどの欄に何を入力すればよいか」を jobsHowTo() で明示する方式にしている。 */
+/* 実際に求人を探せる場所。
+   当サイトは求人を掲載も仲介もせず、外部サイトの「検索結果ページ」へ条件つきで送客する。
+
+   各サイトの検索URLが GET で条件を受け取れるかは実測で確認済み（2026-08-01）:
+     Indeed / スタンバイ … ?q=<キーワード>&l=<勤務地> で条件どおりの結果が返る
+     求人ボックス      … /<キーワード>の仕事-<都道府県> のパス形式で返る
+     ハローワーク      … POST のみ。URLで条件を渡せないため jobsHowTo() で入力手順を案内する
+   URL形式が変わったらここだけ直せばよい。追加時は必ず実際に開いて結果を確認すること。
+
+   affiliate:true にすると PR バッジと rel="sponsored" に切り替わる。
+   現在はいずれも報酬を受け取っていない純粋な参考リンクのため false。 */
+function extEnc(v){return encodeURIComponent(String(v||""))}
+function extCond(oc,pf,q){
+  return {
+    kw: (q.kw||"")||(oc?tr(oc).name:""),
+    pref: pf?nm(pf):"",
+    et: q.et?EMP[q.et]:""
+  };
+}
 var EXT_JOB_SITES=[
-  { name:"ハローワークインターネットサービス", by:"厚生労働省（公的・無料・全国）",
-    note:"全国のハローワークが受理した求人を検索できます。求職申込みをしていなくても検索・閲覧できます。",
-    url:"https://www.hellowork.mhlw.go.jp/kensaku/GECA110010.do?action=initDisp&screenId=GECA110010",
-    official:true, howto:true }
-  // 提携・規約確認が済んだ求人サイトをここに追加する（ASP承認後はアフィリエイトリンクにする）
+  { name:"ハローワークインターネットサービス", by:"厚生労働省（公的・無料・全国）", official:true, howto:true,
+    note:"全国のハローワークが受理した求人を検索できます。求職申込みをしていなくても検索・閲覧でき、手数料もかかりません。",
+    btn:"求人情報検索を開く",
+    url:function(){return "https://www.hellowork.mhlw.go.jp/kensaku/GECA110010.do?action=initDisp&screenId=GECA110010"} },
+  { name:"Indeed（インディード）", by:"求人検索エンジン（各社の求人を横断）",
+    note:"企業の採用ページや求人サイトの掲載を横断して検索できます。",
+    url:function(c){
+      var q=[c.kw,c.et].filter(Boolean).join(" ");
+      return "https://jp.indeed.com/jobs?q="+extEnc(q)+"&l="+extEnc(c.pref);
+    } },
+  { name:"求人ボックス", by:"求人検索エンジン（カカクコム）",
+    note:"職種と勤務地から横断検索できます。給与相場の情報も併せて確認できます。",
+    url:function(c){
+      var b="https://xn--pckua2a7gp15o89zb.com/";
+      if(!c.kw)return c.pref?b+extEnc(c.pref+"の仕事"):b;
+      return b+extEnc(c.kw+"の仕事"+(c.pref?"-"+c.pref:""));
+    } },
+  { name:"スタンバイ", by:"求人検索エンジン（ビズリーチ）",
+    note:"正社員からアルバイトまで、幅広い雇用形態の求人を横断して検索できます。",
+    url:function(c){
+      var q=[c.kw,c.et].filter(Boolean).join(" ");
+      return "https://jp.stanby.com/search?q="+extEnc(q)+"&l="+extEnc(c.pref);
+    } }
 ];
-/* 検索条件を、外部サイトで「どの欄に何を入れるか」に翻訳する。
-   URLで条件を渡せない相手に対して、条件を落とさずに引き継ぐための代替手段。 */
+/* ハローワークは検索条件をURLで受け取れないため、
+   入力された条件を「リンク先のどの欄に何を入れるか」に翻訳して渡す。 */
 function jobsHowTo(oc,pf,q){
   var steps=[];
-  steps.push(["求人情報検索を開く","トップの「求人情報検索」から検索画面に進みます。会員登録なしで検索できます。"]);
   if(pf)steps.push(["就業場所","「就業場所」で <b>"+esc(nm(pf))+"</b> を選びます。市区町村まで絞り込めます。"]);
   else steps.push(["就業場所","「就業場所」で希望の都道府県を選びます。"]);
-  if(oc)steps.push(["職種","「職種」の欄で <b>"+esc(tr(oc).name)+"</b> に近い分類を選ぶか、フリーワードに「"+esc(tr(oc).name)+"」と入力します。"]);
+  if(oc)steps.push(["職種","「職種」欄で <b>"+esc(tr(oc).name)+"</b> に近い分類を選ぶか、フリーワードに「"+esc(tr(oc).name)+"」と入力します。"]);
   else if(q.kw)steps.push(["フリーワード","フリーワード欄に <b>"+esc(q.kw)+"</b> と入力します。"]);
   else steps.push(["職種・フリーワード","「職種」を選ぶか、フリーワード欄に希望の仕事名を入力します。"]);
   if(q.et)steps.push(["雇用形態","「雇用形態」で <b>"+esc(EMP[q.et])+"</b> を選びます。"]);
-  steps.push(["結果の見方","求人票の「賃金」「就業時間」「休日」「加入保険」「受動喫煙対策」を必ず確認します。"+
-    (oc?'当サイトの<a href="javascript:void(0)" onclick="go({name:\'occupation\',slug:\''+esc(oc.slug)+'\'})">'+esc(tr(oc).name)+'のページ</a>で平均年収と見比べると、条件の妥当性を判断しやすくなります。':"")]);
-  return '<div class="card" style="margin-top:12px"><h3 style="font-size:15px">ハローワークでの探し方（この条件の場合）</h3>'+
-    '<p class="small" style="margin-top:4px">ハローワークの検索画面は条件をURLで受け取れないため、リンク先で次のように入力してください。</p>'+
+  steps.push(["求人票の確認","「賃金」「就業時間」「休日」「加入保険」「受動喫煙対策」は必ず確認します。"+
+    (oc?'当サイトの<a href="javascript:void(0)" onclick="go({name:\'occupation\',slug:\''+esc(oc.slug)+'\'})">'+esc(tr(oc).name)+'のページ</a>にある公的統計の平均年収と見比べると、条件の妥当性を判断しやすくなります。':"")]);
+  return '<div class="card" style="margin-top:12px"><h3 style="font-size:15px">ハローワークでの絞り込み方（この条件の場合）</h3>'+
+    '<p class="small" style="margin-top:4px">ハローワークの検索画面だけは条件をURLで受け取れないため、開いたあと次のように入力してください。</p>'+
     '<ol style="padding-left:20px;font-size:13.5px;margin-top:10px;line-height:1.9">'+
     steps.map(function(x){return "<li style='margin:4px 0'><b>"+x[0]+"</b>："+x[1]+"</li>"}).join("")+"</ol></div>";
 }
+/* 職種ページ・地域ページ用。検索ページを経由しなくても、その場の条件で外部検索を開ける。 */
+function extJobButtons(oc,pf,q){
+  var c=extCond(oc,pf,q||{});
+  return EXT_JOB_SITES.map(function(x){
+    return '<a class="btn '+(x.official?"navy":"line")+' sm" target="_blank" rel="'+(x.affiliate?"sponsored ":"")+'nofollow noopener" href="'+esc(x.url(c))+
+      '" onclick="evTrack(\'ext_jobsite_click\',{site:\''+esc(x.name)+'\'})">'+esc(x.name.replace(/（.*/,""))+'で探す（外部）</a>';
+  }).join("");
+}
 function jobsWhereToSearch(oc,pf,q){
-  var cond=[oc?tr(oc).name:"",pf?nm(pf):"",q.et?EMP[q.et]:""].filter(Boolean).join("・");
-  return '<section class="sec" style="padding:18px 0"><div class="sec-h"><h2 style="font-size:19px">実際に求人を探せる場所</h2>'+
-  '<p class="small">当サイトは求人を掲載していないため、'+(cond?'「'+esc(cond)+'」の':"")+'求人は下記でお探しいただけます。'+
-  '検索条件はリンク先で入力してください。</p></div>'+
-  jobsHowTo(oc,pf,q)+
-  '<div class="grid g2" style="margin-top:12px">'+EXT_JOB_SITES.map(function(x){
-    return '<div class="card"><div>'+(x.official?'<span class="badge ok">公的サービス</span>':badgePR())+'</div>'+
+  var c=extCond(oc,pf,q);
+  var cond=[c.kw,c.pref,c.et].filter(Boolean).join("・");
+  var hasCond=!!(c.kw||c.pref);
+  return '<section class="sec" style="padding:18px 0"><div class="sec-h">'+
+  '<h2 style="font-size:19px">'+(cond?'「'+esc(cond)+'」の求人を探す':'求人を探せる場所')+'</h2>'+
+  '<p class="small">当サイトは求人を掲載も仲介もしていません。'+
+  (hasCond?'下のボタンから、<b>入力された条件がそのまま入った検索結果</b>が各サイトで開きます。':'下の各サイトで検索できます。')+
+  '　いずれも当サイトが報酬を受け取っていない参考リンクです。</p></div>'+
+  '<div class="grid g2">'+EXT_JOB_SITES.map(function(x){
+    var href=x.url(c);
+    return '<div class="card"><div>'+(x.official?'<span class="badge ok">公的サービス</span>':(x.affiliate?badgePR():'<span class="badge cat">外部サイト</span>'))+'</div>'+
     '<h3 style="margin-top:6px">'+esc(x.name)+'</h3><p class="small">'+esc(x.by)+'</p>'+
     '<p class="desc" style="font-size:13px;margin-top:6px">'+esc(x.note)+'</p>'+
-    '<a class="btn line sm" style="margin-top:10px" target="_blank" rel="nofollow noopener" href="'+esc(x.url)+'" onclick="evTrack(\'ext_jobsite_click\',{site:\''+esc(x.name)+'\'})">サイトを開く（外部）</a></div>';
+    '<a class="btn '+(x.official?"navy":"line")+' sm" style="margin-top:10px" target="_blank" rel="'+(x.affiliate?"sponsored ":"")+'nofollow noopener" href="'+esc(href)+'" onclick="evTrack(\'ext_jobsite_click\',{site:\''+esc(x.name)+'\'})">'+
+    esc(x.btn||(hasCond&&!x.howto?"この条件の求人を見る（外部）":"サイトを開く（外部）"))+'</a></div>';
   }).join("")+
   '<div class="card"><div><span class="badge cat">比較</span></div><h3 style="margin-top:6px">転職エージェントに探してもらう</h3>'+
   '<p class="desc" style="font-size:13px;margin-top:6px">条件を伝えると、公開されていない求人も含めて紹介を受けられます。タイプ別の違いは比較ページで整理しています。</p>'+
   '<a class="btn line sm" style="margin-top:10px" href="javascript:void(0)" onclick="go({name:\'services\'})">転職サービスを比較する</a></div>'+
-  '</div></section>';
+  '</div>'+jobsHowTo(oc,pf,q)+'</section>';
 }
 function jobsSearch(f){go({name:"jobs",q:{kw:f.kw.value,oc:f.oc.value,pf:f.pf.value,et:f.et.value}});return false}
 function applyBtn(j){
@@ -1166,8 +1211,8 @@ function vOccupation(slug){
   '<section class="sec" style="padding:20px 0"><div class="sec-h"><h2 style="font-size:20px">'+esc(t.name)+'の求人を探す</h2>'+
    (jobPool().real?"":'<p class="small">当サイトは求人を掲載していません（提携準備中）。下記から実際の求人をお探しいただけます。</p>')+'</div>'+
    (jobsN.length?'<div class="grid g2" style="margin-bottom:14px">'+jobsN.slice(0,4).map(jobCard).join("")+'</div>':"")+
-   '<div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn line sm" href="javascript:void(0)" onclick="go({name:\'jobs\',q:{oc:\''+esc(o.slug)+'\'}})">'+esc(t.name)+'の求人検索へ</a>'+
-   '<a class="btn line sm" target="_blank" rel="nofollow noopener" href="https://www.hellowork.mhlw.go.jp/" onclick="evTrack(\'ext_jobsite_click\',{site:\'hellowork\'})">ハローワークで探す（外部）</a></div></section>'+
+   '<div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn line sm" href="javascript:void(0)" onclick="go({name:\'jobs\',q:{oc:\''+esc(o.slug)+'\'}})">'+esc(t.name)+'の求人を条件付きで探す</a>'+
+   extJobButtons(o,null,{})+'</div></section>'+
   ctaBlock({occCats:[o.categoryId]},null,t.name+"の転職に使えるサービス")+
   '<section class="sec" style="padding-top:6px"><div class="sec-h"><h2 style="font-size:20px">よくある質問</h2></div>'+faqBlock(occFaq(o))+'</section>';
 }
@@ -1216,8 +1261,8 @@ function vArea(slug){
   '<section class="sec" style="padding:22px 0"><div class="sec-h"><h2 style="font-size:20px">'+esc(nm(p))+'の求人を探す</h2>'+
    (jobPool().real?"":'<p class="small">当サイトは求人を掲載していません（提携準備中）。下記から実際の求人をお探しいただけます。</p>')+'</div>'+
    (jobsN.length?'<div class="grid g2" style="margin-bottom:14px">'+jobsN.map(jobCard).join("")+'</div>':"")+
-   '<div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn line sm" href="javascript:void(0)" onclick="go({name:\'jobs\',q:{pf:\''+esc(p.slug)+'\'}})">'+esc(nm(p))+'の求人検索へ</a>'+
-   '<a class="btn line sm" target="_blank" rel="nofollow noopener" href="https://www.hellowork.mhlw.go.jp/" onclick="evTrack(\'ext_jobsite_click\',{site:\'hellowork\'})">ハローワークで探す（外部）</a></div></section>'+
+   '<div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn line sm" href="javascript:void(0)" onclick="go({name:\'jobs\',q:{pf:\''+esc(p.slug)+'\'}})">'+esc(nm(p))+'の求人を条件付きで探す</a>'+extJobButtons(null,p,{})+
+   '</div></section>'+
   ctaBlock({},null,nm(p)+"での転職に使えるサービス");
 }
 
