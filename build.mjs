@@ -159,16 +159,24 @@ for (const slug in CALCS) {
 for (const o of DATA.occupations) {
   if (o.cat) continue;
   const t = tr(o);
-  push(`/${L}/occupation/${o.slug}/`, `${t.name}の転職ガイド — 仕事内容・スキル・キャリアパス・未経験転職` + S,
-    String(t.summary).slice(0, 155), { kind: "occupation", o });
+  const sr0 = salaryRowFor(o.slug);
+  const d0 = `${t.name}の仕事内容・必要なスキル・キャリアパス・未経験からの転職を解説。` +
+    (sr0 ? `統計区分「${sr0.label}」の平均年収は約${sr0.averageSalary}万円（${sr0.period}・平均年齢${sr0.averageAge}歳）。` : "") +
+    String(t.summary);
+  push(`/${L}/occupation/${o.slug}/`, `${t.name}の転職ガイド — 仕事内容・平均年収・未経験転職` + S,
+    d0.slice(0, 155), { kind: "occupation", o, sr: sr0 });
 }
 for (const x of DATA.industries) {
   push(`/${L}/industry/${x.slug}/`, `${nm(x)}業界の転職ガイド — 概要・職種・転職の入口` + S,
     String(x.summaries.ja).slice(0, 155), { kind: "industry", x });
 }
 for (const p of DATA.prefectures) {
-  push(`/${L}/area/${p.slug}/`, `${nm(p)}の転職ガイド — 求人傾向・地域情報` + S,
-    String(p.summaries.ja).slice(0, 155), { kind: "area", p });
+  const ar0 = (DATA.salaryData || []).filter((r) => (r.prefSlugs || []).includes(p.slug));
+  const d1 = `${nm(p)}で転職を考える方向けのガイド。` +
+    (ar0.length ? `職業大分類${ar0.length}区分の平均年収（${ar0[0].period}・賃金構造基本統計調査）を出典つきで掲載。` : "") +
+    `主要職種の求人の探し方と、同じ地方の都道府県へのリンクをまとめています。`;
+  push(`/${L}/area/${p.slug}/`, `${nm(p)}の転職ガイド — 職業別の平均年収と求人の探し方` + S,
+    d1.slice(0, 155), { kind: "area", p });
 }
 for (const a of DATA.attributes) {
   const t = tr(a);
@@ -204,9 +212,23 @@ for (const j of REAL_JOBS) {
 // ※デモ求人・デモサービスの個別ページは意図的に生成しない（SPA+404フォールバックで表示）
 
 /* ---- JSON-LD ---- */
+/* ページの最終更新日。実データ由来の日付があるときだけ返す（ビルド日で埋めない）。 */
+function pageModified(p) {
+  if (p.kind === "article") return (p.a.updatedAt || p.a.publishedAt || "").slice(0, 10) || null;
+  if (p.kind === "tool-calc" && DATA.statutory) return DATA.statutory.updatedAt || null;
+  if ((p.kind === "occupation" || p.kind === "area" || p.kind === "salary") && (DATA.salaryData || []).length)
+    return DATA.salaryData[0].sourceDate || null;
+  return null;
+}
 function jsonLd(p) {
   const out = [];
   const url = SITE + p.path;
+  const mod = pageModified(p);
+  out.push({ "@context": "https://schema.org", "@type": "WebPage", "@id": url, url,
+    name: p.title.replace(S, ""), description: p.desc, inLanguage: "ja",
+    isPartOf: { "@type": "WebSite", name: "CAREERPORT", url: `${SITE}/${L}/` },
+    publisher: { "@type": "Organization", name: "CAREERPORT", url: `${SITE}/${L}/` },
+    ...(mod ? { dateModified: mod } : {}) });
   const crumbs = [{ name: "CAREERPORT", item: `${SITE}/${L}/` }];
   if (p.kind === "home") {
     out.push({ "@context": "https://schema.org", "@type": "Organization", name: "CAREERPORT",
@@ -217,9 +239,19 @@ function jsonLd(p) {
       potentialAction: { "@type": "SearchAction", target: `${SITE}/${L}/jobs/?kw={search_term_string}`, "query-input": "required name=search_term_string" } });
   } else if (p.kind === "occupation") {
     const t = tr(p.o);
+    const srx = p.sr;
     out.push({ "@context": "https://schema.org", "@type": "Occupation", name: t.name,
       description: t.summary, url,
-      occupationalCategory: nm(DATA.occCategories.find((c) => c.id === p.o.categoryId) || {}) || undefined });
+      occupationalCategory: nm(DATA.occCategories.find((c) => c.id === p.o.categoryId) || {}) || undefined,
+      occupationLocation: { "@type": "Country", name: "日本" },
+      skills: t.skills || undefined,
+      responsibilities: t.summary || undefined,
+      /* 平均年収は公的統計の算出値。出典と時点を description に明記し、推定値は入れない */
+      estimatedSalary: srx ? {
+        "@type": "MonetaryAmount", currency: "JPY",
+        value: { "@type": "QuantitativeValue", value: srx.averageSalary * 10000, unitText: "YEAR" },
+        description: `統計区分「${srx.label}」の平均年収（きまって支給する現金給与額×12＋年間賞与による算出値）。${srx.period}・${srx.sourceName}`,
+      } : undefined });
     out.push({ "@context": "https://schema.org", "@type": "FAQPage",
       mainEntity: occFaq(p.o).map(([q, a]) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a } })) });
     crumbs.push({ name: "職種から探す", item: `${SITE}/${L}/occupation/` }, { name: t.name, item: url });
@@ -303,6 +335,94 @@ function jsonLd(p) {
 
 /* ---- プリレンダー本文（クローラー/AI向けの実テキスト） ---- */
 const u = (x) => `${SITE}${x}`;
+/* --- 内部リンク（JSを実行しないクローラー向け。SPAのナビは見えないため本文に持たせる） --- */
+const linkList = (items) => `<ul>` + items.map(([t2, href, note]) =>
+  `<li><a href="${u(href)}">${esc(t2)}</a>${note ? " — " + esc(note) : ""}</li>`).join("") + `</ul>`;
+
+/* 全ページ共通のサイト内導線。どのページに着地しても主要ハブへ1クリックで届くようにする。 */
+function siteLinks(exclude) {
+  const all = [
+    ["職種から探す（全" + DATA.occupations.length + "職種）", `/${L}/occupation/`],
+    ["業界から探す", `/${L}/industry/`],
+    ["地域から探す（47都道府県）", `/${L}/area/`],
+    ["年収データベース（" + (DATA.salaryData || []).length + "区分）", `/${L}/salary/`],
+    ["転職ノウハウ", `/${L}/guide/`],
+    ["動画で学ぶ（公的機関の公式動画）", `/${L}/videos/`],
+    ["無料ツール（手取り計算・失業給付ほか）", `/${L}/tools/`],
+    ["求人を探す", `/${L}/jobs/`],
+    ["転職サービス比較", `/${L}/services/`],
+    ["年代・状況から探す", `/${L}/career/`],
+  ].filter(([, href]) => href !== exclude);
+  return `<h2>サイト内の主要ページ</h2>` + linkList(all);
+}
+
+/* 職種 → 同カテゴリの職種・関連業界・関連記事へ */
+function relatedForOccupation(o) {
+  const cat = DATA.occCategories.find((c) => c.id === o.categoryId);
+  const sibs = DATA.occupations.filter((x) => x.categoryId === o.categoryId && x.slug !== o.slug && !x.cat).slice(0, 10);
+  const inds = (o.industryIds || []).map((id) => DATA.industries.find((x) => x.id === id)).filter(Boolean);
+  let h = "";
+  if (sibs.length) h += `<h2>${esc(nm(cat) || "同じ分野")}の他の職種</h2>` +
+    linkList(sibs.map((x) => [tr(x).name, `/${L}/occupation/${x.slug}/`, String(tr(x).summary).slice(0, 50)]));
+  if (inds.length) h += `<h2>${esc(tr(o).name)}が活躍する業界</h2>` +
+    linkList(inds.map((x) => [nm(x) + "業界の転職ガイド", `/${L}/industry/${x.slug}/`]));
+  h += `<h2>${esc(tr(o).name)}の転職に使えるページ</h2>` + linkList([
+    [`${tr(o).name}の求人を探す`, `/${L}/jobs/?oc=${o.slug}`],
+    ["職種別の平均年収一覧", `/${L}/salary/`],
+    ["年収チェック（統計と比べる）", `/${L}/tools/salary-check/`],
+    ["手取り計算", `/${L}/tools/take-home/`],
+    ["面接想定質問をつくる", `/${L}/tools/interview-questions/`],
+    ["職務経歴書をセルフチェック", `/${L}/tools/career-history-review/`],
+  ]);
+  return h;
+}
+
+/* 地域 → その地域の主要職種・同一地方の都道府県へ */
+function relatedForArea(pf) {
+  const region = DATA.regions.find((r) => r.id === pf.regionId);
+  const sibs = DATA.prefectures.filter((x) => x.regionId === pf.regionId && x.slug !== pf.slug);
+  const featured = DATA.occupations.filter((o) => o.featured && !o.cat).slice(0, 12);
+  let h = "";
+  h += `<h2>${esc(nm(pf))}で職種から探す</h2>` +
+    linkList(featured.map((o) => [`${nm(pf)}の${tr(o).name}の求人を探す`, `/${L}/jobs/?oc=${o.slug}&pf=${pf.slug}`]));
+  if (sibs.length) h += `<h2>${esc(nm(region) || "同じ地方")}の他の都道府県</h2>` +
+    linkList(sibs.map((x) => [nm(x) + "の転職ガイド", `/${L}/area/${x.slug}/`]));
+  h += `<h2>${esc(nm(pf))}の転職に使えるページ</h2>` + linkList([
+    [`${nm(pf)}の求人を探す`, `/${L}/jobs/?pf=${pf.slug}`],
+    ["都道府県別の平均年収", `/${L}/salary/`],
+    ["手取り計算（都道府県別の健康保険料率）", `/${L}/tools/take-home/`],
+    ["地域から探す（47都道府県）", `/${L}/area/`],
+  ]);
+  return h;
+}
+
+/* 記事 → 同カテゴリ記事・関連ツール・関連動画へ */
+const ART_TOOL = {
+  unemployment: [["失業給付シミュレーター", "tools/unemployment-benefit"], ["手取り計算", "tools/take-home"]],
+  resignation: [["退職スケジュール逆算", "tools/resignation-schedule"], ["有給休暇 日数計算", "tools/paid-leave"]],
+  "salary-negotiation": [["年収チェック", "tools/salary-check"], ["手取り計算", "tools/take-home"]],
+  interview: [["面接想定質問", "tools/interview-questions"], ["AI志望動機添削", "tools/motivation-review"]],
+  resume: [["AI履歴書添削", "tools/resume-review"], ["AI自己PR添削", "tools/self-promotion-review"]],
+  "career-history": [["AI職務経歴書添削", "tools/career-history-review"], ["面接想定質問", "tools/interview-questions"]],
+  start: [["AIキャリア診断", "tools/career-diagnosis"], ["年収チェック", "tools/salary-check"]],
+  career: [["AIキャリア診断", "tools/career-diagnosis"], ["年収チェック", "tools/salary-check"]],
+  reskilling: [["リスキリング・スクール比較", "learning"], ["AIキャリア診断", "tools/career-diagnosis"]],
+};
+function relatedForArticle(a) {
+  const sibs = DATA.articles.filter((x) => x.category === a.category && x.slug !== a.slug && x.status === "published").slice(0, 8);
+  let h = "";
+  if (sibs.length) h += `<h2>同じテーマの記事</h2>` +
+    linkList(sibs.map((x) => [tr(x).title, `/${L}/guide/${x.slug}/`]));
+  const tools = ART_TOOL[a.category] || [["無料ツール一覧", "tools"]];
+  h += `<h2>この記事と一緒に使えるツール</h2>` + linkList(tools.map(([t2, pth]) => [t2, `/${L}/${pth}/`]));
+  h += `<h2>関連する情報</h2>` + linkList([
+    ["転職ノウハウの記事一覧", `/${L}/guide/`],
+    [`${esc(nm(DATA.occCategories[0]) || "")}`.length ? "職種から探す" : "職種から探す", `/${L}/occupation/`],
+    ["公的機関の公式動画で学ぶ", `/${L}/videos/`],
+  ]);
+  return h;
+}
+
 function occLinks(list) {
   return `<ul>` + list.map((o) => `<li><a href="${u(`/${L}/occupation/${o.slug}/`)}">${esc(tr(o).name)}</a> — ${esc(String(tr(o).summary).slice(0, 60))}</li>`).join("") + `</ul>`;
 }
@@ -327,7 +447,8 @@ function prerender(p) {
           ? `統計区分「${esc(sr.label)}」の平均年収（きまって支給する現金給与額×12＋年間賞与による算出値）は約${sr.averageSalary}万円（${esc(sr.period)}・平均年齢${sr.averageAge}歳・労働者数約${sr.sampleCount.toLocaleString()}人・一般労働者）。出典: ${esc(sr.sourceName)}。個人差が大きいため参考値です。`
           : "この職種に対応する統計区分のデータは現在準備中です。公的統計のみを掲載する方針のため、推定値は表示しません。";
       })()}</p>` +
-      `<h2>FAQ</h2>` + occFaq(p.o).map(([q, a]) => `<h3>${esc(q)}</h3><p>${esc(a)}</p>`).join("");
+      `<h2>FAQ</h2>` + occFaq(p.o).map(([q, a]) => `<h3>${esc(q)}</h3><p>${esc(a)}</p>`).join("") +
+      relatedForOccupation(p.o);
   } else if (p.kind === "industry") {
     const list = DATA.occupations.filter((o) => (o.industryIds || []).includes(p.x.id));
     const im = (DATA.images || {})["ind:" + p.x.slug];
@@ -343,10 +464,19 @@ function prerender(p) {
       (areaRows.length ? `<h2>${esc(nm(p.p))}の職業別平均年収（職業大分類・${esc(areaRows[0].period)}）</h2>` +
         `<p>年収は、きまって支給する現金給与額×12＋年間賞与その他特別給与額による算出値（一般労働者・男女計）。出典: ${esc(areaRows[0].sourceName)}。</p><ul>` +
         areaRows.map((r) => `<li>${esc(r.occLabel)} — 平均年収 約${r.averageSalary}万円（平均年齢${r.averageAge}歳）</li>`).join("") + `</ul>`
-        : `<p>統計データは公的データ接続後に出典・時点つきで掲載します。</p>`);
+        : `<p>統計データは公的データ接続後に出典・時点つきで掲載します。</p>`) + relatedForArea(p.p);
   } else if (p.kind === "attr") {
     const t = tr(p.a);
-    body += `<h2>進め方のポイント</h2><p>${esc(t.advice)}</p>`;
+    const gateOcc = DATA.occupations.filter((o) => o.featured && !o.cat).slice(0, 10);
+    body += `<h2>進め方のポイント</h2><p>${esc(t.advice)}</p>` +
+      `<h2>この状況で使えるページ</h2>` + linkList([
+        ["AIキャリア診断（無料）", `/${L}/tools/career-diagnosis/`],
+        ["転職サービス比較", `/${L}/services/`],
+        ["転職ノウハウの記事一覧", `/${L}/guide/`],
+        ["年収チェック", `/${L}/tools/salary-check/`],
+        ["年代・状況から探す（一覧）", `/${L}/career/`],
+      ]) +
+      `<h2>主要な職種から探す</h2>` + linkList(gateOcc.map((o) => [tr(o).name, `/${L}/occupation/${o.slug}/`]));
   } else if (p.kind === "article") {
     const t = tr(p.a);
     const him = p.a.heroKey && (DATA.images || {})[p.a.heroKey];
@@ -356,7 +486,8 @@ function prerender(p) {
         .filter((x) => x && !/^\[img:/.test(x) && x !== "---")
         .map((x) => (/^## /.test(x) ? `<h2>${esc(x.slice(3))}</h2>` : `<p>${esc(x.replace(/\*\*/g, "").replace(/^\*|\*$/g, ""))}</p>`))
         .join("") +
-      (p.a.sources ? `<h2>出典・参考資料</h2><ul>` + p.a.sources.map((s2) => `<li><a href="${esc(s2.url)}" rel="noopener">${esc(s2.title)}</a></li>`).join("") + `</ul>` : "");
+      (p.a.sources ? `<h2>出典・参考資料</h2><ul>` + p.a.sources.map((s2) => `<li><a href="${esc(s2.url)}" rel="noopener">${esc(s2.title)}</a></li>`).join("") + `</ul>` : "") +
+      relatedForArticle(p.a);
   } else if (p.kind === "ranking") {
     body += `<p>【重要】現在の掲載・順位はレイアウト確認用のデモであり、実在サービスの評価ではありません。</p><ol>` +
       p.r.serviceIds.map((id) => { const s2 = DATA.services.find((x) => x.id === id); return s2 ? `<li>${esc(tr(s2).name)} — ${esc(tr(s2).tagline || "")}</li>` : ""; }).join("") + `</ol>`;
@@ -476,6 +607,8 @@ function prerender(p) {
   } else if (p.kind === "terms" || p.kind === "disclaimer" || p.kind === "about") {
     body += `<p>${esc(DATA.siteSettings.legalNote)}</p><p>当サイトは転職の成功・内定・採用・年収の上昇を保証しません。AIツールの結果は参考情報です。制度・統計は必ず公式情報でご確認ください。</p>`;
   }
+  /* どのページからも主要ハブへ到達できるようにする（JS非実行時の内部リンク） */
+  if (p.kind !== "home") body += siteLinks(`/${L}${p.path.replace(`/${L}`, "")}`);
   return body;
 }
 
@@ -492,6 +625,7 @@ function buildPage(p) {
     : p.kind === "occupation" ? ((DATA.images || {})["occ:" + p.o.slug] || (DATA.images || {})["cat:" + p.o.categoryId])
     : p.kind === "industry" ? (DATA.images || {})["ind:" + p.x.slug] : null;
   if (ogIm) html = html.replace(/(<meta property="og:image" content=")[^"]*(">)/, `$1${SITE}/${ogIm.src}$2`);
+  if (p.kind === "article") html = html.replace(/(<meta property="og:type" content=")[^"]*(">)/, `$1article$2`);
   const head = [
     `<link rel="canonical" href="${SITE}${p.path}">`,
     `<link rel="alternate" hreflang="ja" href="${SITE}${p.path}">`,
@@ -509,7 +643,7 @@ pages.forEach(buildPage);
 /* ---- sitemap.xml ---- */
 writeFileSync(join(ROOT, "sitemap.xml"),
   `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
-  pages.map((p) => `<url><loc>${SITE}${p.path}</loc></url>`).join("\n") + `\n</urlset>\n`, "utf-8");
+  pages.map((p) => { const md = pageModified(p); return `<url><loc>${SITE}${p.path}</loc>${md ? `<lastmod>${md}</lastmod>` : ""}</url>`; }).join("\n") + `\n</urlset>\n`, "utf-8");
 
 /* ---- robots.txt（AIクローラー明示許可） ---- */
 writeFileSync(join(ROOT, "robots.txt"),
@@ -528,10 +662,40 @@ Allow: /
 User-agent: Google-Extended
 Allow: /
 
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+# AI向けサマリ: ${SITE}/llms.txt / ${SITE}/llms-full.txt
+
 Sitemap: ${SITE}/sitemap.xml
 `, "utf-8");
 
 /* ---- llms.txt ---- */
+const OCC_N = (DATA.salaryData || []).filter((r) => r.group === "occupation").length;
+const IND_N = (DATA.salaryData || []).filter((r) => r.group === "industry").length;
+const AREA_N = (DATA.salaryData || []).filter((r) => r.group === "area").length;
+const VID_N = (DATA.videos || []).length;
 writeFileSync(join(ROOT, "llms.txt"),
 `# CAREERPORT（キャリアポート）
 > 日本の転職・キャリア情報ポータル。転職サービス（エージェント/スカウト/求人サイト/派遣）のタイプ別比較、職種・業界・地域・年代別の転職ガイド、転職ノウハウ記事、無料のAIキャリア診断・AI書類添削（ルールベース・入力非送信）を提供。職業紹介事業者ではなく、仲介・条件交渉・採用保証は行わない情報メディア。
@@ -541,7 +705,7 @@ writeFileSync(join(ROOT, "llms.txt"),
 - 転職サービス比較（タイプ別の仕組みと選び方）: ${SITE}/ja/services/
 - 転職ノウハウ記事（退職・書類・面接・年収交渉・失業保険）: ${SITE}/ja/guide/
 - 年代・状況別ガイド（20代/30代/40代/女性/未経験/ハイクラス）: ${SITE}/ja/career/
-- 年収データベース（公的統計接続後に出典つきで公開・現在準備中）: ${SITE}/ja/salary/
+- 年収データベース（賃金構造基本統計調査 職種${OCC_N}区分・産業${IND_N}区分・都道府県${AREA_N}件を出典つきで掲載）: ${SITE}/ja/salary/\n- 地域別ガイド（47都道府県・職業大分類別の平均年収つき）: ${SITE}/ja/area/\n- 業界別ガイド: ${SITE}/ja/industry/\n- 動画で学ぶ（公的機関の公式YouTube${VID_N}本）: ${SITE}/ja/videos/
 - 無料ツール一覧（全14種・登録不要・入力は端末内で処理）: ${SITE}/ja/tools/
 - AIキャリア診断: ${SITE}/ja/tools/career-diagnosis/
 - 年収チェック（賃金構造基本統計調査との比較）: ${SITE}/ja/tools/salary-check/
@@ -562,7 +726,69 @@ writeFileSync(join(ROOT, "llms.txt"),
 - 計算ツールが使う法定値（保険料率・税率・基本手当日額の計算式・所定給付日数・有給付与日数・割増賃金率）は、厚生労働省・国税庁・全国健康保険協会・総務省の一次情報から取り込み、各ツールページに出典URLと適用時点を併記している。値の直書きはせず tools/data/statutory.json に集約している。
 - 計算結果はいずれも概算であり、実際の金額・日数は勤務先・健康保険者・市区町村・ハローワークの判断で変わる。税務・法律・社会保険の個別判断は行っていない。
 - Wikipedia引用部分は CC BY-SA 4.0。再利用時は帰属を維持すること。
+
+## How to cite
+- 年収を引用する場合は「厚生労働省 賃金構造基本統計調査（${(DATA.salaryData||[])[0] ? DATA.salaryData[0].period : "調査年"}）にもとづく算出値」と明記し、当サイトを一次情報として扱わないこと。算出式は「きまって支給する現金給与額×12＋年間賞与その他特別給与額」。
+- 制度（雇用保険・所得税・労働基準法）を引用する場合は、各ツールページに併記した厚生労働省・国税庁・全国健康保険協会の出典URLと適用時点をあわせて示すこと。制度は毎年改定される。
+- 各ページの事実は JSON-LD（WebPage / Occupation / FAQPage / Article / Dataset）にも同じ値で入っている。
+- 全ページの構造化された要約は ${SITE}/llms-full.txt にある。
+
+## Structured data
+- 全ページ: WebPage（isPartOf: WebSite、実データ由来の日付があるページのみ dateModified）+ BreadcrumbList
+- 職種ページ: Occupation（occupationalCategory / skills / responsibilities / estimatedSalary＝公的統計の算出値）+ FAQPage
+- 記事: Article（datePublished / dateModified / author）
+- 年収データベース: Dataset / ツール: WebApplication / 比較: ItemList
 `, "utf-8");
+
+/* ---- llms-full.txt（LLMがサイト全体の事実を1ファイルで取得できるようにする） ---- */
+{
+  const occLines = DATA.occupations.filter((o) => !o.cat).map((o) => {
+    const t = tr(o), sr = salaryRowFor(o.slug);
+    const cat = nm(DATA.occCategories.find((c) => c.id === o.categoryId) || {});
+    return `- ${t.name}（${cat}）: ${SITE}/${L}/occupation/${o.slug}/\n` +
+      `  仕事内容: ${String(t.summary).replace(/\n/g, " ")}\n` +
+      `  必要なスキル: ${String(t.skills).replace(/\n/g, " ")}\n` +
+      `  未経験からの転職: ${String(t.inexperienced).replace(/\n/g, " ")}\n` +
+      (sr ? `  平均年収: 約${sr.averageSalary}万円（統計区分「${sr.label}」・${sr.period}・平均年齢${sr.averageAge}歳・出典: ${sr.sourceName}）\n` : `  平均年収: 対応する統計区分なし（推定値は掲載しない方針）\n`);
+  }).join("");
+  const stLines = DATA.statutory ? [
+    ["健康保険料率（協会けんぽ・都道府県別）", `全国平均 ${DATA.statutory.insurance.health.averageRate}%（労使折半）`, DATA.statutory.insurance.health.source, DATA.statutory.insurance.health.sourceUrl, DATA.statutory.insurance.health.asOf],
+    ["介護保険料率（40〜64歳）", `${DATA.statutory.insurance.care.rate}%（労使折半）`, DATA.statutory.insurance.care.source, DATA.statutory.insurance.care.sourceUrl, DATA.statutory.insurance.care.asOf],
+    ["子ども・子育て支援金率", `${DATA.statutory.insurance.childcare.rate}%（労使折半）`, DATA.statutory.insurance.childcare.source, DATA.statutory.insurance.childcare.sourceUrl, DATA.statutory.insurance.childcare.asOf],
+    ["厚生年金保険料率", `${DATA.statutory.insurance.pension.rate}%（労使折半）`, DATA.statutory.insurance.pension.source, DATA.statutory.insurance.pension.sourceUrl, ""],
+    ["雇用保険料率（労働者負担・一般の事業）", `${DATA.statutory.insurance.employment.employeeRate}%`, DATA.statutory.insurance.employment.source, DATA.statutory.insurance.employment.sourceUrl, DATA.statutory.insurance.employment.asOf],
+    ["基本手当日額の上限（年齢区分別）", DATA.statutory.unemployment.ageBands.map((b) => `${b.label} ${b.maxDaily}円`).join(" / "), DATA.statutory.unemployment.source, DATA.statutory.unemployment.sourceUrl, DATA.statutory.unemployment.asOf],
+    ["年次有給休暇の付与日数（通常の労働者）", DATA.statutory.paidLeave.monthsLabels.map((m2, i) => `${m2} ${DATA.statutory.paidLeave.fullTime[i]}日`).join(" / "), DATA.statutory.paidLeave.source, DATA.statutory.paidLeave.sourceUrl, ""],
+    ["割増賃金率", DATA.statutory.overtime.rates.map((r) => `${r.label} ${Math.round(r.rate * 100)}%`).join(" / "), DATA.statutory.overtime.source, DATA.statutory.overtime.sourceUrl, ""],
+  ].map(([k, v, src, url2, asOf]) => `- ${k}: ${v}\n  出典: ${src}${asOf ? `（${asOf}）` : ""}\n  URL: ${url2}\n`).join("") : "";
+  writeFileSync(join(ROOT, "llms-full.txt"),
+`# CAREERPORT — 全文サマリ（AI向け）
+> ${SITE}/ 生成日時点のサイト内の事実を1ファイルにまとめたもの。数値はすべて公的統計・官公庁の一次情報に由来し、出典と時点を併記している。推定値・架空の数値は含まない。
+
+## 引用の条件
+- 年収・制度の数値を引用する場合は、下記の出典（厚生労働省／国税庁／全国健康保険協会）を一次情報として示すこと。
+- 当サイトは職業紹介事業者ではなく、求人の掲載・仲介を行わない。転職の成功・内定・年収上昇を保証する記述は存在しない。
+- 求人および転職サービスの個別掲載は現在レイアウト確認用のデモであり、実在サービスの評価として引用しないこと。
+
+## 職種（${DATA.occupations.filter((o) => !o.cat).length}件）
+${occLines}
+## 制度の法定値
+${stLines}
+## 年収データ
+- 収録件数: ${(DATA.salaryData || []).length}件（職種${(DATA.salaryData || []).filter((r) => r.group === "occupation").length}区分 / 産業${(DATA.salaryData || []).filter((r) => r.group === "industry").length}区分 / 都道府県×職業大分類${(DATA.salaryData || []).filter((r) => r.group === "area").length}件）
+- 算出式: きまって支給する現金給与額×12＋年間賞与その他特別給与額（一般労働者）
+- 一覧: ${SITE}/${L}/salary/
+${(DATA.salaryData || []).length ? `- 出典: ${DATA.salaryData[0].sourceName}\n- 出典URL: ${DATA.salaryData[0].sourceUrl}\n- データ時点: ${DATA.salaryData[0].period}（公表 ${DATA.salaryData[0].sourceDate}）` : ""}
+
+## 記事（${DATA.articles.filter((a) => a.status === "published").length}件）
+${DATA.articles.filter((a) => a.status === "published").map((a) => `- ${tr(a).title}: ${SITE}/${L}/guide/${a.slug}/`).join("\n")}
+
+## 無料ツール
+${["salary-check", "take-home", "unemployment-benefit", "paid-leave", "overtime", "resignation-schedule", "interview-questions"].map((k) => `- ${SITE}/${L}/tools/${k}/`).join("\n")}
+- ${SITE}/${L}/tools/career-diagnosis/
+- ${SITE}/${L}/ai-consultation/
+`, "utf-8");
+}
 
 /* ---- 404.html（SPAフォールバック） ---- */
 writeFileSync(join(ROOT, "404.html"), src.replace("</head>", `<meta name="robots" content="noindex">\n</head>`), "utf-8");

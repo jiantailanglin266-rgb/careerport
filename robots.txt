@@ -13,4 +13,30 @@ Allow: /
 User-agent: Google-Extended
 Allow: /
 
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+# AI向けサマリ: https://jiantailanglin266-rgb.github.io/careerport/llms.txt / https://jiantailanglin266-rgb.github.io/careerport/llms-full.txt
+
 Sitemap: https://jiantailanglin266-rgb.github.io/careerport/sitemap.xml

@@ -6,7 +6,10 @@
 - 転職サービス比較（タイプ別の仕組みと選び方）: https://jiantailanglin266-rgb.github.io/careerport/ja/services/
 - 転職ノウハウ記事（退職・書類・面接・年収交渉・失業保険）: https://jiantailanglin266-rgb.github.io/careerport/ja/guide/
 - 年代・状況別ガイド（20代/30代/40代/女性/未経験/ハイクラス）: https://jiantailanglin266-rgb.github.io/careerport/ja/career/
-- 年収データベース（公的統計接続後に出典つきで公開・現在準備中）: https://jiantailanglin266-rgb.github.io/careerport/ja/salary/
+- 年収データベース（賃金構造基本統計調査 職種143区分・産業13区分・都道府県517件を出典つきで掲載）: https://jiantailanglin266-rgb.github.io/careerport/ja/salary/
+- 地域別ガイド（47都道府県・職業大分類別の平均年収つき）: https://jiantailanglin266-rgb.github.io/careerport/ja/area/
+- 業界別ガイド: https://jiantailanglin266-rgb.github.io/careerport/ja/industry/
+- 動画で学ぶ（公的機関の公式YouTube143本）: https://jiantailanglin266-rgb.github.io/careerport/ja/videos/
 - 無料ツール一覧（全14種・登録不要・入力は端末内で処理）: https://jiantailanglin266-rgb.github.io/careerport/ja/tools/
 - AIキャリア診断: https://jiantailanglin266-rgb.github.io/careerport/ja/tools/career-diagnosis/
 - 年収チェック（賃金構造基本統計調査との比較）: https://jiantailanglin266-rgb.github.io/careerport/ja/tools/salary-check/
@@ -27,3 +30,15 @@
 - 計算ツールが使う法定値（保険料率・税率・基本手当日額の計算式・所定給付日数・有給付与日数・割増賃金率）は、厚生労働省・国税庁・全国健康保険協会・総務省の一次情報から取り込み、各ツールページに出典URLと適用時点を併記している。値の直書きはせず tools/data/statutory.json に集約している。
 - 計算結果はいずれも概算であり、実際の金額・日数は勤務先・健康保険者・市区町村・ハローワークの判断で変わる。税務・法律・社会保険の個別判断は行っていない。
 - Wikipedia引用部分は CC BY-SA 4.0。再利用時は帰属を維持すること。
+
+## How to cite
+- 年収を引用する場合は「厚生労働省 賃金構造基本統計調査（令和7年（2025年）調査）にもとづく算出値」と明記し、当サイトを一次情報として扱わないこと。算出式は「きまって支給する現金給与額×12＋年間賞与その他特別給与額」。
+- 制度（雇用保険・所得税・労働基準法）を引用する場合は、各ツールページに併記した厚生労働省・国税庁・全国健康保険協会の出典URLと適用時点をあわせて示すこと。制度は毎年改定される。
+- 各ページの事実は JSON-LD（WebPage / Occupation / FAQPage / Article / Dataset）にも同じ値で入っている。
+- 全ページの構造化された要約は https://jiantailanglin266-rgb.github.io/careerport/llms-full.txt にある。
+
+## Structured data
+- 全ページ: WebPage（isPartOf: WebSite、実データ由来の日付があるページのみ dateModified）+ BreadcrumbList
+- 職種ページ: Occupation（occupationalCategory / skills / responsibilities / estimatedSalary＝公的統計の算出値）+ FAQPage
+- 記事: Article（datePublished / dateModified / author）
+- 年収データベース: Dataset / ツール: WebApplication / 比較: ItemList
