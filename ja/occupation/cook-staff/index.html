@@ -293,8 +293,15 @@ main,footer.site{position:relative;z-index:1}
 /* 写真つきタイル（ランキング等） */
 .ptile{display:block;background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)}
 .ptile:hover{border-color:var(--gold-400)}
-.ptile .tc-img{height:96px}
-.ptile .lb{display:block;padding:11px 14px;font-size:14px;font-weight:600;color:var(--navy-950)}
+/* ランキング／業界タイル。.thumb-card と同じ画像処理を効かせないと写真が原寸で
+   はみ出し、ラベル文字と重なって読めなくなる。ラベルは写真の上にのせて金色にする。 */
+.ptile{position:relative}
+.ptile .tc-img{position:relative;height:150px;overflow:hidden}
+.ptile .tc-img img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.88) contrast(1.04)}
+.ptile .tc-img:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,20,38,0) 32%,rgba(8,20,38,.8))}
+.ptile .tc-cr{position:absolute;right:6px;top:6px;z-index:2;color:rgba(255,255,255,.85);font-size:8.5px;background:rgba(8,20,38,.6);padding:1px 7px;border-radius:999px}
+.ptile .lb{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:12px 14px;font-size:14px;font-weight:700;color:var(--gold-400);text-shadow:0 1px 4px rgba(8,20,38,.9);line-height:1.5}
+.ptile:hover .lb{color:var(--gold-100)}
 /* photo marquee（ホバーで停止しない・reduced-motionで静止） */
 .pmq{overflow:hidden;position:relative;margin:0 -20px;background:var(--navy-950);padding:18px 0}
 .pmq .mqtrack{gap:14px;animation-duration:70s}
