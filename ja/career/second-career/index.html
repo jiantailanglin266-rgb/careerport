@@ -160,7 +160,7 @@ nav.g a.on{color:var(--gold-400)}
 .msg.me{background:var(--navy-900);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
 .msg .lnk{display:inline-block;margin:6px 6px 0 0;background:#fff;border:1px solid var(--gold-400);color:var(--navy-900);border-radius:999px;padding:5px 13px;font-size:12.5px;cursor:pointer}
 .chat .inp{display:flex;gap:8px;margin-top:12px}
-.chat .inp input{flex:1;padding:12px 15px;border:1px solid var(--border);border-radius:999px;font-size:14px;font-family:var(--sans)}
+.chat .inp input{flex:1 1 0;min-width:0;padding:12px 15px;border:1px solid var(--border);border-radius:999px;font-size:14px;font-family:var(--sans)}
 /* marquee — 仕様: ホバーで停止しない（プロジェクト共通規約）。reduced-motionでは静止 */
 .mq{overflow:hidden;position:relative;padding:14px 0;border-top:1px solid rgba(210,168,70,.25);border-bottom:1px solid rgba(210,168,70,.25);background:var(--navy-950)}
 .mqtrack{display:flex;gap:34px;width:max-content;animation:mqL 38s linear infinite}
@@ -254,7 +254,7 @@ a.secban:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(8,20,38,.1
 .agent .ah b{color:#fff;font-size:15.5px;display:block;font-family:var(--serif)}
 .agent .ah span{color:#93a5c4;font-size:11.5px}
 .agent .ah .st{margin-left:auto;font-family:var(--en);font-size:11px;color:var(--gold-400);letter-spacing:.08em;white-space:nowrap}
-.agent .abody{padding:20px 22px 22px;max-height:none}
+.agent .abody{padding:20px 22px 22px;max-height:none;min-width:0}
 .agent .msgs{display:flex;flex-direction:column;gap:12px;margin-bottom:16px}
 .agent .m{max-width:88%;padding:12px 16px;border-radius:14px;font-size:14.2px;line-height:1.8}
 .agent .m.bot{background:rgba(255,255,255,.94);color:var(--text);align-self:flex-start;border-bottom-left-radius:4px}
@@ -264,8 +264,8 @@ a.secban:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(8,20,38,.1
 .agent .opts button{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.34);color:#fff;
   border-radius:999px;padding:9px 17px;font-size:13.5px;cursor:pointer;font-family:var(--sans)}
 .agent .opts button:hover{background:var(--gold-400);border-color:var(--gold-400);color:var(--navy-950)}
-.agent .ainp{display:flex;gap:8px;margin-top:14px}
-.agent .ainp input{flex:1;padding:12px 16px;border-radius:999px;border:1px solid rgba(255,255,255,.28);
+.agent .ainp{display:flex;gap:8px;margin-top:14px;min-width:0}
+.agent .ainp input{flex:1 1 0;min-width:0;padding:12px 16px;border-radius:999px;border:1px solid rgba(255,255,255,.28);
   background:rgba(8,20,38,.5);color:#fff;font-size:14px;font-family:var(--sans)}
 .agent .ainp input::placeholder{color:#7d90b0}
 .agent .prog{height:4px;background:rgba(255,255,255,.12);border-radius:99px;overflow:hidden;margin-bottom:16px}
@@ -398,6 +398,20 @@ footer .legal{border-top:1px solid rgba(210,168,70,.2);margin-top:34px;padding-t
   .bgmq{inset:-35% -45%}
 }
 @media(max-width:560px){
+  /* 括弧などで改行できず数pxはみ出す見出しを折り返す */
+  /* 長い見出しを折り返す。break-all は英単語まで途中で割るため使わない */
+  .ttl,.nm,.card h3,.thumb-card h3{overflow-wrap:break-word}
+  /* AIエージェント: 余白と文字を詰めて、狭い端末でも横に溢れないようにする */
+  .agent .ah{padding:14px 14px;gap:9px}
+  .agent .av{width:34px;height:34px;font-size:17px}
+  .agent .ah b{font-size:14px}
+  .agent .ah span{font-size:10.5px}
+  .agent .ah .st{font-size:10px}
+  .agent .abody{padding:16px 14px 18px}
+  .agent .m{max-width:94%;font-size:13.8px;padding:11px 14px}
+  .agent .opts button{font-size:12.5px;padding:8px 12px}
+  .agent .ainp input{padding:11px 14px;font-size:14px}
+  .agent .karte{padding:16px 14px}
   .bgmq b{color:rgba(36,64,110,.22)}
   .bgmq b.o{-webkit-text-stroke:1px rgba(36,64,110,.3)}
 }
