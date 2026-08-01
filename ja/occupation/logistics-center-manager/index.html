@@ -391,8 +391,15 @@ footer .legal{border-top:1px solid rgba(210,168,70,.2);margin-top:34px;padding-t
   .hero:before{background:linear-gradient(180deg,rgba(255,255,255,.93) 0%,rgba(255,255,255,.82) 55%,rgba(255,255,255,.55) 100%)}
 }
 @media(max-width:960px){
-  .bgmq b{font-size:clamp(15px,4.2vw,24px);line-height:1.75}
+  /* スマホは左右のガター（PCでは160px前後ある余白）がほぼ無く、地の文字が見える面積が
+     1/3以下になる。10%のままだと事実上見えないので、濃度と行間を上げて成立させる。 */
+  .bgmq b{font-size:clamp(16px,4.6vw,26px);line-height:1.95;color:rgba(36,64,110,.19)}
+  .bgmq b.o{color:transparent;-webkit-text-stroke:1px rgba(36,64,110,.26)}
   .bgmq{inset:-35% -45%}
+}
+@media(max-width:560px){
+  .bgmq b{color:rgba(36,64,110,.22)}
+  .bgmq b.o{-webkit-text-stroke:1px rgba(36,64,110,.3)}
 }
 @media(max-width:760px){
   .hd{gap:12px}
