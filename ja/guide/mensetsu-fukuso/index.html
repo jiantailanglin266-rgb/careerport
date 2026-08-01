@@ -168,6 +168,24 @@ nav.g a.on{color:var(--gold-400)}
 .mq .it b{color:var(--gold-400);font-family:var(--en);font-weight:600;letter-spacing:.05em}
 @keyframes mqL{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media (prefers-reduced-motion:reduce){.mqtrack{animation:none}}
+/* ---------- セクションバナー（自社制作のブランド画像） ----------
+   画像に見出しが焼き込まれているため、デスクトップでは画像を出し、見出しテキストは
+   読み上げ・検索エンジン向けにDOMへ残したまま視覚的に隠す。
+   モバイルでは画像内の文字が小さすぎて読めないので、画像を出さずテキスト見出しに戻す。 */
+.secban{display:block;margin:0 0 20px;border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);background:var(--card)}
+.secban img{width:100%;height:auto;display:block}
+a.secban{transition:transform .3s ease,box-shadow .3s ease}
+a.secban:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(8,20,38,.16)}
+.sec-h.has-ban .eyebrow,.sec-h.has-ban>h2{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+/* ヘッダー／フッターのロゴ画像 */
+.logo img.lmark{height:26px;width:auto;display:block}
+.ftlogo{height:24px;width:auto;display:block;margin-bottom:10px}
+@media(max-width:760px){
+  .secban{display:none}
+  .sec-h.has-ban .eyebrow,.sec-h.has-ban>h2{position:static;width:auto;height:auto;padding:0;margin:0;overflow:visible;clip:auto;white-space:normal}
+  .logo img.lmark{height:22px}
+}
+
 /* ---------- 無料ツール（計算系） ---------- */
 .calc-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .calc-row .q{margin-bottom:0}
@@ -387,8 +405,8 @@ footer .legal{border-top:1px solid rgba(210,168,70,.2);margin-top:34px;padding-t
 <header class="site">
   <div class="wrap hd">
     <a href="javascript:void(0)" onclick="go({name:'home'})" class="logo" aria-label="CAREERPORT トップへ">
-      <svg width="30" height="30" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#0d1c33"/><circle cx="32" cy="32" r="19" fill="none" stroke="#d2a846" stroke-width="3"/><path d="M32 15 L37 32 L32 49 L27 32 Z" fill="#d2a846"/><circle cx="32" cy="32" r="4" fill="#0d1c33" stroke="#d2a846" stroke-width="2"/></svg>
-      <span>CAREERPORT<small>キャリアポート</small></span>
+      <img class="lmark" src="../../../images/logo/careerport-logo-light.png" alt="CAREERPORT" width="611" height="78">
+      <span class="sr-kana"><small>キャリアポート</small></span>
     </a>
     <nav class="g" id="gnav" aria-label="グローバルナビゲーション"></nav>
     <a class="cta" href="javascript:void(0)" onclick="go({name:'tool-diagnosis'})">無料でキャリア診断</a>
@@ -1579,6 +1597,43 @@ function vTools(){
   ctaBlock({},["agent"],"ツールを使ったあとの相談先");
 }
 
+/* ----- トップページのセクションバナー -----
+   eyebrow のテキストをキーに、生成済みのブランド画像へ差し替える。
+   alt には画像内の文言をそのまま入れ、画像が読めない環境でも同じ情報が伝わるようにする。 */
+var SEC_BANNER={
+ "AI Career Agent":["agent","AIエージェントに相談する。6つの質問に答えるだけで、公的統計（賃金構造基本統計調査）をもとに、いまの年収の位置・向いている職種・次にやることを整理してお返しします",null],
+ "Your Compass":["compass","いまの悩みから探す",{name:"careers"}],
+ "Compare Services":["services","転職サービスを比較する",{name:"services"}],
+ "By Occupation":["occupation","職種から探す。営業・エンジニア・企画・マーケティング・コンサルタント・経理・財務ほか",{name:"occupations"}],
+ "By Industry":["industry","業界から探す。IT・通信／医療・ヘルスケア／小売・流通／金融／メーカー／教育／人材・サービス／不動産・建設ほか",{name:"industries"}],
+ "By Area":["area","地域から探す。北海道・東北／関東／中部／関西／中国・四国／九州・沖縄ほか",{name:"areas"}],
+ "Attributes":["attributes","年代・状況から探す。20代・第二新卒／30代／40代・ミドル層／50代以上／未経験にチャレンジしたい／キャリアアップしたい",{name:"careers"}],
+ "Salary Data":["salary","年収データベース",{name:"salary"}],
+ "Guide":["guide","転職ノウハウ。転職の基礎知識／応募書類の書き方／面接対策／キャリアアップ戦略",{name:"articles"}],
+ "Why CAREERPORT":["why","CAREERPORTの特徴",null],
+ "FAQ":["faq","よくある質問",null]
+};
+function applySecBanners(){
+  if(!state.view||state.view.name!=="home")return;
+  var hs=document.querySelectorAll("#app .sec-h");
+  for(var i=0;i<hs.length;i++){
+    var h=hs[i],eb=h.querySelector(".eyebrow");
+    if(!eb||h.classList.contains("has-ban"))continue;
+    var b=SEC_BANNER[(eb.textContent||"").trim()];
+    if(!b)continue;
+    var img='<img src="'+window.CP_BASE+'/images/sections/'+b[0]+'.jpg" alt="'+esc(b[1])+'" loading="lazy" decoding="async">';
+    var el;
+    if(b[2]){
+      el=document.createElement("a");
+      el.href="javascript:void(0)";
+      el.onclick=(function(v){return function(){go(v)}})(b[2]);
+    }else{ el=document.createElement("div"); }
+    el.className="secban";el.innerHTML=img;
+    h.parentNode.insertBefore(el,h);
+    h.classList.add("has-ban");
+  }
+}
+
 /* ----- 無料ツール（計算系） -----
    法定値は DATA.statutory（官公庁の一次情報＋出典URL）だけを参照し、
    このファイルには率も金額も書かない。計算は CP_LOGIC の純関数に委ね、
@@ -2200,7 +2255,7 @@ window.mnavToggle=mnavToggle;
 function renderFoot(){
   var col=function(t,links){return "<div><h4>"+t+"</h4>"+links.map(function(l){return '<a href="javascript:void(0)" onclick=\'go('+JSON.stringify(l[1])+')\'>'+l[0]+"</a>"}).join("")+"</div>"};
   document.getElementById("sitefoot").innerHTML='<div class="cols">'+
-  '<div><div class="logo" style="font-size:17px">CAREERPORT</div><p style="margin-top:10px;font-size:12.5px">'+esc(DATA.siteSettings.tagline)+'</p><p style="margin-top:8px;font-size:11.5px;color:#6c7f9e">'+esc(DATA.siteSettings.legalNote)+'</p></div>'+
+  '<div><img class="ftlogo" src="'+window.CP_BASE+'/images/logo/careerport-logo-light.png" alt="CAREERPORT" width="611" height="78"><p style="margin-top:10px;font-size:12.5px">'+esc(DATA.siteSettings.tagline)+'</p><p style="margin-top:8px;font-size:11.5px;color:#6c7f9e">'+esc(DATA.siteSettings.legalNote)+'</p></div>'+
   col("探す",[["求人を探す",{name:"jobs"}],["転職サービス比較",{name:"services"}],["職種から探す",{name:"occupations"}],["業界から探す",{name:"industries"}],["地域から探す",{name:"areas"}],["年収データベース",{name:"salary"}],["企業情報",{name:"companies"}]])+
   col("学ぶ・使う",[["転職ノウハウ",{name:"articles"}],["動画で学ぶ",{name:"videos"}],["体験談・ストーリー",{name:"stories"}],["リスキリング・スクール",{name:"learning"}],["AIキャリア診断",{name:"tool-diagnosis"}],["AI書類添削",{name:"tool-review",slug:"career-history-review"}],["AIチャット相談",{name:"ai-consultation"}]])+
   col("サイト情報",[["CAREERPORTについて",{name:"about"}],["運営会社",{name:"company"}],["編集方針",{name:"editorial-policy"}],["監修方針",{name:"expert-supervision"}],["データポリシー",{name:"data-policy"}],["広告掲載方針",{name:"advertising-policy"}],["プライバシーポリシー",{name:"privacy"}],["利用規約",{name:"terms"}],["免責事項",{name:"disclaimer"}],["訂正依頼窓口",{name:"correction-request"}],["サイトマップ",{name:"sitemap"}]])+
@@ -2243,6 +2298,7 @@ function render(){
     }
   }catch(e){h='<div class="empty">表示中にエラーが発生しました。<br><span class="small">'+esc(e.message)+"</span></div>"}
   document.getElementById("app").innerHTML=h;
+  applySecBanners();
   renderNav();
   // reveal-on-scroll
   try{

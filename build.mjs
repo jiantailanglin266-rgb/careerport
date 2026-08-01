@@ -626,6 +626,13 @@ function buildPage(p) {
     : p.kind === "industry" ? (DATA.images || {})["ind:" + p.x.slug] : null;
   if (ogIm) html = html.replace(/(<meta property="og:image" content=")[^"]*(">)/, `$1${SITE}/${ogIm.src}$2`);
   if (p.kind === "article") html = html.replace(/(<meta property="og:type" content=")[^"]*(">)/, `$1article$2`);
+  /* 静的HTMLに直接書かれたヘッダーのロゴは、ページ階層に応じた相対パスに直す
+     （SPAのJSが動く前でも、またクローラーからも見えるようにするため） */
+  {
+    const depth = p.path.split("/").filter(Boolean).length;
+    const rel = "../".repeat(depth) || "./";
+    html = html.split('src="images/logo/').join(`src="${rel}images/logo/`);
+  }
   const head = [
     `<link rel="canonical" href="${SITE}${p.path}">`,
     `<link rel="alternate" hreflang="ja" href="${SITE}${p.path}">`,
