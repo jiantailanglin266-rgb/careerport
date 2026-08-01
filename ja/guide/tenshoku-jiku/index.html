@@ -168,6 +168,18 @@ nav.g a.on{color:var(--gold-400)}
 .mq .it b{color:var(--gold-400);font-family:var(--en);font-weight:600;letter-spacing:.05em}
 @keyframes mqL{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media (prefers-reduced-motion:reduce){.mqtrack{animation:none}}
+/* ---------- FV直下のブランド動画（ロゴリビール） ----------
+   音声トラックを持たない12秒の1回再生。ループさせると導入演出が繰り返されて
+   気が散るため loop は付けず、最終フレーム（ロゴ）で止める。
+   prefers-reduced-motion のときは再生せず最終フレームの静止画に置き換える。 */
+.herovid{position:relative;margin:0 -20px 4px;background:#081426;overflow:hidden;line-height:0}
+.herovid video,.herovid img{width:100%;height:auto;display:block}
+.herovid .vskip{position:absolute;right:14px;bottom:12px;z-index:2;background:rgba(8,20,38,.55);color:#fff;border:0;
+  font-size:11.5px;padding:5px 12px;border-radius:999px;cursor:pointer;font-family:var(--sans);opacity:0;transition:opacity .25s}
+.herovid:hover .vskip{opacity:1}
+.herovid .vskip:hover{background:rgba(8,20,38,.8)}
+@media(prefers-reduced-motion:reduce){.herovid video{display:none}}
+
 /* ---------- セクションバナー（自社制作のブランド画像） ----------
    画像に見出しが焼き込まれているため、デスクトップでは画像を出し、見出しテキストは
    読み上げ・検索エンジン向けにDOMへ残したまま視覚的に隠す。
@@ -807,6 +819,31 @@ function occFaq(o){
 }
 
 /* ---------- views ---------- */
+/* FV直下のブランド動画。動きを減らす設定の環境と、動画を再生できない環境では
+   最終フレームの静止画を出すので、どちらでもロゴが必ず見える。 */
+function heroVideo(){
+  var b=window.CP_BASE;
+  var reduce=false;
+  try{reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches}catch(e){}
+  if(reduce)return '<div class="herovid"><img src="'+b+'/images/video/hero-still.jpg" alt="CAREERPORT" width="1600" height="686"></div>';
+  return '<div class="herovid">'+
+    '<video autoplay muted playsinline preload="metadata" width="1920" height="822" '+
+      'poster="'+b+'/images/video/hero-poster.jpg" aria-label="CAREERPORT ブランドムービー" onended="this.classList.add(\'done\')">'+
+      '<source src="'+b+'/images/video/hero.webm" type="video/webm">'+
+      '<source src="'+b+'/images/video/hero.mp4" type="video/mp4">'+
+      '<img src="'+b+'/images/video/hero-still.jpg" alt="CAREERPORT" width="1600" height="686">'+
+    '</video>'+
+    '<button class="vskip" type="button" onclick="heroVideoSkip(this)">スキップ</button>'+
+  '</div>';
+}
+function heroVideoSkip(btn){
+  var v=btn.parentNode.querySelector("video");
+  if(!v)return;
+  try{v.currentTime=Math.max(0,(v.duration||12)-0.1);v.pause()}catch(e){}
+  btn.style.display="none";
+}
+window.heroVideoSkip=heroVideoSkip;
+
 function vHome(){
   var occs=DATA.occupations.filter(function(o){return o.featured});
   var occTotal=DATA.occupations.filter(function(o){return o.status==="published"}).length;
@@ -832,6 +869,7 @@ function vHome(){
   '<div style="align-self:end"><button class="btn gold" style="width:100%;padding:11px 20px" type="submit">検索</button></div>'+
   '</div></form></div></div>'+
   '<div class="mq"><div class="mqtrack">'+mqItems()+mqItems()+'</div></div></div>'+
+  heroVideo()+
 
   '<section class="sec rv" style="padding:40px 0 30px"><div class="sec-h" style="text-align:center;margin-bottom:20px">'+
   '<div class="eyebrow">AI Career Agent</div><h2 style="font-size:27px">AIエージェントに相談する</h2>'+
