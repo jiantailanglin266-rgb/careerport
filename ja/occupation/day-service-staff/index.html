@@ -190,12 +190,10 @@ a.secban{transition:transform .3s ease,box-shadow .3s ease}
 a.secban:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(8,20,38,.16)}
 .sec-h.has-ban .eyebrow,.sec-h.has-ban>h2{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 /* ヘッダー／フッターのロゴ画像 */
-.logo img.lmark{height:26px;width:auto;display:block}
+.logo img.lmark{height:26px;width:auto;display:block;flex:none}
 .ftlogo{height:24px;width:auto;display:block;margin-bottom:10px}
 @media(max-width:760px){
-  .secban{display:none}
-  .sec-h.has-ban .eyebrow,.sec-h.has-ban>h2{position:static;width:auto;height:auto;padding:0;margin:0;overflow:visible;clip:auto;white-space:normal}
-  .logo img.lmark{height:22px}
+  .secban{margin-bottom:14px}
 }
 
 /* ---------- 無料ツール（計算系） ---------- */
@@ -396,13 +394,38 @@ footer .legal{border-top:1px solid rgba(210,168,70,.2);margin-top:34px;padding-t
   .bgmq b{font-size:clamp(15px,4.2vw,24px);line-height:1.75}
   .bgmq{inset:-35% -45%}
 }
+@media(max-width:760px){
+  .hd{gap:12px}
+  .logo img.lmark{height:23px}
+}
+@media(max-width:560px){
+  .hd{gap:8px;height:56px}
+  .logo img.lmark{height:19px}
+  .logo .sr-kana{display:none}          /* ワードマークと重複し、幅も足りない */
+  .hd .cta{font-size:11px;padding:6px 10px;letter-spacing:0}
+  .menu-btn{padding:6px 10px;font-size:12px}
+}
+@media(max-width:359px){
+  .hd .cta{display:none}                /* 下部ナビの「診断」と同じ導線なので省く */
+  .menu-btn{margin-left:auto}
+}
 @media(max-width:560px){
   body{font-size:14.5px}
   .g2,.g3,.g4{grid-template-columns:1fr}
-  .searchbox .row{grid-template-columns:1fr}
   .article-body{padding:22px 18px}
   .form{padding:20px 16px}
   .sec{padding:40px 0}
+  /* 検索フォームは2列に。1列だと5段になりFVが1画面に収まらない */
+  .searchbox{padding:14px}
+  .searchbox .row{grid-template-columns:1fr 1fr;gap:9px}
+  .searchbox .row>div:first-child{grid-column:1/-1}
+  /* 写真クレジットは折り返して全文を出す（CC表示の欠落を防ぐ） */
+  .thumb-card .tc-cr,.ptile .tc-cr,.art-thumb .tc-cr{max-width:92%;white-space:normal;line-height:1.45;text-align:right}
+  /* FVの縦を詰める */
+  .hero .sub{margin:12px 0 18px;font-size:14px}
+  .hero .ctas{gap:8px;margin-bottom:22px}
+  .hero .ctas .btn{flex:1 1 100%;justify-content:center}
+  .hero .ctas .btn.ghost{flex:1 1 calc(50% - 4px)}
 }
 </style>
 <link rel="canonical" href="https://jiantailanglin266-rgb.github.io/careerport/ja/occupation/day-service-staff/">
@@ -1647,6 +1670,10 @@ var SEC_BANNER={
  "Why CAREERPORT":["why","CAREERPORTの特徴",null],
  "FAQ":["faq","よくある質問",null]
 };
+/* 実寸。読み込み前に高さを確保してレイアウトのガタつきを防ぐ */
+var SEC_BANNER_SIZE={agent:[1400,768],compass:[1400,769],services:[1400,768],occupation:[1400,768],
+ industry:[1400,769],area:[1400,768],attributes:[1400,769],salary:[1400,323],guide:[1400,788],
+ why:[1400,788],faq:[1400,295]};
 function applySecBanners(){
   if(!state.view||state.view.name!=="home")return;
   var hs=document.querySelectorAll("#app .sec-h");
@@ -1655,7 +1682,9 @@ function applySecBanners(){
     if(!eb||h.classList.contains("has-ban"))continue;
     var b=SEC_BANNER[(eb.textContent||"").trim()];
     if(!b)continue;
-    var img='<img src="'+window.CP_BASE+'/images/sections/'+b[0]+'.jpg" alt="'+esc(b[1])+'" loading="lazy" decoding="async">';
+    var d=SEC_BANNER_SIZE[b[0]]||[1400,768];
+    var img='<img src="'+window.CP_BASE+'/images/sections/'+b[0]+'.jpg" alt="'+esc(b[1])+'" '+
+      'width="'+d[0]+'" height="'+d[1]+'" loading="lazy" decoding="async">';
     var el;
     if(b[2]){
       el=document.createElement("a");
